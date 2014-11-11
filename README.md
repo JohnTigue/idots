@@ -1,7 +1,7 @@
 EbolaMapper
 ===========
 
-Widget for visualizing ebola outbreak data on maps, through time. In other words, modern open-source anti-virus software.
+Widget for visualizing ebola outbreak data on maps, through time. In other words, "modern open-source anti-virus software." Let's break out those terms:
 
 Modern: basically that means highly interacive Web based visualizations (read: d3.js). We can really up the game compared to what usually happens (mostly static data in PDFs which, by the way, we can print-to-file quite attractively from the SVG-based d3.js visualizations).
 
