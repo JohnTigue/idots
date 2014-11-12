@@ -13,3 +13,9 @@ Anti-virus software: Ebola is a virus, this software project is anti ebola, and 
 Fork this repository if you want to deploy EbolaMapper. Styling (CSS, etc.) and data sources are easy to set. There are sane defaults such that you can just grab a copy and be quickly up and running.
 
 Blog posts about EbolaMapper can be found at: http://ebolalobe.com/category/ebolamapper/
+
+But most information is in this project's wiki:
+https://github.com/JohnTigue/EbolaMapper/wiki
+
+And the issue tracker:
+https://github.com/JohnTigue/EbolaMapper/issues
