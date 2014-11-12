@@ -15,10 +15,11 @@ Let's break out those terms.
 
 More info
 ---------
-Blog posts about EbolaMapper can be found at: http://ebolalobe.com/category/ebolamapper/
+Blog posts about EbolaMapper can be found at:  
+http://ebolalobe.com/category/ebolamapper/
 
-Most information is in this project's wiki:
+Most information is in this project's wiki:  
 https://github.com/JohnTigue/EbolaMapper/wiki
 
-The issue tracker is where to go if you want to jump in:
+The issue tracker is where to go if you want to jump in:  
 https://github.com/JohnTigue/EbolaMapper/issues
