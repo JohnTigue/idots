@@ -13,10 +13,12 @@ Let's break out those terms.
 
 **EbolaMapper** is white label-able i.e. you can easy style it to match the rest of your Web site. Fork this repository if you want to deploy EbolaMapper. Styling (CSS, etc.) and data sources are easy to set. There are, though, sane defaults such that you can just grab a copy and be quickly up and running.
 
+More info
+---------
 Blog posts about EbolaMapper can be found at: http://ebolalobe.com/category/ebolamapper/
 
-But most information is in this project's wiki:
+Most information is in this project's wiki:
 https://github.com/JohnTigue/EbolaMapper/wiki
 
-And the issue tracker:
+The issue tracker is where to go if you want to jump in:
 https://github.com/JohnTigue/EbolaMapper/issues
