@@ -23,11 +23,12 @@ Fork this repository if you want to deploy EbolaMapper. Styling (CSS, etc.) and 
 
 More info
 ---------
-Blog posts about EbolaMapper can be found at:  
-http://ebolalobe.com/category/ebolamapper/
-
 Most information is in this project's wiki:  
 https://github.com/JohnTigue/EbolaMapper/wiki
 
 The issue tracker is where to go if you want to jump in:  
 https://github.com/JohnTigue/EbolaMapper/issues
+
+Blog posts about EbolaMapper can be found at:  
+http://ebolalobe.com/category/ebolamapper/
+
