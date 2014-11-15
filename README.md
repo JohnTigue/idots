@@ -26,8 +26,9 @@ More info
 Most information is in this project's wiki:  
 https://github.com/JohnTigue/EbolaMapper/wiki
 
-The issue tracker is where to go if you want to jump in:  
-https://github.com/JohnTigue/EbolaMapper/issues
+If you want to jump in and get involved:  
+[The To Do List](https://github.com/JohnTigue/EbolaMapper/wiki/To-Do-List) provides an overview of where things are at.  
+[The Issue Tracker](https://github.com/JohnTigue/EbolaMapper/issues) is where to find the nitty-gritty.
 
 Blog posts about EbolaMapper can be found at:  
 http://ebolalobe.com/category/ebolamapper/
