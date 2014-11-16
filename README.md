@@ -9,13 +9,13 @@ Let's break out those terms.
 
 **Modern**: basically that means highly interacive Web based visualizations (read: D3.js). We can really up the game compared to what usually happens (mostly static data in PDFs which, by the way, we can print-to-file quite attractively from the SVG-based D3.js visualizations).
 
-**Open-source**: The code is Apache 2.0 licensed (i.e. do with it as you wish). The data is also free open data. We have currated data and provide it via RESTful Web service APIs (static files even, such that **EbolaMapper** can work offline).
+**Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). The data is also free open data. We have currated data and provide it via RESTful Web service APIs (static files even, such that **EbolaMapper** can work offline).
 
 **Anti-virus software**: Ebola is a virus and this software project is anti ebola (and pro geeky humor).
 
 Use it
 ------
-**EbolaMapper** is white label-able i.e. you can easy style it to match the rest of your Web site. 
+**EbolaMapper** is white label-able, that is you can easy style it to match the rest of your Web site. 
 
 Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) you do not even need to attribute it to anyone else besides youself. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
 
