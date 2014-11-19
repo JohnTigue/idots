@@ -19,7 +19,7 @@ Use it
 
 Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) you do not even need to attribute it to anyone else besides youself. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
 
-Fork this repository if you want to deploy EbolaMapper. Styling (CSS, etc.) and data sources are easy to set. There are, though, sane defaults such that you can just grab a copy and be quickly up and running.
+Fork (or simply download) this repository if you want to deploy EbolaMapper. Styling (CSS, etc.) is highly configurable and well documented. Data sources serving up info via [the Outbreak APIs] (https://github.com/JohnTigue/EbolaMapper/wiki) can be specified as an URL prarameter. The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
 
 More info
 ---------
