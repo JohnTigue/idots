@@ -7,9 +7,9 @@ Description
 -----------
 Let's break out those terms.
 
-**Modern**: basically that means highly interacive Web based visualizations (read: D3.js). We can really up the game compared to what usually happens (mostly static data in PDFs which, by the way, we can print-to-file quite attractively from the SVG-based D3.js visualizations).
+**Modern**: basically that means highly interacive Web based visualizations leveraging SVG (via D3.js). This works with any browser new than IE8
 
-**Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). The data is also free open data. We have currated data and provide it via RESTful Web service APIs (static files even, such that **EbolaMapper** can work offline).
+**Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). The data is also free open data. We have currated data and provide it via RESTful Web service Outbreak APIs (static files even, such that **EbolaMapper** can work offline or via file:// URLs).
 
 **Anti-virus software**: Ebola is a virus and this software project is anti ebola (and pro geeky humor).
 
