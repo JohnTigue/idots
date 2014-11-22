@@ -7,11 +7,11 @@ Description
 -----------
 Let's break out those terms.
 
-**Modern**: basically that means highly interacive Web based visualizations leveraging SVG (via D3.js). This works with any browser new than IE8
+**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014; when the next outbreak, of whatever infectious disease occurs, and these tools are used again via the not-ebola-specific [Outbreak API](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-API), hopefully IE8 will have already died, which according to Microsoft will happen 2016).
 
-**Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). The data is also free open data. We have currated data and provide it via RESTful Web service Outbreak APIs (static files even, such that **EbolaMapper** can work offline or via file:// URLs).
+**Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). 2014 Ebola outbreak in West Africa data is also made available, as free open data ([PDDL licensed](http://opendatacommons.org/licenses/pddl/). We have currated data and provide it via the RESTful Web service Outbreak API (static files even, such that **EbolaMapper** can work offline or via `file://` URLs).
 
-**Anti-virus software**: Ebola is a virus and this software project is anti ebola (and pro geeky humor).
+**Anti-virus software**: Ebola is a virus and this software project is anti-ebola (and pro-geeky humor).
 
 Use it
 ------
