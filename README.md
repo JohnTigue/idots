@@ -17,19 +17,21 @@ Use it
 ------
 **EbolaMapper** is white label-able, that is you can easy style it to match the rest of your Web site. 
 
-Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) you do not even need to attribute it to anyone else besides youself. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
+Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) you do not even need to attribute it to anyone else besides yourself. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
 
-Fork (or simply download) this repository if you want to deploy EbolaMapper. Styling (CSS, etc.) is highly configurable and well documented. Data sources serving up info via [the Outbreak APIs] (https://github.com/JohnTigue/EbolaMapper/wiki) can be specified as an URL prarameter. The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
+Fork (or simply download) this repository if you want to [deploy EbolaMapper](https://github.com/JohnTigue/EbolaMapper/wiki/Deployment-HOWTO). 
+- Styling (CSS, etc.) is highly configurable and [well documented](https://github.com/JohnTigue/EbolaMapper/wiki/White-Label). 
+- Any data source using the [Outbreak API] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-API) can be specified as an URL parameter.
+The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
 
 More info
 ---------
-Most information is in this project's wiki:  
-https://github.com/JohnTigue/EbolaMapper/wiki
+There is a lot of information is in [the EbolaMapper wiki](https://github.com/JohnTigue/EbolaMapper/wiki)
 
 If you want to jump in and get involved:  
-[The To Do List](https://github.com/JohnTigue/EbolaMapper/wiki/To-Do-List) provides an overview of where things are at.  
-[The Issue Tracker](https://github.com/JohnTigue/EbolaMapper/issues) is where to find the nitty-gritty.
+- [The To Do List](https://github.com/JohnTigue/EbolaMapper/wiki/To-Do-List) provides an overview of where things are at  
+- [The Issue Tracker](https://github.com/JohnTigue/EbolaMapper/issues) is where to find the nitty-gritty
 
 Blog posts about EbolaMapper can be found at:  
-http://ebolalobe.com/category/ebolamapper/
+http://tigue.com/category/ebolamapper/
 
