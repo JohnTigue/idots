@@ -7,7 +7,7 @@ Description
 -----------
 Here is a break out the phrase "modern open-source anti-virus software."
 
-**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014; when the next outbreak, of whatever infectious disease occurs, and these tools are used again via the not-ebola-specific [Outbreak API](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-API), hopefully IE8 will have already died, which according to Microsoft will happen 2016).
+**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014; when the next outbreak, of whatever infectious disease occurs, and these tools are used again via the not-ebola-specific [Outbreak Time Series APIs](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview), hopefully IE8 will have already died, which according to Microsoft will happen 2016).
 
 **Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). 2014 Ebola outbreak in West Africa data is also made available, as free open data ([PDDL licensed](http://opendatacommons.org/licenses/pddl/)). We have currated data and provide it via the RESTful Web service Outbreak API (as static files even, such that **EbolaMapper** can work offline or via `file://` URLs).
 
@@ -21,7 +21,7 @@ Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apac
 
 Fork (or simply download) this repository if you want to [deploy EbolaMapper](https://github.com/JohnTigue/EbolaMapper/wiki/Deployment-HOWTO). 
 - Styling (CSS, etc.) is highly configurable and [well documented](https://github.com/JohnTigue/EbolaMapper/wiki/White-Label). 
-- Any data source using the [Outbreak API] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-API) can be specified as an URL parameter.
+- Any data source using the [Outbreak Time Series APIs] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview) can be specified as an URL parameter.
 The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
 
 More info
