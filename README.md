@@ -7,7 +7,7 @@ Description
 -----------
 Here is a break out the phrase "modern open-source anti-virus software."
 
-**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014; when the next outbreak, of whatever infectious disease occurs, and these tools are used again via the not-ebola-specific [Outbreak Time Series APIs](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview), hopefully IE8 will have already died, which according to Microsoft will happen 2016).
+**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014; when the next outbreak, of whatever infectious disease occurs, and these tools are used again via the not-ebola-specific [Outbreak Time Series APIs](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview), hopefully IE8 will have already died, which Microsoft is scheduled to kill off in 2016 with only some dead-enders hanging on).
 
 **Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish). 2014 Ebola outbreak in West Africa data is also made available, as free open data ([PDDL licensed](http://opendatacommons.org/licenses/pddl/)). We have currated data and provide it via the RESTful Web service Outbreak API (as static files even, such that **EbolaMapper** can work offline or via `file://` URLs).
 
