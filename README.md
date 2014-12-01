@@ -21,7 +21,7 @@ Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apac
 
 Fork (or simply download) this repository if you want to [deploy EbolaMapper](https://github.com/JohnTigue/EbolaMapper/wiki/Deployment-HOWTO). 
 - Styling (CSS, etc.) is highly configurable and [well documented](https://github.com/JohnTigue/EbolaMapper/wiki/White-Label). 
-- Any data source using the [Outbreak Time Series APIs] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview) can be specified as an URL parameter.
+- Any data source using the [Outbreak Time Series Specification] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview) can be specified as an URL parameter.
 The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
 
 More info
