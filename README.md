@@ -1,7 +1,7 @@
 EbolaMapper
 ===========
 
-**EbolaMapper** is a set of tools for visualizing ebola outbreak data in Web pages. This includes Web components, mobile apps, and various secondaries like data validators, converters, and the like. In other words, it is **modern open-source anti-virus software**. 
+**EbolaMapper** is a set of Web tools for visualizing outbreaks, including ebola. This includes Web components, mobile apps, and various secondaries like data validators, converters, and the like. In other words, it is **modern open-source anti-virus software**. 
 
 Description
 -----------
