@@ -13,20 +13,21 @@ Here is a break out the phrase "modern open-source anti-virus software."
 
 **Anti-virus software**: Ebola is a virus and this software project is anti-ebola (and pro-geeky humor).
 
-Use it
+Uses
 ------
-**EbolaMapper** is white label-able, the components are Web page embeddable (iframe or otherwise) and can easy be styled via CSS to match the rest of a Web site. 
+**EbolaMapper** is white label-able, that is the components are Web page embeddable (iframe or otherwise) and can easy be styled via CSS to match the rest of a Web site. 
 
-Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) the code does not even need to attribute it to anyone. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
+Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) deploys do not require attribution. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
 
 Fork (or simply download) this repository if you want to [deploy EbolaMapper](https://github.com/JohnTigue/EbolaMapper/wiki/Deployment-HOWTO). 
 - Styling (CSS, etc.) is highly configurable and [well documented](https://github.com/JohnTigue/EbolaMapper/wiki/White-Label). 
 - Any data source using the [Outbreak Time Series Specification] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview) can be specified as an URL parameter.
+
 The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
 
 More info
 ---------
-There is a lot of information is in [the EbolaMapper wiki](https://github.com/JohnTigue/EbolaMapper/wiki)
+There is a lot of information in [the EbolaMapper project wiki](https://github.com/JohnTigue/EbolaMapper/wiki)
 
 If you want to jump in and get involved:  
 - [The To Do List](https://github.com/JohnTigue/EbolaMapper/wiki/To-Do-List) provides an overview of where things are at  
