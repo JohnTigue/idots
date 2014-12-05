@@ -34,5 +34,5 @@ If you want to jump in and get involved:
 - [The Issue Tracker](https://github.com/JohnTigue/EbolaMapper/issues) is where to find the nitty-gritty
 
 Blog posts about EbolaMapper can be found at:  
-http://tigue.com/category/ebolamapper/
+http://tigue.com/
 
