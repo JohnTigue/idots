@@ -27,7 +27,7 @@ The default settings are sane such that you can just grab a copy, throw the file
 
 More info
 ---------
-There is a lot of information in [the EbolaMapper project wiki](https://github.com/JohnTigue/EbolaMapper/wiki)
+The best place to go for more information is the [EbolaMapper project's wiki](https://github.com/JohnTigue/EbolaMapper/wiki).
 
 If you want to jump in and get involved:  
 - [The To Do List](https://github.com/JohnTigue/EbolaMapper/wiki/To-Do-List) provides an overview of where things are at  
