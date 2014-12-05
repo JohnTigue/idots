@@ -15,9 +15,9 @@ Here is a break out the phrase "modern open-source anti-virus software."
 
 Use it
 ------
-**EbolaMapper** is white label-able, that is you can easy style it to match the rest of your Web site. 
+**EbolaMapper** is white label-able, the components are Web page embeddable (iframe or otherwise) and can easy be styled via CSS to match the rest of a Web site. 
 
-Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) you do not even need to attribute it to anyone else besides yourself. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
+Since **EbolaMapper** is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) the code does not even need to attribute it to anyone. Please, take it and help the world. (We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link we can add to the list.)
 
 Fork (or simply download) this repository if you want to [deploy EbolaMapper](https://github.com/JohnTigue/EbolaMapper/wiki/Deployment-HOWTO). 
 - Styling (CSS, etc.) is highly configurable and [well documented](https://github.com/JohnTigue/EbolaMapper/wiki/White-Label). 
