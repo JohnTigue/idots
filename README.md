@@ -7,7 +7,7 @@ Description
 -----------
 Here is a break out the phrase "modern open-source anti-virus software."
 
-**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014, at less than 10% of global usages, and Microsoft will stop supporting in 2016).
+**Modern**: this means highly interacive Web based visualizations leveraging SVG, via D3.js. This works with any browser newer than IE8 (which is already fading fast in late 2014, at less than 10% of global usages, and Microsoft will stop supporting in 2016). EbolaMapper also uses AnjularJS 1.3.x, another project which recognises the IE8 is not worth the limitations. 
 
 **Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish, commericially or otherwise). Data for the 2014 Ebola Outbreak in West Africa is also made available, as free open data ([PDDL licensed](http://opendatacommons.org/licenses/pddl/)). We have currated data and provide it via a RESTful Web service API based on the [Outbreak Time Series Specification](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview).
 
