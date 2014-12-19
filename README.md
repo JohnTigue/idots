@@ -1,7 +1,9 @@
 ## EbolaMapper
 EbolaMapper is Web technology for visualizing epidemiological outbreaks, including ebola. The project has Web components, mobile apps, and various secondaries such as data validators, converters, and the like. 
 
-This project also defines the [Outbreak Time Series Specification](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview). Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is rather simple but it demonstrates how it can be easily done and will hopefully be a seed which germinates into more sophisticated infrastructure. 
+This project also defines the [Outbreak Time Series Specification](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview). The data model defined by the Specification is very specific and simple: **The Spec quantifies only the population level information required for plotting epidemic curves in time and space visualizations.** The Spec is not intended to address things like line listing, contact listing, or contact tracing. That is a whole different level of complexity: technically, socially, and politically. **[Personally Identifiable Information (PII)](http://en.wikipedia.org/wiki/Personally_identifiable_information) is explicitly out of scope.**
+
+Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is intentionally simple but it demonstrates how it can be easily done and will hopefully be a seed which germinates into more sophisticated infrastructure. 
 
 ### Status
 The schedule is to have EbolaMapper minimally viable by 2014-01-09. See, [the wiki](https://github.com/JohnTigue/EbolaMapper/wiki#status) for more details.
