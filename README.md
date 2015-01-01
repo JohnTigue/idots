@@ -1,7 +1,9 @@
 ## EbolaMapper
-EbolaMapper is Web technology for visualizing epidemiological outbreaks, including ebola. The project has Web components, mobile apps, and various secondaries such as data validators, converters, and the like. 
+The EbolaMapper project is primarily concerned with Web technology for visualizing epidemiological outbreaks, including ebola. The project is developing Web page components and hybrid mobile apps, as well as various secondary tools such as data validators, converters, and the like. 
 
-This project also defines the [Outbreak Time Series Specification](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview). Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is rather simple but it demonstrates how it can be easily done and will hopefully be a seed which germinates into more sophisticated infrastructure. 
+This project also defines the [Outbreak Time Series Specification](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview). The data model described in the Specification is very specific and simple: **the Spec quantifies only population level information for plotting epidemic curves. [Personally Identifiable Information (PII)](http://en.wikipedia.org/wiki/Personally_identifiable_information) is explicitly out of scope.** The Spec is not intended to address things like line listing nor contact tracing; doing so would involve a much greater level of complexity, technically and politically.
+
+The Outbreak Time Series Spec defines the data structure and EbolaMapper can then visualize the data using highly interactive Web standard technologies including SVG, JavaScript, CSS, and HTML. Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is intentionally simple yet very useful; it demonstrates how such things can be easily done and will hopefully be built upon in the future in various infectious disease outbreak responses -- seemingly [things are going to be interesting for the foreseeable future.](http://bigstory.ap.org/article/db7d627eb16841f7b78909b035e96e6f/experts-it-was-busy-black-eye-year-disease-control)
 
 ### Status
 The schedule is to have EbolaMapper minimally viable by 2014-01-09. See, [the wiki](https://github.com/JohnTigue/EbolaMapper/wiki#status) for more details.
@@ -24,7 +26,7 @@ Fork (or simply download) this repository if you want to [deploy EbolaMapper](ht
 - Styling (CSS, etc.) is highly configurable and [well documented](https://github.com/JohnTigue/EbolaMapper/wiki/White-Label). 
 - Any data source using the [Outbreak Time Series Specification] (https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview) can be specified as an URL parameter, or specified within the code.
 
-The default settings are sane such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
+[The default settings are sane](http://en.wikipedia.org/wiki/Convention_over_configuration) such that you can just grab a copy, throw the files up on a Web server, and quickly be up and running.
 
 ### More info
 The best place to go for more information is the [EbolaMapper project's wiki](https://github.com/JohnTigue/EbolaMapper/wiki).
