@@ -1,5 +1,5 @@
 ## EbolaMapper
-The EbolaMapper project is primarily concerned with web technology for visualizing epidemiological outbreaks, including ebola. The project is developing web page components and hybrid mobile apps, as well as various secondary tools such as data validators, converters, and the like. 
+The EbolaMapper project is primarily concerned with web technology for spatiotemporal visualizations of epidemiological outbreaks, including ebola. The project is developing web page components and hybrid mobile apps, as well as various secondary tools such as data validators, converters, and the like. 
 
 This project also defines the Outbreak Time Series Specification. The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data. Oversimplifying, the fundamental messages encoded by The Spec are of the form: During time interval A to B, at location L there were X new cases, Y new deaths, etc.
 
