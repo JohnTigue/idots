@@ -1,7 +1,7 @@
 ## EbolaMapper
 The EbolaMapper project is primarily concerned with web technology for spatiotemporal visualizations of epidemiological outbreaks, including ebola. The project is developing web page components and hybrid mobile apps, as well as various secondary tools such as data validators, converters, and the like. 
 
-This project also defines the Outbreak Time Series Specification. The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data. Oversimplifying, the fundamental messages encoded by The Spec are of the form: During time interval A to B, at location L there were X new cases, Y new deaths, etc.
+This project also defines [the Outbreak Time Series Specification(#outbreak_time_series_spec). The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data. Oversimplifying, the fundamental messages encoded by The Spec are of the form: During time interval Moment1-to-Moment2, at location L assign X new cases, Y new deaths, etc.
 
 The Outbreak Time Series Spec defines the data structure and EbolaMapper can visualize the data in a highly interactive manner leveraging only web standard technologies including SVG, JavaScript, CSS, and HTML. Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is intentionally simple yet very useful; it demonstrates how such things can be easily done and will hopefully be built upon in the future in various infectious disease outbreak responses -- seemingly [things are going to be interesting for the foreseeable future.](http://bigstory.ap.org/article/db7d627eb16841f7b78909b035e96e6f/experts-it-was-busy-black-eye-year-disease-control)
 
@@ -28,7 +28,7 @@ Fork (or simply download) this repository if you want to [deploy EbolaMapper](ht
 
 [The default settings are sane](http://en.wikipedia.org/wiki/Convention_over_configuration) such that you can just grab a copy, throw the files up on a web server, and quickly be up and running.
 
-## Outbreak Time Series Specification
+## Outbreak Time Series Specification <a name='outbreak_time_series_spec'></a>
 This project defines the [Outbreak Time Series Specification](https://github.com/JohnTigue/EbolaMapper/wiki/Outbreak-Time-Series-Specification-Overview). The data model described in the Specification is very specific and simple: the Spec quantifies only population level information for plotting epidemic curves. The Spec is not intended to address things like line listing nor contact tracing; doing so would involve a much greater level of 
 complexity, technically and politically.
 
