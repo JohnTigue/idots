@@ -1,14 +1,8 @@
-/** Backgrounders on this "tape" test tech, and some stuff on modules:
-  *   http://substack.net/how_I_write_tests_for_node_and_the_browser
+/** Backgrounders on tape for testing:
   *   https://ci.testling.com/guide/tape
-  *   https://medium.com/@brianleroux/es6-modules-amd-and-commonjs-c1acefbe6fc0
+  *   http://substack.net/how_I_write_tests_for_node_and_the_browser
   */
 
-/** Darn, this log4javascriptthing assumes "window." so it's client-side only.
-  * var logger = require( '../assets/js/vendor/log4javascript-1.4.10/log4javascript.js' ).getLogger( "app" )
-  *
-  * Do an "npm search bunyan" and it seems that there's quite a healthy little community around Bunyan!
-  */
 var bunyan = require( 'bunyan' );
 var logger = bunyan.createLogger( {name: 'myapp'} );
 logger.level( 'info' );
@@ -130,6 +124,7 @@ test( 'Check that url encoding is happening on names (containing spaces i.e New 
 
 /**
   * JFT-TODO: How to test this besides just looking at the log messages? which is all I'm currently doing.
+  *   How about a timer? i.e this should take only a very few milliseconds
   */
 test( 'Check that cache is working', function( t ) {
     t.plan( 1 );
