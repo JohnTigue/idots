@@ -1,29 +1,33 @@
 {
-"name": "ebola-mapper",
-"version": "0.1.0",
-"license": "Apache 2.0",
-"devDependencies": {
+  "name": "ebola-mapper",
+  "version": "0.1.0",
+  "license": "Apache 2.0",
+  "devDependencies": {
     "browserify": "^8.1.0",
     "browserify-shim": "^3.8.2",
-    "promise": "^6.1.0"
-    },
-"scripts": {
+    "promise": "^6.1.0",
+    "tape": "^3.5.0"
+  },
+  "scripts": {
     "env": "env",
     "lint": "jshint test/test-name-to-loc-cache-builder.js --exclude node_modules",
     "test": "tape test/test-name-to-loc-cache-builder.js|node_modules/bunyan/bin/bunyan"
-    },
-"browserify": {
+  },
+  "browserify": {
     "transform": [
-        "browserify-shim"
-        ]
-    },
-"browserify-shim": {
+      "browserify-shim"
+    ]
+  },
+  "browserify-shim": {
     "log4javascript": "global:log4javascript",
     "leaflet": "global:L",
     "leaflet-markercluster": {
-        "depends": [
-            "leaflet"
-            ]
-        }
+      "depends": [
+        "leaflet"
+      ]
     }
+  },
+  "dependencies": {
+    "bunyan": "^1.3.4"
+  }
 }
