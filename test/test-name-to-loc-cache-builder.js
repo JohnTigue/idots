@@ -1,15 +1,19 @@
+'use strict';
+
+var bunyan   = require( 'bunyan' );
+var logger   = bunyan.createLogger( {name: 'myapp'} );
+logger.level( 'info' );
+
+
 /** Backgrounders on tape for testing:
   *   https://ci.testling.com/guide/tape
   *   http://substack.net/how_I_write_tests_for_node_and_the_browser
   */
+var test     = require( 'tape' );
 
-var bunyan = require( 'bunyan' );
-var logger = bunyan.createLogger( {name: 'myapp'} );
-logger.level( 'info' );
-
-var test = require( 'tape' );
-var http = require( 'http' );
-var cacher = require( '../assets/js/construct_preload_cache_of_locations.js' );
+var http     = require( 'http' );
+var cacher   = require( '../src/utils/construct_preload_cache_of_locations.js' );
+var geocoder = require( '../src/geo_librarian/caching_geocoder' );
 
 
 test( 'module load sanity check', function( t ) {
@@ -87,13 +91,11 @@ test( 'Old-school callback lookup for Seattle via Nominatim', function( t ) {
   );
 
 
-// JFT-TODO: do that with http request instead, as it has a simpler and more consistent API
+// JFT-TODO: do that with http request instead, as it has a simpler and more consistent API. Might as well derp around with fetch() as well, and that cancelable proxied fetch()
 
 
 /** Enough with raw APIs, now for using my caching geocoder which returns Promises
   */
-
-var geocoder = require( '../assets/js/caching_geocoder' );
 test( 'check for caching_geocoder module to load', function( t ) {
     t.plan( 1 );
     t.ok( geocoder, 'geocacher module loaded ok' );
@@ -121,6 +123,7 @@ test( 'Check that url encoding is happening on names (containing spaces i.e New 
       } );
     }
   );
+
 
 /**
   * JFT-TODO: How to test this besides just looking at the log messages? which is all I'm currently doing.
