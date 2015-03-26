@@ -2,7 +2,7 @@
 
 var bunyan = require( 'bunyan' );
 var logger = bunyan.createLogger( {name: 'myapp'} );
-logger.level( 'info' );
+logger.level( 'debug' );
 
 /** Backgrounders on tape for testing:
   *   https://ci.testling.com/guide/tape
@@ -13,9 +13,8 @@ var test = require( 'tape' );
 var http = require( 'http' );
 
 // JFT-TODO: Ugh, the two are conflated and should be factored out to separate files
-var cacher   = require( '../src/util/construct_preload_cache_of_locations.js' );
-var geocoder = require( '../assets/js/caching_geocoder' );
-
+var cacher   = require( '../src/utils/construct_preload_cache_of_locations.js' );
+var geocoder = require( '../src/geo_librarian/caching_geocoder' );
 
 
 test( 'module load sanity check', function( t ) {
@@ -128,10 +127,10 @@ test( 'Check that url encoding is happening on names (containing spaces i.e New 
   );
 
 /**
-  * JFT-TODO: How to test this besides just looking at the log messages? which is all I'm currently doing.
-  *   How about a timer? i.e this should take only a very few milliseconds, if not microsecs
-  * Also, perhaps should inspect state of cache: to verify it having the same number of cached object after second call.
-  * Thirdly, as is this is coupled to previous tests. This single test should call into cache twice for same loc name, say, "Leibzig"
+  * JFT-TODO: 
+  * Also, rather than just time response perhaps should inspect state of cache (consider if network were test doubled): 
+  *   so verify it having the same number of cached object before and after second call.
+  * Also this is coupled to previous tests. This single test should call into cache twice for same loc name, say, "Leibzig"
   */
 test( 'Check that cache is working', function( t ) {
     t.plan( 2 );
@@ -142,7 +141,7 @@ test( 'Check that cache is working', function( t ) {
       var nycLong = parseInt( locs[0].lon );
       logger.debug( "in NYC's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + nycLong );
       t.equal( nycLong, -73, 'NYC is circa 73 degrees west of the prime meridian' );
-      var elapseMillis = process.hrtime( startTime )[1] / 1000000;
+      var elapsedMillis = process.hrtime( startTime )[1] / 1000000;
       logger.debug( "repeat lookup of NYC (so, cached) took " + elapsedMillis + " milliseconds." );
       t.ok( elapsedMillis < 2, "Cache responded quickly" );
       } );
