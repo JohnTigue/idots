@@ -5,12 +5,13 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/JohnTigue/EbolaMapper.git"
-    },
+  },
   "devDependencies": {
     "browserify": "^8.1.0",
     "browserify-shim": "^3.8.2",
-    "onchange": "^1.0.0",
-    "tape": "^3.5.0"
+    "chai": "*",
+    "chai-as-promised": "*",
+    "mocha": "*"
   },
   "scripts": {
     "env": "env",
