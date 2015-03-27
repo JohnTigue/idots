@@ -8,33 +8,32 @@
 
 var bunyan = require( 'bunyan' );
 var logger = bunyan.createLogger( {name: 'myapp'} );
-logger.level( 'info' );
+logger.level('info');
 
 var expect = require('chai').expect;
-var http   = require( 'http' );
+var http   = require('http');
 
 describe( 'Nominatim on net' , function() {
   var someRequestOpts = {
-    hostname: 'nominatim.openstreetmap.org',
-    port: 80,
-    method: 'GET',      
-    path: '/search/?q=Seattle&limit=5&format=json&addressdetails=1'
-    };
+        hostname: 'nominatim.openstreetmap.org',
+        port: 80,
+        method: 'GET',      
+        path: '/search/?q=Seattle&limit=5&format=json&addressdetails=1'
+        };
 
-  it( 'should 200 for Seattle (not looking at Response body)', function( done ) {
+  it( 'should 200 for Seattle (not looking at Response body)', function(done) {
     var aRequest = http.request( someRequestOpts, function( aResponse ) {
-        logger.debug( 'Status code=' + aResponse.statusCode );
-        expect( aResponse.statusCode, 'Status code' ).to.equal( 200 );
-	done();
-        }
-      );
+          logger.debug( 'Status code=' + aResponse.statusCode );
+          expect(aResponse.statusCode, 'Status code').to.equal(200);
+	  done();
+          });
 
-    logger.trace( aRequest );
-    aRequest.on( 'error', done );
+    logger.trace(aRequest);
+    aRequest.on('error', done);
     aRequest.end();
     });
 
-  it( "should say Seattle's lat ~= 47", function( done ) {
+  it( "should say Seattle's lat ~= 47", function(done) {
     var aReq = http.request( someRequestOpts, function( response ) {
         logger.debug( 'http.request has a response object' );
         var respBod = '';
