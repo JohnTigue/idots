@@ -1,8 +1,9 @@
 ## EbolaMapper
 The EbolaMapper project is primarily concerned with web technology for spatiotemporal visualizations of epidemiological outbreaks, including ebola. The project is developing web page components and hybrid mobile apps, as well as various secondary tools such as data aggregators, validators, converters, and the like. 
 
-This project also defines [the Outbreak Time Series Specification](#outbreak_time_series_spec). The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data. Oversimplifying, the fundamental messages encoded by The Spec are of the form:  
-For disease D, during time interval Moment1-to-Moment2, at location L: recorded were X new cases, Y new deaths, etc.
+This project also defines [the Outbreak Time Series Specification](#outbreak_time_series_spec). The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data.
+
+Oversimplifying, the fundamental messages encoded by The Spec are of the form: **For disease D, during time interval Moment1-to-Moment2, at location L: recorded were X new cases, Y new deaths, etc.**
 
 The Outbreak Time Series Spec defines the data structure and EbolaMapper can visualize the data in a highly interactive manner leveraging only web standard technologies including SVG, JavaScript, CSS, and HTML. Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is intentionally simple yet very useful; it demonstrates how such things can be easily done and will hopefully be built upon in the future in various infectious disease outbreak responses -- seemingly [things are going to be interesting for the foreseeable future.](http://bigstory.ap.org/article/db7d627eb16841f7b78909b035e96e6f/experts-it-was-busy-black-eye-year-disease-control)
 
