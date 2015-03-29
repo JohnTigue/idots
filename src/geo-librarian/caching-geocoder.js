@@ -4,7 +4,7 @@ var url_query_termer = require('querystring');
 var Promise = require('promise');
 
 var bunyan = require('bunyan' );
-var logger = bunyan.createLogger( {name: 'myapp'} );
+var logger = bunyan.createLogger( {name: 'caching-geocoder'} );
 logger.level( 'warn' );
 
 /** This module maintains a loopup table of location names and if it already has a Promise for a name then it simply returns the preexisting. 
@@ -78,6 +78,8 @@ function getLocationPromise( aName ) {
       aReq.end()
       })
     }
+  logger.debug( 'getLocationPromise returning:' + cachedPromises[ aName ] );
+
   return cachedPromises[ aName ]
   }
 
