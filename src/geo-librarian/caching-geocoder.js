@@ -60,9 +60,9 @@ function getLocationPromise( aName ) {
         path: path
         }
   
-  
+//logger.warn("requestURL:"+host+path);
       var aReq = http.request( nominatimRequestOpts, function( response ) {
-        logger.debug( 'http.get called back' );
+        logger.debug( 'http.request called back' );
         var respBod = '';
         response.on( 'data', function( aChunk ) {
           respBod += aChunk 

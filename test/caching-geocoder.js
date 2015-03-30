@@ -12,6 +12,10 @@ var chaiAsPromised = require('chai-as-promised');
 var expect         = require('chai').expect;
 chai.use(chaiAsPromised);
 
+var sinon          = require('sinon');
+var PassThrough    = require('stream').PassThrough;
+var http           = require('http');
+
 var geocoder       = require( '../src/geo-librarian/caching-geocoder' );
 
 describe('spec caching-geocoder', function(){
@@ -62,14 +66,51 @@ describe('spec caching-geocoder', function(){
     });
 
 
-  describe('when asked to geocode a name with embedded spaces "Bangkok, Thailand"', function(){
-    it('should deal with that and say Bangkok is ~=100 degrees East', function(done) {
-      geocoder.locate( "Bangkok, Thailand" ).then( function( locs ) {
-        var bLong = parseInt( locs[0].lon );
-//logger.level('debug');
-        logger.debug( "in Bang's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + bLong );
-logger.level('info');
-        expect(bLong).to.equal(100); //'NYC is circa 73 degrees west of the prime meridian' );
+  describe('when asked to geocode Fes', function(){
+    var fakeNominatimAnswerForFes      = [{lat:'34.0341156', lon:'-5.0133482'}, {lat:'34.02813075', lon:'-5.01220890165468'}];
+    var falseFakeNominatimAnswerForFes = [{lat:'11.11', lon:'-22.22'}, {lat:'33.33', lon:'-44.44'}];
+    var httpRequestStub = null;
+
+    /** Using PassThrough to do test doubling for Nominatim.
+      * Following the style of: 
+      *   http://codeutopia.net/blog/2015/01/30/how-to-unit-test-nodejs-http-requests/
+      * Because cannot simply use sinon's simple utilities:
+      *   sinon's fakeServer is not designed to work with node. Maybe in 2.0 but not now.
+      *     https://github.com/cjohansen/Sinon.JS/issues/319
+      *     http://stackoverflow.com/questions/26790942/how-to-call-a-fakeserver-in-sinon-js-node
+      *       "Sinon is overriding the browser's XMLHttpRequest to create FakeXMLHttpRequest."
+      * So, sinon can be used as test double library in node (as per main page's docs) but the fakeServer bit only works in the browers
+      */
+    before(function(){
+      var aResponse = new PassThrough();
+      aResponse.write(JSON.stringify(fakeNominatimAnswerForFes));
+      aResponse.end();
+
+      var aRequest = new PassThrough();
+      httpRequestStub = sinon.stub(http, 'request');
+//console.log(httpRequestStub.request);
+      //httpRequestStub.request.callsArgWith(1, aResponse).returns(aRequest);
+      http.request.callsArgWith(1, aResponse).returns(aRequest);
+      //http.request.yoMama(1);
+      });
+ 
+    after(function(){
+      http.request.restore();
+      });
+    
+    it('should responde with approx. correct coords', function(done) {
+      var startTime = process.hrtime();
+      geocoder.locate('Fes, Morocco').then( function( locs ) {
+        var fesLong = parseInt(locs[0].lon);
+        var fesLat = parseInt(locs[0].lat);
+//log.level('debug');
+        logger.debug( "in Fes's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + fesLong );
+	var firstElapsedMillis = process.hrtime( startTime )[1] / 1000000;
+	logger.debug( "lookup of Fes took " + firstElapsedMillis + " milliseconds." );
+//log.level('info');
+	// Fes, Morocco 34.0333° N, 5.0000° W
+        expect(fesLong).to.equal(-5);
+        expect(fesLat).to.equal(34);
         done();
         }, function(err) {done(err);}
         );
@@ -95,12 +136,12 @@ logger.level('info');
       var startTime = process.hrtime();
       expect(true).to.be.ok; // see next comment for explanation for this
       geocoder.locate("Bangkok, Thailand").then( function(locs){
-        logger.debug( "in Bangkok then() #1" );
+        logger.debug("in Bangkok then() #1");
         // JFT-TODO: this is odd debugging. if expect(false).to.be.ok inside a then() will cause timeout to be reported but same outside of then() gives AssertionError.
         //   Perhaps this has to do with needing mocha-as-promised and/or chai-as-promised
         expect(true).to.be.ok; 
         expect(isBangkok(locs[0])).to.be.ok;
-	var firstElapsedMillis = process.hrtime( startTime )[1] / 1000000;
+	var firstElapsedMillis = process.hrtime(startTime)[1] / 1000000;
 	logger.debug( "Fist lookup of Bangkok took " + firstElapsedMillis + " milliseconds." );
 
 	// Ask a second time:
