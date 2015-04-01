@@ -1,4 +1,4 @@
-//"use strict";
+'use strict'; // JFT-TODO: there must be some way of telling mocha to use strict, without resorting to a IIFE for the whole file
 
 /** caching-geocoder resolves location names to lat&long, uses a cache which can be prefilled from a local file.
   */
@@ -8,18 +8,39 @@ var logger         = bunyan.createLogger({name: 'myapp'});
 logger.level('info');
 
 var chai           = require('chai');
+var assert         = chai.assert;
+//JFT-TODO: want to kill expect off s.t. only using assert interface b/c insane asserting-on-property-access. 
+//  https://github.com/moll/js-must#asserting-on-property-access
+//  chai-as-promise is still being used though.
+var expect         = chai.expect;  
+
+// JFT-TOOD: not clear if chaiAsPromised is needed currently (2015-03) as recently mocha has promises built in.
+// 2015-03-31: this is currently being used though. Search for "eventually". 
 var chaiAsPromised = require('chai-as-promised');
-var expect         = require('chai').expect;
 chai.use(chaiAsPromised);
 
 var sinon          = require('sinon');
 var PassThrough    = require('stream').PassThrough;
 var http           = require('http');
 
-var geocoder       = require( '../src/geo-librarian/caching-geocoder' );
+// Actual SUT:
+var geocoder       = require('../src/geo-librarian/caching-geocoder');
 
+
+// JFT-TODO: this really doesn't know anything about Nominatim. Might want to rename and move this out into a generic test-double-utils.js 
+
+/** Using PassThrough to do test doubling for Nominatim.
+  * Following the style of: 
+  *   http://codeutopia.net/blog/2015/01/30/how-to-unit-test-nodejs-http-requests/
+  * Because cannot just use sinon's simple utilities:
+  *   sinon's fakeServer is not designed to work with node, it's a browser thing (XHR base). Maybe in 2.0 but not now.
+  *     https://github.com/cjohansen/Sinon.JS/issues/319
+  *     http://stackoverflow.com/questions/26790942/how-to-call-a-fakeserver-in-sinon-js-node
+  *       "Sinon is overriding the browser's XMLHttpRequest to create FakeXMLHttpRequest."
+  * So, sinon can be used as test double library in node (as per main page's docs) but the fakeServer bit only works in the browers (weak!)
+  */
 function stubNominatimServer(aCannedJsonObject){
-  //"use strict";
+  'use strict';
   var aResponse = new PassThrough();
   aResponse.write(JSON.stringify(aCannedJsonObject));
   aResponse.end();
@@ -29,14 +50,38 @@ function stubNominatimServer(aCannedJsonObject){
   }
 
 
-describe('spec caching-geocoder', function(){
-  describe('when test runner inits this file (sanity check:)', function(){
-    it('should load caching-geocoder via module system', function(){
-      expect(geocoder).to.not.be.an('undefined');
+describe('caching-geocoder-spec.js', function(){
+  describe('when test runner inits this file', function(){
+    it('should load caching-geocoder via module system i.e. basic sanity check', function(){
+      assert.isDefined(geocoder);
       });
     });
 
+
   describe('when asked to geocode Seattle', function(){
+    var seattleResult = {};
+
+    before(function(done){
+      var seattleStub = {
+        wrong: [{lat:'11.11', lon:'22.22'}],
+        right: [{lat:'47.6097', lon:'-122.3331'}] 
+        };
+      stubNominatimServer(seattleStub.right);
+      geocoder.locate('Seattle').then(function(locations){
+        seattleResult.long = parseFloat(locations[0].lon);
+        seattleResult.lat  = parseFloat(locations[0].lat);
+        logger.debug("in Seattle's then() locs.length=" + locations.length  + " and locs[0].long=" + locations[0].lon + " aka ~" + seattleResult.long);
+        done();
+        }, function(err){done(err);}
+        );
+      });
+
+    it('should say Seattle ~ (47°N & 122°W)', function(){
+      // Seattle === 47.6097° N, 122.3331° W
+      assert.closeTo(seattleResult.long, -122.3, 0.5, "Seattle is close to 122.3° W"); 
+      assert.closeTo(seattleResult.lat, 47.6, 0.5, "Seattle is close to 47.6° N"); 
+      });
+
     it.skip('should say Seattle ~= 47 degrees North (chai as promised)', function(done) {
       var seattleLatPromise = geocoder.locate('Seattle');
       seattleLatPromise.then( function(locs) {
@@ -45,34 +90,45 @@ describe('spec caching-geocoder', function(){
         return seaLat;
         });
       logger.debug('seattleLatPromise='+seattleLatPromise);
-      expect(seattleLatPromise).not.be.an('undefined');
+      assert.isDefined(seattleLatPromise);
   
-      // JFT-TODO: something wrong here:
+      // JFT-TODO: something wrong here: (with chai-as-promised?)
       // TypeError: Cannot read property 'eventually' of undefined
       return seattleLatPromise.should.eventually.equal(47); //'Seattle is ~47 North'
       });
   
-    it('should say Seattle ~= 47 degrees North', function(done) {
-      var seattleLatPromise = geocoder.locate('Seattle');
-      seattleLatPromise.then( function(locs) {
-        var seaLat = parseInt(locs[0].lat);
-        logger.debug( 'in SEA test\'s then() locs.length=' + locs.length  + ' and locs[0].lat=' + locs[0].lat + ' aka ~' + seaLat );
-        expect(seattleLatPromise).to.eventually.equal(47);
-        done();
-        }, function(err) {done(err);}
-        );
+    after(function(){
+      http.request.restore();
       });
     });
+
   
   describe('when asked to geocode a name with embedded spaces "New York City"', function(){
-    it('should deal with that and say NYC is ~=73 degrees West', function(done) {
-      geocoder.locate( "New York City" ).then( function( locs ) {
-        var nycLong = parseInt( locs[0].lon );
-        logger.debug( "in NYC's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + nycLong );
-        expect(nycLong).to.equal(-73); //'NYC is circa 73 degrees west of the prime meridian' );
+    var nycStub = {
+      wrong: [{lat:'11.11', lon:'22.22'}],
+      right: [{lat:'40.7127', lon:'-74.0059'}] 
+      };
+    var nyc = {};
+
+    before(function(done){
+      stubNominatimServer(nycStub.right);
+      geocoder.locate( "New York City" ).then( function(locations) {
+        nyc.long = parseFloat(locations[0].lon);
+        nyc.lat  = parseFloat(locations[0].lat);
+        logger.debug("in NYC's then() locs.length=" + locations.length  + " and locs[0].long=" + locations[0].lon + " aka ~" + nyc.long);
         done();
-        }, function(err) {done(err);}
+        }, function(err){done(err);}
         );
+      });
+
+    it('should deal with the spaces and report NYC\'s location correctly enough', function(){
+       // NYC === 40.7127° N, 74.0059° W
+      assert.closeTo(nyc.long, -74, 0.5, "NYC is close to 74° W"); 
+      assert.closeTo(nyc.lat, 40.5, 0.5, "NYC is close to 41° N"); 
+      });
+
+    after(function(){
+      http.request.restore();
       });
     });
 
@@ -83,32 +139,13 @@ describe('spec caching-geocoder', function(){
     var fesLong = 0;
     var fesLat = 0;
 
-
-    /** Using PassThrough to do test doubling for Nominatim.
-      * Following the style of: 
-      *   http://codeutopia.net/blog/2015/01/30/how-to-unit-test-nodejs-http-requests/
-      * Because cannot just use sinon's simple utilities:
-      *   sinon's fakeServer is not designed to work with node. Maybe in 2.0 but not now.
-      *     https://github.com/cjohansen/Sinon.JS/issues/319
-      *     http://stackoverflow.com/questions/26790942/how-to-call-a-fakeserver-in-sinon-js-node
-      *       "Sinon is overriding the browser's XMLHttpRequest to create FakeXMLHttpRequest."
-      * So, sinon can be used as test double library in node (as per main page's docs) but the fakeServer bit only works in the browers
-      */
     before(function(done){
-      /*
-      var aResponse = new PassThrough();
-      aResponse.write(JSON.stringify(trueFakeNominatimAnswerForFes));
-      aResponse.end();
-      var aRequest = new PassThrough();
-      sinon.stub(http, 'request');
-      http.request.callsArgWith(1, aResponse).returns(aRequest);
-      */
       stubNominatimServer(accurateNominatimAnswerForFes);
 
       var startTime = process.hrtime();
       geocoder.locate('Fes, Morocco').then( function( locs ) {
-        fesLong = locs[0].lon;
-        fesLat = locs[0].lat;
+        fesLong = parseFloat(locs[0].lon);
+        fesLat = parseFloat(locs[0].lat);
         logger.debug( "in Fes's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + fesLong );
         var firstElapsedMillis = process.hrtime( startTime )[1] / 1000000;
         logger.debug( "lookup of Fes took " + firstElapsedMillis + " milliseconds." );
@@ -119,8 +156,8 @@ describe('spec caching-geocoder', function(){
  
     it('should respond with approx. correct coords for Fes', function(){
       // Fes, Morocco 34.0333° N, 5.0000° W
-      expect(parseInt(fesLong)).to.equal(-5); // rounding down b/c real number can vary a bit.
-      expect(parseInt(fesLat)).to.equal(34);  // ibid
+      assert.closeTo(fesLong, -5, 0.1, "Fes is very close to 5.0° W"); 
+      assert.closeTo(fesLat, 34, 0.1, "Fes is very close to 34.0° N"); 
       });
 
     after(function(){
@@ -129,42 +166,54 @@ describe('spec caching-geocoder', function(){
     });
   
   
-    /** JFT-TODO: 
-      *   Rather than just time response to confirm cache is keeping and finding previously fetched info perhaps should inspect state of cache.
-      *     Consider if the network were test doubled (which is desirable for FAST unit tests) instead of really hitting the network: 
-      *       then no 2 milli delay would ever occur.
-      *     So, instead, verify it having the same number of cached object before and after second call.
-      */
-  describe('when asked to geocode the same name twice', function(){
-    //Bangkok, Thailand is at 13.7563° N, 100.5018° E
-    function isBangkok( aLoc ) {
-      var answer = (parseInt(aLoc.lon) === 100) && (parseInt(aLoc.lat) === 13); 
-      logger.debug( "isBangkok()==" + answer );
+  // see test/test/tickle-osm-nominatim-geocoder-test.js for the same test (i.e. ask for Bangkok twice) done by actually hitting the network.
+  describe('when asked to geocode the same name twice (Bangkok)', function(){
+    function isBangkok(aLoc){
+      //Bangkok, Thailand is at roughly 13.7563° N, 100.5018° E
+      var aLat = parseFloat(aLoc.lat);
+      var aLong = parseFloat(aLoc.lon);
+      var answer =  (13.2 < aLat && aLat < 14.2) && (100.0 < aLong && aLong < 101.0); 
+      logger.debug("isBangkok()==" + answer);
       return answer;
       }
 
-    it('should cache results rather than hit the network twice', function(done){
-      var startTime = process.hrtime();
-      expect(true).true; // see next comment for explanation for this
-      geocoder.locate("Bangkok, Thailand").then( function(locs){
-        logger.debug("in Bangkok then() #1");
-        // JFT-TODO: this is odd debugging. if expect(false).true inside a then() will cause timeout to be reported but same outside of then() gives AssertionError.
-        //   Perhaps this has to do with needing mocha-as-promised and/or chai-as-promised
-        // expect(true).true; 
-        expect(isBangkok(locs[0])).true;
-	var firstElapsedMillis = process.hrtime(startTime)[1] / 1000000;
-	logger.debug( "Fist lookup of Bangkok took " + firstElapsedMillis + " milliseconds." );
+    var bangkokFirstAsk = {};
+    var bangkokSecondAsk = {};
+    var cacheCounts = {};
+
+    before(function(done){
+      geocoder.clearCache(); // just incase Bangkok got asked for in some other describe()
+      cacheCounts.init = geocoder.getCacheSize();
+      var bangkokStub = {
+        wrong: [{lat:'11.11', lon:'22.22'}],
+        right: [{lat:'13.7563', lon:'100.5018'}]
+        };
+      stubNominatimServer(bangkokStub.right);
+
+      // Ask for Bangkok twice:
+      geocoder.locate("Bangkok, Thailand").then( function(locations){
+	cacheCounts.afterFirstAsk = geocoder.getCacheSize();
+        bangkokFirstAsk.location = locations[0];
+        logger.debug("in Bangkok then() #1");  
 
 	// Ask a second time:
-        var secondStartTime = process.hrtime();
         geocoder.locate("Bangkok, Thailand").then(function(locs){
-  	  var secondElapsedMillis = process.hrtime( secondStartTime )[1] / 1000000;
-          logger.debug( "Second lookup of Bangkok took " + secondElapsedMillis + " milliseconds." );
-	  expect(isBangkok(locs[0])).true;
-  	  expect(secondElapsedMillis < 2).to.be.ok; // Cache responded quickly
+          cacheCounts.afterSecondAsk = geocoder.getCacheSize();
+          bangkokSecondAsk.location = locations[0];
           done();}, function(err) {done(err);});
 	}, function(err) {done(err);} // JFT-TODO: can this be reduced to just: done
         );
+      });
+
+    it('should cache results rather than hit the network twice', function(){
+      assert(isBangkok(bangkokFirstAsk.location), "first Bangkok ask got wrong result");
+      assert(cacheCounts.init + 1 === cacheCounts.afterFirstAsk, "first Bangkok ask did not increase cache size");
+      assert(isBangkok(bangkokSecondAsk.location), "second Bangkok ask got wrong result");
+      assert(cacheCounts.afterFirstAsk === cacheCounts.afterSecondAsk, "second Bangkok ask did increase cache size");
+      });
+
+    after(function(){
+      http.request.restore();
       });
     });
   });

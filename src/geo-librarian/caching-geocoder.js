@@ -11,6 +11,12 @@ logger.level( 'warn' );
   * This way only go to the network once for each piece of data.
   */
 var cachedPromises = {}
+var cacheMembersCount = 0;
+
+function emptyCache(){
+  cacheMembersCount = 0;
+  cachedPromises = {};
+  }
 
 module.exports = {
   locate: function( aName ){
@@ -18,7 +24,9 @@ module.exports = {
     },
   name: function( someCoordinates ) { return promiseOfName },
   load_cache: function ( anUrl ) {},
-  dump_cache: function () { return cachedPromises.toJSON() } 
+  dump_cache: function () { return cachedPromises.toJSON() }, 
+  clearCache: function(){emptyCache();},
+  getCacheSize: function(){return cacheMembersCount;}
   }
 
 
@@ -32,6 +40,7 @@ function getLocationPromise( aName ) {
   else {
     logger.info( 'not cached:' + aName );
 
+    cacheMembersCount++;
     cachedPromises[ aName ] = new Promise( function ( resolve, reject ) {   
       var host = 'nominatim.openstreetmap.org'
       var schemeAndHost = 'http://' + host
