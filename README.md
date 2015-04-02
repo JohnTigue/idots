@@ -20,6 +20,8 @@ Jokingly, EbolaMapper can be described as **modern open-source anti-virus softwa
 **Anti-virus software**: Ebola is a virus and this software project is anti-ebola (and pro-geeky humor).
 
 ### Uses
+EbolaMapper enables historical outbreak data visualization. The "historical" distinction is made here to imply that, so far, EbolaMapper is a reporting tool and not a forecasting tool. It enables interactive [explorable explanations](http://worrydream.com/ExplorableExplanations/) of an outbreak. The term "situational awareness" might be appropriate. Conceivably, EbolaMapper could be used to "play" the output of a simulated or modeled outbreak. Currently though the main, first goal is to provide tools for reporter and the public to use to quickly comprehend the existing situation, rather than providing explorable explanations of forecasts and models, tools which are also dearly needed but that are not currently within the scope of this project, currently.
+
 EbolaMapper is white label-able, or OEM-able, that is the components can be embedded with a web page (iframe or otherwise) and can be easily styled via CSS to match the rest of a web site's look.
 
 EbolaMapper is licensed under [the Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html) so deploys do not require any attribution. We are, though, interested in showing off quality work in a gallery of deploys. So, drop us a line if you have a link you would like us to add to the list.
