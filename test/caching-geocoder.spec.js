@@ -1,6 +1,8 @@
 /* global console, require, describe, context, before, beforeEach, after, afterEach, it */
 
-/** caching-geocoder.js resolves location names to lat&long, uses a cache which can be prefilled from a local file.
+/** caching-geocoder.js resolves location names to latitude & longitude coordinates,
+  * uses a cache which can be prefilled from a local file. Much more detail to be
+  * found in the comments in caching-geocoder.js.
   */
 describe('caching-geocoder.spec.js', function(){  
   'use strict'; 
@@ -210,8 +212,8 @@ describe('caching-geocoder.spec.js', function(){
     });
 
 
-  /** This geocoder is a caching geocoder. The cache consists of a mapping of location names to Promises of
-    * geo-coordinates for the named locations. The cache can be populated 2 ways:
+  /** This geocoder is a caching geocoder. The cache consists of a mapping of location 
+    * names to Promises of corresponding geo-coordinates. The cache can be populated 2 ways:
     *   1. The obvious way is for it to go fetch a name's geo-coordinates via a geocoding service's HTTP REST API.
     *   2. The less obvious way is for it to be fed pre-canned mappings of a loc name to a geo-coord.
     * 
@@ -221,11 +223,25 @@ describe('caching-geocoder.spec.js', function(){
     *
     * In the interest of separation of responsibilities, caching-geocoder.js does not know where
     * the pre-canned Promises come from; it is handed the Promises and caches them. Something else
-    * is responsible for coming up with the promises, say, by reading their data` from a local file or other store.
+    * is responsible for coming up with the promises, say, by reading canned data from a local file or other store.
     */
-  context('when set with a pre-fetched name-to-geo-loc Promise', function(){
-    it.skip('must return that Promise when asked to geocode that location name', function(){
-      must.throw(); //JFT-TODO
+  context('when a name-to-geo-loc has been pre-fetched', function(){
+    var cacheCounts = {};
+    var returnedLocs = null;
+
+    before(function(){
+      geocoder.setPrefetched('Meliandou, Guinea', 8.6226, -10.0642);
+      cacheCounts.before = geocoder.getCacheSize();
+      return geocoder.locate('Meliandou, Guinea').then(function(locations){
+        returnedLocs = locations;
+        cacheCounts.after = geocoder.getCacheSize();        
+        });	
+      });
+
+    it('must, when later geocode that name, return a Promise with those coords and not hit the network', function(){
+      must(cacheCounts.before).equal(cacheCounts.after);
+      must(returnedLocs[0].lat).equal(8.6226);
+      must(returnedLocs[0].lon).equal(-10.0642);
       });
     });
   });
