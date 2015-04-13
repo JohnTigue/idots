@@ -43,6 +43,9 @@ describe('caching-geocoder.spec.js', function(){
     aResponse.write(JSON.stringify(aCannedJsonObject));
     aResponse.end();
     var aRequest = new PassThrough();
+
+    // JFT-TOD: right here nock does the same:
+    //   https://github.com/pgte/nock#how-does-it-work
     sinon.stub(http, 'request');
     http.request.callsArgWith(1, aResponse).returns(aRequest);
     }
@@ -71,8 +74,8 @@ describe('caching-geocoder.spec.js', function(){
         });
       });
 
-    it('should say Seattle ~ (47°N & 122°W)', function(){
-      // Seattle ~== 47.6097° N, 122.3331° W
+    it('should say Seattle ~ (47 N & 122 W)', function(){
+      // Seattle ~== 47.6097 N, 122.3331 W
       must(seattleResult.long).between(-122.8, -121.8);
       must(seattleResult.lat).between(47.1, 48.1);
       });
@@ -100,7 +103,7 @@ describe('caching-geocoder.spec.js', function(){
       });
 
     it('should deal with the spaces and report NYC\'s location correctly enough', function(){
-       // NYC === 40.7127° N, 74.0059° W
+      // NYC === 40.7127 N, 74.0059 W
       must(nyc.long).between(-74.5, -73.5);
       must(nyc.lat).between(40.0, 41.0);
       });
@@ -136,7 +139,7 @@ describe('caching-geocoder.spec.js', function(){
       });
  
     it('should respond with approx. correct coords for Fes', function(){
-      // Fes, Morocco 34.0333° N, 5.0000° W
+      // Fes, Morocco 34.0333 N, 5.0000 W
       must(fesLoc.long).between(-5.2, -4.8);
       must(fesLoc.lat).between(33.5, 34.5);
       });
@@ -180,7 +183,7 @@ describe('caching-geocoder.spec.js', function(){
       // JFT-TODO: could do this as returning a new Promise.all([1st, 2nd]) 
       // ...or would that not ensure sequential behavior i.e. want to test
       // that first request loads the cache before second one runs. So, chain 
-      // the two requests instead?
+      // the two requests instead: then().then()
       geocoder.locate('Bangkok, Thailand').then(
         function(locations){
           cacheCounts.afterFirstAsk = geocoder.getCacheSize();
@@ -197,8 +200,8 @@ describe('caching-geocoder.spec.js', function(){
         );
       });
 
-    it('should cache results rather than hit the network twice', function(){ 
-      // Check that geocoder returned location of Bangkok twice, 
+    it('should cache results rather than hit the network twice', function(){
+      // Check that geocoder returned location of Bangkok twice,
       //   and more importantly the cache's size grew by one first time and by zero second time.
       must(isBangkok(bangkokFirstAsk.location)).true();
       must(cacheCounts.init + 1).equal(cacheCounts.afterFirstAsk);
@@ -220,12 +223,15 @@ describe('caching-geocoder.spec.js', function(){
     * The latter case is useful for situations where the location names that will be of interest 
     * are known ahead of time. In that caase, pre-loading the cache can make for a much quicker 
     * start-up time compared to having to go across the network for each location name's geo-coordinates.
-    *
+    */
+
+   /* JFT-TODO: any reason to do this: i.e. make and insta-fulfill Promises here and hand them to cache-geocoder,
+    * which was the original plan but ended out just handing in (name, lat, long):
     * In the interest of separation of responsibilities, caching-geocoder.js does not know where
     * the pre-canned Promises come from; it is handed the Promises and caches them. Something else
     * is responsible for coming up with the promises, say, by reading canned data from a local file or other store.
     */
-  context('when a name-to-geo-loc has been pre-fetched', function(){
+  context('when a name-to-geo-loc is set via pre-fetch', function(){
     var cacheCounts = {};
     var returnedLocs = null;
 
