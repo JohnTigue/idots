@@ -7,8 +7,7 @@
 describe('caching-geocoder.spec.js', function(){  
   'use strict'; 
 
-  var bunyan       = require('bunyan');
-  var logger       = bunyan.createLogger({name: 'myapp'});
+  var logger = require('utilios/logger')('cacherTester');
   logger.level('info');
   
   var must         = require('must');
@@ -49,7 +48,7 @@ describe('caching-geocoder.spec.js', function(){
     sinon.stub(http, 'request');
     http.request.callsArgWith(1, aResponse).returns(aRequest);
     }
-  
+
 
   context('when mocha loads up this file', function(){
     it('should load caching-geocoder via module system i.e. basic sanity check', function(){
@@ -58,7 +57,7 @@ describe('caching-geocoder.spec.js', function(){
     });
 
 
-  context('when asked to geocode Seattle', function(){
+  context.only('when asked to geocode Seattle', function(){
     var seattleResult = {};
 
     before(function(){
@@ -95,7 +94,7 @@ describe('caching-geocoder.spec.js', function(){
 
     before(function(){
       stubNominatimServer(nycStub.correct);
-      return geocoder.locate( "New York City" ).then( function(locations) {
+      return geocoder.locate("New York City").then(function(locations){
         nyc.long = parseFloat(locations[0].lon);
         nyc.lat  = parseFloat(locations[0].lat);
         logger.debug("in NYC's then() locs.length=" + locations.length  + " and locs[0].long=" + locations[0].lon + " aka ~" + nyc.long);
@@ -127,14 +126,14 @@ describe('caching-geocoder.spec.js', function(){
 
     before(function(){
       stubNominatimServer(fesStub.correct);
-
       var startTime = process.hrtime();
-      return geocoder.locate('Fes, Morocco').then( function( locs ) {
+
+      return geocoder.locate('Fes, Morocco').then(function(locs){
         fesLoc.long = parseFloat(locs[0].lon);
         fesLoc.lat = parseFloat(locs[0].lat);
-        logger.debug( "in Fes's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + fesLoc.long );
-        var firstElapsedMillis = process.hrtime( startTime )[1] / 1000000;
-        logger.debug( "lookup of Fes took " + firstElapsedMillis + " milliseconds." );
+        logger.debug("in Fes's then() locs.length=" + locs.length  + " and locs[0].long=" + locs[0].lon + " aka ~" + fesLoc.long);
+        var firstElapsedMillis = process.hrtime(startTime)[1] / 1000000;
+        logger.debug("lookup of Fes took " + firstElapsedMillis + " milliseconds.");
         });
       });
  
@@ -169,7 +168,7 @@ describe('caching-geocoder.spec.js', function(){
     var cacheCounts = {};
 
     before(function(done){
-      geocoder.clearCache(); 
+      geocoder.resetCache(); 
       // ...just incase Bangkok got asked for in some earlier describe()
 
       cacheCounts.init = geocoder.getCacheSize();
@@ -215,21 +214,33 @@ describe('caching-geocoder.spec.js', function(){
     });
 
 
-  /** This geocoder is a caching geocoder. The cache consists of a mapping of location 
-    * names to Promises of corresponding geo-coordinates. The cache can be populated 2 ways:
-    *   1. The obvious way is for it to go fetch a name's geo-coordinates via a geocoding service's HTTP REST API.
-    *   2. The less obvious way is for it to be fed pre-canned mappings of a loc name to a geo-coord.
+  /** This geocoder is a caching geocoder. The cache consists of a
+    * mapping of location names to Promises of corresponding
+    * geo-coordinates. The cache can be populated 2 ways: 
+    *
+    * 1. The obvious way is for it to go fetch a name's
+    *    geo-coordinates via a geocoding service's HTTP REST API.  
+    *
+    * 2. The less obvious way is for it to be fed pre-fetched mappings
+    *    of loc-name-to-geo-coord.
     * 
-    * The latter case is useful for situations where the location names that will be of interest 
-    * are known ahead of time. In that caase, pre-loading the cache can make for a much quicker 
-    * start-up time compared to having to go across the network for each location name's geo-coordinates.
+    * The latter case is useful for situations where the location
+    * names that will be of interest are known ahead of time. In that
+    * caase, pre-loading the cache can make for a much quicker
+    * start-up time compared to having to go across the network for
+    * each location name's geo-coordinates.
     */
 
-   /* JFT-TODO: any reason to do this: i.e. make and insta-fulfill Promises here and hand them to cache-geocoder,
-    * which was the original plan but ended out just handing in (name, lat, long):
-    * In the interest of separation of responsibilities, caching-geocoder.js does not know where
-    * the pre-canned Promises come from; it is handed the Promises and caches them. Something else
-    * is responsible for coming up with the promises, say, by reading canned data from a local file or other store.
+   /* JFT-TODO:
+    *
+    * Any reason to do the original plan of make insta-resolved
+    * Promises here and hand them to cache-geocoder? Instead I ended
+    * out just handing in (name, lat, long): In the interest of
+    * separation of responsibilities, caching-geocoder.js does not
+    * know where the pre-canned Promises come from; it is handed the
+    * Promises and caches them. Something else is responsible for
+    * coming up with the promises, say, by reading canned data from a
+    * local file or other store.
     */
   context('when a name-to-geo-loc is set via pre-fetch', function(){
     var cacheCounts = {};
