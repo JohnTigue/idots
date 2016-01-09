@@ -1,0 +1,20 @@
+{
+  "name": "EbolaMapper",
+  "version": "0.0.1",
+  "homepage": "https://github.com/JohnTigue/EbolaMapper",
+  "authors": [
+    "John Tigue <john@tigue.com>"
+  ],
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "license": "Apache-2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
