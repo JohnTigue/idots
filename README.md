@@ -2,7 +2,7 @@
 The `outbreak_time_series` project defines a web-friendly data standard for outbreak time series. Additionally the project is developing open source web technology for visualizing the spatiotemporal progress of epidemiological outbreaks. Primarily that means web page components and hybrid mobile apps, but there is also need for various secondary tools such as data aggregators, validators, converters, and the like. 
 
 The goal is to enable open source equivalents along the lines of the follow examples. (Note the examples by Simon Johnson are already open source; this project will have similar UIs but will read from data compliant with the Outbreak Time Series Spec which is defined as part of this project.)
-![](https://raw.githubusercontent.com/JohnTigue/ebola-viz-twumbshots/gh-pages/not-golden-ratio/nine-up-vizes.png)
+<a href='https://github.com/JohnTigue/outbreak_time_series/wiki/Gallery-of-Ebola-Visualizations-Found-Across-the-Web'>![](https://raw.githubusercontent.com/JohnTigue/ebola-viz-twumbshots/gh-pages/not-golden-ratio/nine-up-vizes.png)</a>
 
 This project defines [the Outbreak Time Series Specification](#outbreak_time_series_spec). The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data, with the capacity to define affected sub-populations (e.g. first responders, children, etc.). Oversimplifying, the fundamental messages encoded by The Spec are of the form: **For disease D, during time interval I (moment-1-to-moment-2), at location L, for population P: recorded were X new cases, Y new deaths, etc.**
 
