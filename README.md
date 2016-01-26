@@ -1,5 +1,5 @@
 ## outbreak_time_series
-The `outbreak_time_series` project defines a web-friendly data standard for outbreak time series. Addtionally there is open source code for web technology for spatiotemporal visualizations of epidemiological outbreaks. The project is developing web page components and hybrid mobile apps, as well as various secondary tools such as data aggregators, validators, converters, and the like. 
+The `outbreak_time_series` project defines a web-friendly data standard for outbreak time series. Addtionally the project is developing open source web technology for visualizing the spatiotemporal progress of epidemiological outbreaks. The project is developing web page components and hybrid mobile apps, as well as various secondary tools such as data aggregators, validators, converters, and the like. 
 
 The goal is to enable open soucre equavlents along the lines of the follow examples. (Note the examples by Simon Johnson are already open source; this project will have equivent UIs but reading from data compliant with the Outbreak Time Series Spec which is defined as part of this project.)
 ![](https://raw.githubusercontent.com/JohnTigue/ebola-viz-twumbshots/gh-pages/not-golden-ratio/nine-up-vizes.png)
