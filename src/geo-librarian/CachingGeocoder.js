@@ -136,7 +136,6 @@ function promiseLocCoords(aName){
 There might be a workaround
 
 
-
         .then(function(aResp){
 //THIS CHUNK HERE is the double callbacker
 //Just calling then does it w or w/o any statements
