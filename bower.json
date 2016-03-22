@@ -18,6 +18,8 @@
     "tests"
   ],
   "dependencies": {
-    "snap.svg": "~0.4.1"
+    "snap.svg": "~0.4.1",
+    "angular-material-data-table": "^0.9.14",
+    "angular-dsv": "^1.0.0"
   }
 }
