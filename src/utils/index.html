@@ -1,0 +1,89 @@
+<html>
+  <head>
+    <title>outbreak_time_series raw data viewer</title>
+    <script type='text/javascript' src='src/bower_components/angular/angular.js' ></script>
+    <link href='src/bower_components/angular/angular-csp.css' rel='stylesheet' type='text/css'/>
+
+    <script type='text/javascript' src='src/bower_components/angular-animate/angular-animate.js' ></script>
+    <script type='text/javascript' src='src/bower_components/angular-aria/angular-aria.js' ></script>
+
+    <script type='text/javascript' src='src/bower_components/angular-material/angular-material.js' ></script>
+    <link href='src/bower_components/angular-material/angular-material.css' rel='stylesheet' type='text/css'/>
+
+    <!-- mdDataTable: -->
+      <!-- style sheet -->
+      <link href='src/bower_components/angular-material-data-table/dist/md-data-table.min.css' rel='stylesheet' type='text/css'/>
+      <!-- module -->
+      <script type='text/javascript' src='src/bower_components/angular-material-data-table/dist/md-data-table.min.js'></script>
+
+    <script type='text/javascript' src='src/js/main.js' ></script>
+  </head>
+  <body layout='column' >
+    <div ng-app='mdDataTableDemo' >
+      <md-toolbar>
+	<div class="md-toolbar-tools" layout-align="space-between">
+          <div class="md-title">outbreak_time_series raw data viewer</div>
+	</div>
+      </md-toolbar>
+
+      <md-content layout="column" flex>
+	<div ng-controller='dataTableController'>
+	  <!-- straight out of the docs: https://github.com/daniel-nagy/md-data-table -->
+	  <md-toolbar class="md-table-toolbar md-default">
+	    <div class="md-toolbar-tools">
+	      <span>Ebola 2014 West Africa</span>
+	    </div>
+	  </md-toolbar>
+	  
+	  <!-- exact table from live demo -->
+	<md-table-container>
+	  <table md-table md-row-select ng-model="selected" md-progress="promise">
+	    <thead md-head md-order="query.order" md-on-reorder="onReorder">
+	      <tr md-row>
+		<th md-column md-order-by="nameToLower">_id</th>
+		<th md-column md-numeric md-order-by="calories.value"><span>Indicator</span></th>
+		<th md-column><span>Country</span></th>
+		<th md-column md-numeric><span>Date</span></th>
+		<th md-column md-numeric><span>Value</span></th>
+		<!--
+		<th md-column md-numeric>Sodium (mg)</th>
+		<th md-column md-numeric>Calcium (%)</th>
+		<th md-column md-numeric>Iron (%)</th>
+		  -->
+	      </tr>
+	    </thead>
+	    <tbody md-body>
+	      <tr md-row md-select="dessert" md-select-id="{{dessert.name}}" md-auto-select ng-repeat="dessert in desserts.data">
+		<td md-cell>{{dessert.name}}</td>
+		<td md-cell>{{dessert.calories.value}}</td>
+		<td md-cell>{{dessert.fat}}</td>
+		<td md-cell>{{dessert.carbs.value}}</td>
+		<td md-cell>{{dessert.protein.value | number: 1}}</td>
+		<!--
+		<td md-cell>{{dessert.sodium.value}}</td>
+		<td md-cell>{{dessert.calcium.value}}{{dessert.calcium.unit}}</td>
+		<td md-cell>{{dessert.iron.value}}{{dessert.iron.unit}}</td>
+		-->
+	      </tr>
+	    </tbody>
+	  </table>
+	</md-table-container>
+
+	<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{desserts.count}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+
+	</div>
+
+	<h2>Tech details</h2>
+	<p>
+	  Data source: <a href='https://data.hdx.rwlabs.org/dataset/ebola-cases-2014'>WHO</a> 2016-03-20
+	  <br/>
+	  Data service: <a href='https://github.com/JohnTigue/outbreak_time_series/wiki/outbreak_time_series_reader-module'>outbreak_time_series_reader module</a>
+	  <br/>
+	  CSV parser: <a href='https://www.npmjs.com/package/angular-dsv'>angular-dsv</a>
+	  <br/>
+	  Table UI: <a href='http://danielnagy.me/md-data-table/'>Material Design Data Table</a>
+	</p>
+	</md-content>
+    </div>
+  </body>
+</html>
