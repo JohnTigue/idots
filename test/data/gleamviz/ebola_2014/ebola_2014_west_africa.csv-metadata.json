@@ -1,0 +1,24 @@
+{
+"@context": "http://www.w3.org/ns/csvw",
+"dc:title": "2014: Ebola Outbreak in West Africa"
+"dc:description": "Outbreak Time Series Specification compliant data"
+"dc:creator": "John Tigue",
+"tables": [
+  {
+  "url": "countries.csv",
+  "dc:title": "Countries",
+  "tableSchema": {
+    "columns": [
+      {"titles": "countries", "datatype": "string" },
+      {"titles": "latitute", "datatype": "number" },
+      {"titles": "longitude", "datatype": "number" }
+    ]
+    }
+  }
+  },
+  {
+  "url": "sierra_leone.csv",	
+  "dc:title": "Sierra Leone"
+  }],
+    
+}    
