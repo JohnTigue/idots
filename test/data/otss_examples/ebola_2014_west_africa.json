@@ -1,0 +1,50 @@
+{
+"outbreak": {
+    "metadata": {
+	"title":
+
+Title
+Disease name
+Label: e.g. "West Africa Ebola Outbreak 2014"
+StartDate:
+EndDate:
+GeoArea: World, Africa, Country, or sub area. These are the ADM IDs in topoJSON.
+Geospatial resolution: maximum precision of location identity
+admin1
+admin2
+admin3
+admin4
+admin1_plus_cities
+admin2_plus_cities
+admin3_plus_cities
+admin4_plus_cities
+coordinates (if coordinates specify resolution precision)
+ID (could be an URL) of data source
+Source
+Data license
+
+
+    },
+    "time_series": {
+        "time_intervals": [
+            {"intervals_metadata": { },
+	     "locations": [
+		{"location": "Seattle"},
+		    {"populations":
+                       [
+		       {"population": "men", "otss_cases_all": 27},
+		       {"population": "women", "otss_cases_all": 19}
+		       ]
+		    },	 	 
+      	        {"location": "Portland"},
+		    {"populations":
+                       [
+		       {"population": "men", "otss_cases_all": 34},
+		       {"population": "women", "otss_cases_all": 25}
+		       ]
+		    }]}
+       ]
+    }
+  }
+      
+}
