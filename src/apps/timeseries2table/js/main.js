@@ -1,4 +1,8 @@
-var aDemoApp = angular.module('mdDataTableDemo', ['ngMaterial', 'md.data.table']);
+var aDemoApp = angular.module('mdDataTableDemo', ['ngMaterial', 'md.data.table', 'hc.dsv']);
+
+// Constants
+// header: Indicator,Country,Date,value
+var aCsvFileRelativeUrl = '../../../test/data/ebola_2014/ebola_data_db_format.1000_rows.csv';
 
 aDemoApp.config(['$compileProvider', '$mdThemingProvider', function ($compileProvider, $mdThemingProvider) {
     'use strict';
@@ -11,8 +15,8 @@ aDemoApp.config(['$compileProvider', '$mdThemingProvider', function ($compilePro
   }]);
 
 
-// straight from the docs: https://github.com/daniel-nagy/md-data-table
-aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', '$scope', function (outbreakTimeSeriesFactory, $scope) {
+// the code seeded straight from the docs: https://github.com/daniel-nagy/md-data-table
+aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'dsv', '$scope', function (outbreakTimeSeriesFactory, dsv, $scope) {
   'use strict';
 
   $scope.selected = [];
@@ -23,25 +27,50 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', '$
     page: 1
   };
 
+  function startFetchOfOutbreakTimeSeries(junk) {
+    var rowCount = 0;
+    
+    return dsv.csv({method: 'GET', url: aCsvFileRelativeUrl}, function(d) {
+      rowCount++;
+      if( rowCount < 2 ) {
+	console.log(d);
+      }
+      return { indicator: d.Indicator, country: d.Country, date: new Date(d.Date), value: parseInt(d.value) };
+       })
+       .success(function(data, status, headers, config) {
+         console.log('dsv.csv success. rowCount=' + rowCount + '. First 4 rows:');
+	 for( var i = 0; i < 4; i++){
+   	   console.log(data[i]);
+	 }
+	 var parseResults = {rowCount: rowCount, data: data};
+         onSuccessfulDataParse(parseResults);
+       })
+       .error(function(data, status, headers, config) {
+	 console.error( 'dsv.csv error' + status + headers + config + data );
+       });
+    }
+      
+  // JFT-TODO: dead, so kill
   function getOutbreakTimeSeries(query) {
     $scope.promise = outbreakTimeSeriesFactory; //pre-jft: $nutrition.desserts.get(query, success).$promise;
-    success(dummyOutbreakTimeSeries);
+    onSuccessfulDataParse(dummyOutbreakTimeSeries);
   }
 
-  function success(anOutbreakTimeSeries) {
-    $scope.desserts = anOutbreakTimeSeries;
+  function onSuccessfulDataParse(anOutbreakTimeSeries) {
+    console.log('onSuccessfulDataParse()');
+    $scope.dataPoints = anOutbreakTimeSeries;
   }
 
   $scope.onPaginate = function (page, limit) {
-    getOutbreakTimeSeries(angular.extend({}, $scope.query, {page: page, limit: limit}));
+    startFetchOfOutbreakTimeSeries(angular.extend({}, $scope.query, {page: page, limit: limit}));
   };
 
   $scope.onReorder = function (order) {
-    getOutbreakTimeSeries(angular.extend({}, $scope.query, {order: order}));
+    startFetchOfOutbreakTimeSeries(angular.extend({}, $scope.query, {order: order}));
   };
 
   // start init load of data
-  getOutbreakTimeSeries($scope.query);  
+  startFetchOfOutbreakTimeSeries($scope.query);
 
   /*
   This was durnig dev: don't want an unnecessary watch so just called getDesserts() during the controllers init, i.e. added the previous line of code above here. 
@@ -54,6 +83,16 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', '$
 }]);
 
 
+
+
+/*******************  OutbreakTimeseriesService ****************************/
+
+/* OTService is an Angular data service. App accesses OTSS data model through APIs and
+ * OTService will fetch and parse Resources as needed and cache instantiated objects of data model.
+ *
+ */
+
+
 // JFT-TODO: This should actually come from parsing the CSV, but this will do during dev...
 var dummyOutbreakTimeSeries = {};
 dummyOutbreakTimeSeries.data = [
@@ -63,12 +102,11 @@ dummyOutbreakTimeSeries.data = [
   {_id: 'row4', indicator: "Cumulative number of confirmed, probable and suspected Ebola deaths", country: 'Sierra Leone', date: "2016-03-28", value: "5"}
   ];
 
-
-
 aDemoApp.factory( 'dummyOutbreakTimeSeriesFactory', ['$q', function ($q){
   return $q.resolve(dummyOutbreakTimeSeries);
   }]);
 
 
-console.log('finished parsing main.js');
+
+//console.log('finished parsing main.js');
 
