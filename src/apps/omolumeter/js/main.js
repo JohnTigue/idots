@@ -10,23 +10,69 @@ aDemoApp.config(['$compileProvider', '$mdThemingProvider', function ($compilePro
     $compileProvider.debugInfoEnabled(false);
     
     $mdThemingProvider.theme('default')
-      .primaryPalette('indigo')
-      .accentPalette('blue-grey');
+      .primaryPalette('grey')
+      .accentPalette('red');
   }]);
 
 
 // the code seeded straight from the docs: https://github.com/daniel-nagy/md-data-table
-aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'dsv', '$scope', function (outbreakTimeSeriesFactory, dsv, $scope) {
+aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'dsv', '$scope', '$window', function (outbreakTimeSeriesFactory, dsv, $scope, $window) {
   'use strict';
 
+  $scope.isDataStillLoading = true;
+  $scope.dataUrl = aCsvFileRelativeUrl;
+  
   $scope.selected = [];
 
   $scope.query = {
     order: 'country',
     limit: 5,
     page: 1
-  };
+    };
 
+  $scope.openUrlInNewTab = function urlOpener(anUrl){
+    $window.open(anUrl);
+    };
+  
+  $scope.techDetails = [
+    {
+    title : 'Specification definition',
+    url : 'https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-Time-Series-Specification-Overview',
+    buttonLabel : 'Outbreak Time Series Specification' 
+    },
+    {
+    title : 'Data source',
+    url : 'https://data.hdx.rwlabs.org/dataset/ebola-cases-2014',
+    buttonLabel : 'WHO 2016-03-20' 
+    },
+    {
+    title : 'CSV loaded during initialization',
+    url : $scope.dataUrl,
+    buttonLabel : $scope.dataUrl 
+    },
+    {
+    title : 'code which reads Outbreak Time Series Spec files',
+    url : 'https://github.com/JohnTigue/outbreak_time_series/wiki/outbreak_time_series_reader-module',
+    buttonLabel : 'outbreak_time_series_reader module (JavaScript)' 
+    },
+    {
+    title : 'JavaScript Framework',
+    url : 'http://angularjs.blogspot.com/2016/02/angular-150-ennoblement-facilitation.html',
+    buttonLabel : 'Angular 1.5' 
+    },    
+    {
+    title : 'CSV parser',
+    url : 'https://www.npmjs.com/package/angular-dsv',
+    buttonLabel : 'angular-dsv (part of D3.js)' 
+    },
+    {
+    title : 'Table UI',
+    url : 'http://danielnagy.me/md-data-table/',
+    buttonLabel : 'Material Design Data Table' 
+    }
+  ];
+
+  
   function startFetchOfOutbreakTimeSeries(junk) {
     var rowCount = 0;
     
@@ -34,20 +80,22 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'd
       rowCount++;
       if( rowCount < 2 ) {
 	console.log(d);
-      }
+        }
       return { indicator: d.Indicator, country: d.Country, date: new Date(d.Date), value: parseInt(d.value) };
-       })
-       .success(function(data, status, headers, config) {
-         console.log('dsv.csv success. rowCount=' + rowCount + '. First 4 rows:');
-	 for( var i = 0; i < 4; i++){
-   	   console.log(data[i]);
-	 }
-	 var parseResults = {rowCount: rowCount, data: data};
-         onSuccessfulDataParse(parseResults);
-       })
-       .error(function(data, status, headers, config) {
-	 console.error( 'dsv.csv error' + status + headers + config + data );
-       });
+      })
+      .success(function(data, status, headers, config) {
+        console.log('dsv.csv success. rowCount=' + rowCount + '. First 4 rows:');
+	for( var i = 0; i < 4; i++){
+   	  console.log(data[i]);
+	  }
+	var parseResults = {rowCount: rowCount, data: data};
+        onSuccessfulDataParse(parseResults);
+        $scope.isDataStillLoading = false;
+      })
+      .error(function(data, status, headers, config) {
+        console.error( 'dsv.csv error' + status + headers + config + data );
+        $scope.isDataStillLoading = false;
+        });
     }
       
   // JFT-TODO: dead, so kill
@@ -91,6 +139,15 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'd
  * OTService will fetch and parse Resources as needed and cache instantiated objects of data model.
  *
  */
+aDemoApp.factory('OutbreakTimeSeriesService', ['$http', function($http){
+  return {
+    getTimeseries: function(){
+      return $http.get(aCsvFileRelativeUrl).then(function(response){
+	return response.data;
+        })
+      }			      
+    };
+  }]);
 
 
 // JFT-TODO: This should actually come from parsing the CSV, but this will do during dev...
