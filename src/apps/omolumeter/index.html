@@ -1,189 +1,208 @@
-<html>
+<!DOCTYPE html>
+<html lang='en' >
   <head>
     <title>Omolumeter</title>
 
-    <script type='text/javascript' src='../../../bower_components/angular/angular.js' ></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
     <link href='../../../bower_components/angular/angular-csp.css' rel='stylesheet' type='text/css'/>
-
-    <script type='text/javascript' src='../../../bower_components/angular-animate/angular-animate.js' ></script>
-    <script type='text/javascript' src='../../../bower_components/angular-aria/angular-aria.js' ></script>
-
-    <script type='text/javascript' src='../../../bower_components/angular-material/angular-material.js' ></script>
     <link href='../../../bower_components/angular-material/angular-material.css' rel='stylesheet' type='text/css'/>
-
-    <!-- mdDataTable: -->
-      <!-- style sheet -->
-      <link href='../../../bower_components/angular-material-data-table/dist/md-data-table.min.css' rel='stylesheet' type='text/css'/>
-      <!-- module -->
-      <script type='text/javascript' src='../../../bower_components/angular-material-data-table/dist/md-data-table.min.js'></script>
-
-    <script type='text/javascript' src='../../../bower_components/angular-dsv/angular-dsv.js' ></script>
-
-      
-    <script type='text/javascript' src='js/main.js' ></script>
+    <link href='../../../bower_components/angular-material-data-table/dist/md-data-table.min.css' rel='stylesheet' type='text/css'/>
     <link href='css/omolumeter.css' rel='stylesheet' type='text/css' />
+    <style type="text/css">
+        /**
+         * Hide when Angular is not yet loaded and initialized
+	 * (from https://github.com/angular/material-start/blob/master/app/index.html, line 15)
+         */
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+          display: none !important;
+        }
+    </style>
   </head>
-  <body layout='column' style='background-color:#F0F0F0'>
-    <div ng-app='mdDataTableDemo' >
-      <md-toolbar>
-	<div class="md-toolbar-tools" layout-align="space-between">
-	  <!-- JFT-TODO: figure out where CSS isn't working, then get rid of the following <br/> -->
-          <div class="md-title" layout-padding>Omolumeter: visualizer for Outbreak Time Series Specification (v0.1.1)<!-- timeseries2table, a simple raw data viewer (is selected from behind hamburger stack) --></div>
-	</div>
-      </md-toolbar>
-      
-      <md-content layout="column" flex style='background-color:#F0F0F0'>
-	<md-card>
-	<div ng-controller='dataTableController'>
-	  <!-- straight out of the docs: https://github.com/daniel-nagy/md-data-table -->
-	  <md-toolbar class="md-table-toolbar md-default">
-	    <div class="md-toolbar-tools">
-	      <span>Ebola 2014 West Africa</span>
-	    </div>
+  <body ng-app='mdDataTableDemo' layout='column' style='background-color:#F0F0F0'>
+    <div id='appInitializingDialog' style='display:none'>
+      Omolumeter v0.2.0 loading...
+      <md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular>
+    </div>
+    
+    <div ng-controller='DataTableController as vm' >
+      <section ng-controller='MainNavController as navCtrl' layout='row' flex>
+	<md-sidenav
+           ng-click='vm.toggleMainNav()'
+           class='site-sidenav md-sidenav-left md-whiteframe-z2'
+           md-component-id="mainNav"
+           md-is-locked-open="isSidenavToBeLockedOpen"
+           md-disable-backdrop
+           NOTmd-whiteframe="4"
+	   aria-label='Select Visualization'
+	   flex='25'
+	   >
+	  <md-toolbar class="">                     
+            <h1 class="md-toolbar-tools"></h1>
 	  </md-toolbar>
 	  
-	  <!-- exact table from live demo -->
-	<md-table-container>
-	  <table md-table md-row-select='false' ng-model="selected" md-progress="promise">
-	    <thead md-head md-order="orderingCol" md-on-reorder="onReorder">
-	      <tr md-row>
-		<th md-column md-order-by='date'><span>Date</span></th>
-		<th md-column md-order-by='country'><span>Country</span></th>
-		<th md-column md-order-by='indicator'><span>Indicator</span></th>
-		<th md-column md-numeric><span>Value</span></th>
-	      </tr>
-	    </thead>
-	    <tbody md-body ng-cloak>
-	      <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select ng-repeat="dataPoint in dataPoints.data | orderBy: orderingCol">
-		<td md-cell>{{dataPoint.date | date}}</td>
-		<td md-cell>{{dataPoint.country}}</td>
-		<td md-cell>{{dataPoint.indicator}}</td>
-		<td md-cell>{{dataPoint.value | number : 0}}</td>
-	      </tr>
-	    </tbody>
-	  </table>
-	</md-table-container>
+	  <md-content layout-padding nOTg-controller="LeftCtrl">
+	    <md-list class='md-dense md-hue-3' flex>	      
+	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		<div class="md-list-item-text" layout="column">
+		  <h3>Introduction</h3>
+		</div>
+	      </md-list-item>
+	      <!--
+	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		<div class="md-list-item-text" layout="column">
+		  <h3>Chart</h3>
+		</div>
+	      </md-list-item>
+	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		<div class="md-list-item-text" layout="column">
+		  <h3>Smart table</h3>
+		</div>
+	      </md-list-item>
+                -->
+	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		<div class="md-list-item-text" layout="column" md-sidenav-focus>
+		  <h3>Raw data</h3>
+		</div>
+	      </md-list-item>
+	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		<div class="md-list-item-text" layout="column">
+		  <h3>About this code v0.2.0</h3>
+		</div>
+	      </md-list-item>
+	    </md-list>
+	  </md-content>
+	</md-sidenav>
 
-	<div layout="column" layout-sm="column" layout-align="center center" ng-show='isDataStillLoading' class='md-hue-3'>
-	  <md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular>
-	  <br/>
-	  <p class='md-hue-3'>
-	    Loading 1000 CSV rows of data...
-	  </p>
-	</div>
+	<md-content layout="column" flex NOTlayout-padding style='background-color:#F0F0F0'>
+	  <md-toolbar layout='row' layout-align='start center'>
+	    <md-button id="main" class='menu md-icon-button' ng-click="vm.onHamburgerClick()" aria-label="Show Menu" layout='row' layout-align='start' >
+              <md-icon md-svg-icon="menu"  ></md-icon>
+	    </md-button>
+	    <h2 class="md-toolbar-tools">Omolumeter - raw data<!-- timeseries2table --></h2>
+	  </md-toolbar>
+	  	   
+	  <md-card>
+	    <div >
+	      <!-- straight out of the docs: https://github.com/daniel-nagy/md-data-table -->
+	      <md-toolbar class="md-table-toolbar md-default">
+		<div class="md-toolbar-tools">
+		  <span>Ebola 2014 West Africa</span>
+		</div>
+	      </md-toolbar>
+	      
+	      <!-- exact table from live demo -->
+	      <md-table-container>
+		<table md-table md-row-select='false' ng-model="selected" md-progress="promise">
+		  <thead md-head md-order="orderingCol" md-on-reorder="onReorder">
+		    <tr md-row>
+		      <th md-column md-order-by='date'><span>Date</span></th>
+		      <th md-column md-order-by='country'><span>Country</span></th>
+		      <th md-column md-order-by='indicator'><span>Indicator</span></th>
+		      <th md-column md-numeric><span>Value</span></th>
+		    </tr>
+		  </thead>
+		  <tbody md-body ng-cloak>
+		    <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select ng-repeat="dataPoint in dataPoints.data | orderBy: orderingCol">
+		      <td md-cell>{{dataPoint.date | date}}</td>
+		      <td md-cell>{{dataPoint.country}}</td>
+		      <td md-cell>{{dataPoint.indicator}}</td>
+		      <td md-cell>{{dataPoint.value | number : 0}}</td>
+		    </tr>
+		  </tbody>
+		</table>
+	      </md-table-container>
 
-	<!-- No pagination in early versions. Just throw whole file on screen, no md-virual-repeat in early versions
-	<md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{dataPoints.rowCount}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
-          -->
-	</div>
-	</md-card>
-
-	
-	<md-card ng-controller='dataTableController'><!-- JFT TODO: no need for three controllers -->
-	  <div>
-	    <md-toolbar layout="row" class="md-hue-3">
-	      <div class="md-toolbar-tools">
-		<span>Goals</span>
+	      <div layout="column" layout-sm="column" layout-align="center center" ng-show='isDataStillLoading' class='md-hue-3'>
+		<md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular>
+		<br/>
+		<p class='md-hue-3'>
+		  Loading 1000 CSV rows of data...
+		</p>
 	      </div>
-	    </md-toolbar>
-            <md-list class='md-dense md-hue-3' flex>	      
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Audience</h3>
-		  <p>This simple table view, called timeseries2table, is a low level debug tool. No end-user would normally see this view of the data but it will be part of the Omolumeter as an advanced view.</p>
+
+	      <!-- No pagination in early versions. Just throw whole file on screen, no md-virual-repeat in early versions
+		   <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{dataPoints.rowCount}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
+		   -->
+	    </div>
+	  </md-card>
+
+	  
+	  <md-card >
+	    <div>
+	      <md-toolbar layout="row" class="md-hue-3">
+		<div class="md-toolbar-tools">
+		  <span>Intro & Goals</span>
 		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Read CSV data file</h3>
-		  <p>Fetch and parse a CSV file. These tools are applications. They load data which are web resources separate from the app; outbreak data is not hardcoded into the app. The data comes from CSV files.</p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Build out Outbreak Time Series object model</h3>
-		  <p>Explore what the JavaScript object model should look like. Best way to do this is load CSVs (CSVW, eventually) from different sources until data model handles all cases.</p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Visualize object model</h3>
-		  <p>This current raw table view is the most basic visualization. But, clearly each row should be a time interval. And each row has one sub row for each indicator measured. Then horizontally one column for each location (for however many locations). Each cell has 3 numbers (suspected, probable, confirmed). Those 3 numbers are the values for a given indicator during a given interval.</p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Test drive table widgets</h3>
-		  <p>There are lots of ways to draw tables with Angular. Optimally, there is an open source, high performant one with Material Design styling. Definitely with virtual repeat to handle large datasets, which this current implementation does not have. This demo is loading 1000 rows. On larger data (17K rows) things worked but took minutes to render.</p>
-		</div>
-	      </md-list-item>
-	    </md-list>
-	  </div>
-	</md-card>
+	      </md-toolbar>
+	      <md-list class='md-dense md-hue-3' flex>	      
+		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		  <div class="md-list-item-text" layout="column">
+		    <h3>Audience</h3>
+		    <p>This simple table view, called timeseries2table, is a low level debug tool. No end-user would normally see this view of the data but it will be part of the Omolumeter as an advanced view.</p>
+		  </div>
+		</md-list-item>
+		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		  <div class="md-list-item-text" layout="column">
+		    <h3>Read CSV data file</h3>
+		    <p>Fetch and parse a CSV file. These tools are applications. They load data which are web resources separate from the app; outbreak data is not hardcoded into the app. The data comes from CSV files.</p>
+		  </div>
+		</md-list-item>
+		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		  <div class="md-list-item-text" layout="column">
+		    <h3>Build out Outbreak Time Series object model</h3>
+		    <p>Explore what the JavaScript object model should look like. Best way to do this is load CSVs (CSVW, eventually) from different sources until data model handles all cases.</p>
+		  </div>
+		</md-list-item>
+		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		  <div class="md-list-item-text" layout="column">
+		    <h3>Visualize object model</h3>
+		    <p>This current raw table view is the most basic visualization. But, clearly each row should be a time interval. And each row has one sub row for each indicator measured. Then horizontally one column for each location (for however many locations). Each cell has 3 numbers (suspected, probable, confirmed). Those 3 numbers are the values for a given indicator during a given interval.</p>
+		  </div>
+		</md-list-item>
+		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		  <div class="md-list-item-text" layout="column">
+		    <h3>Test drive table widgets</h3>
+		    <p>There are lots of ways to draw tables with Angular. Optimally, there is an open source, high performant one with Material Design styling. Definitely with virtual repeat to handle large datasets, which this current implementation does not have. This demo is loading 1000 rows. On larger data (17K rows) things worked but took minutes to render.</p>
+		  </div>
+		</md-list-item>
+	      </md-list>
+	    </div>
+	  </md-card>
 
 
-	<md-card ng-controller='dataTableController'><!-- JFT TODO: no need for two controllers -->
-	  <div>
-	    <md-toolbar layout="row" class="md-hue-3">
-	      <div class="md-toolbar-tools">
-		<span>Tech implementation further reading</span>
-	      </div>
-	    </md-toolbar>
-	    <md-list class='md-dense md-hue-3' flex>
-	      <md-list-item class="md-2-line" ng-repeat='detail in techDetails' ng-click='openUrlInNewTab(detail.url)'>
-		<div class="md-list-item-text" layout="column" >
-		  <h3>{{detail.title}}</h3>
-		  <p><a>{{detail.buttonLabel}}</a></p>
+	  <md-card>
+	    <div>
+	      <md-toolbar layout="row" class="md-hue-3">
+		<div class="md-toolbar-tools">
+		  <span>Tech implementation further reading</span>
 		</div>
-	      </md-list-item>
-	    </md-list>
-	    
+	      </md-toolbar>
+	      <md-list class='md-dense md-hue-3' flex>
+		<md-list-item class="md-2-line" ng-repeat='detail in techDetails' ng-click='openUrlInNewTab(detail.url)'>
+		  <div class="md-list-item-text" layout="column" >
+		    <h3>{{detail.title}}</h3>
+		    <p><a>{{detail.buttonLabel}}</a></p>
+		  </div>
+		</md-list-item>
+	      </md-list>
+	    </div>
+	  </md-card>
 
-
-<!--
-	    <md-list class='md-dense md-hue-3' flex>
-	      <md-list-item class="md-2-line" ng-click="null">
-		<div class="md-list-item-text" layout="column">
-		  <h3>Data source</h3>
-		  <p><a href='https://data.hdx.rwlabs.org/dataset/ebola-cases-2014'>WHO 2016-03-20</a></p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null">
-		<div class="md-list-item-text" layout="column">
-		  <h3>CSV loaded during initialization</h3>
-		  <p><a ng-href='{{dataUrl}}'>{{dataUrl}}</a></p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null">
-		<div class="md-list-item-text" layout="column">
-		  <h3>Data service</h3>
-		  <p><a href='https://github.com/JohnTigue/outbreak_time_series/wiki/outbreak_time_series_reader-module'>outbreak_time_series_reader module</a></p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null">
-		<div class="md-list-item-text" layout="column">
-		  <h3>CSV parser</h3>
-		  <p><a href='https://www.npmjs.com/package/angular-dsv'>angular-dsv</a></p>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null">
-		<div class="md-list-item-text" layout="column">
-		  <h3>Table UI</h3>
-		  <p><a href='http://danielnagy.me/md-data-table/'>Material Design Data Table</a></p>
-		</div>
-	      </md-list-item>
-	    </md-list>
-  -->
-	
-<!--            
-            
-
-	    Item #4 is
--->
-          </div>
-	</md-card>
-
-      </md-content>
+	</md-content>
+      </section>	
     </div>
+
+    <script type='text/javascript' src='../../../bower_components/angular/angular.js' ></script>
+    <script type='text/javascript' src='../../../bower_components/angular-animate/angular-animate.js' ></script>
+    <script type='text/javascript' src='../../../bower_components/angular-aria/angular-aria.js' ></script>
+    <script type='text/javascript' src='../../../bower_components/angular-material/angular-material.js' ></script>
+    <script type='text/javascript' src='../../../bower_components/angular-material-data-table/dist/md-data-table.min.js'></script>
+    <script type='text/javascript' src='../../../bower_components/angular-dsv/angular-dsv.js' ></script>
+    <script type='text/javascript' src='js/main.js' ></script>
+
   </body>
 </html>

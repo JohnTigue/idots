@@ -10,8 +10,6 @@
     "browserify": "^8.1.0",
     "browserify-shim": "^3.8.2",
     "bunyan-debug-stream": "^1.0.5",
-    "chai": "*",
-    "chai-as-promised": "*",
     "jshint": "^2.6.3",
     "mocha": "*",
     "must": "^0.12.0",

@@ -1,24 +1,35 @@
-var aDemoApp = angular.module('mdDataTableDemo', ['ngMaterial', 'md.data.table', 'hc.dsv']);
+(function(){
+  'use strict';
+  
+var omolumeterApp = angular.module('mdDataTableDemo', ['ngMaterial', 'md.data.table', 'hc.dsv']);
 
 // Constants
 // header: Indicator,Country,Date,value
 var aCsvFileRelativeUrl = '../../../test/data/ebola_2014/ebola_data_db_format.1000_rows.csv';
 
-aDemoApp.config(['$compileProvider', '$mdThemingProvider', function ($compileProvider, $mdThemingProvider) {
-    'use strict';
+omolumeterApp.config(['$compileProvider', '$mdIconProvider', '$mdThemingProvider', function ($compileProvider, $mdIconProvider, $mdThemingProvider) {
+  'use strict';
     
-    $compileProvider.debugInfoEnabled(false);
-    
-    $mdThemingProvider.theme('default')
-      .primaryPalette('grey')
-      .accentPalette('red');
+  $compileProvider.debugInfoEnabled(false);
+
+  $mdIconProvider
+    .defaultIconSet("../../assests/svg/ic_menu_black_24px.svg", 128) // JFT-TODO: default what?
+    .icon("menu"  , '../../assests/svg/ic_menu_black_24px.svg', 24);
+  
+  $mdThemingProvider.theme('default')
+    .primaryPalette('grey')
+    .accentPalette('red');
   }]);
-
-
-// the code seeded straight from the docs: https://github.com/daniel-nagy/md-data-table
-aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'dsv', '$scope', '$window', function (outbreakTimeSeriesFactory, dsv, $scope, $window) {
+  
+  
+var DataTableController = function (outbreakTimeSeriesFactory, dsv, $scope, $window, $mdSidenav, $mdMedia, $log) {  
   'use strict';
 
+  var vm = this;
+  
+  // hide "loading..." UI
+  document.querySelector('#appInitializingDialog').style.display = 'none';
+  
   $scope.isDataStillLoading = true;
   $scope.dataUrl = aCsvFileRelativeUrl;
   
@@ -75,10 +86,12 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'd
   
   function startFetchOfOutbreakTimeSeries(junk) {
     var rowCount = 0;
-    
+
+    // JFT-TODO why return, or better why nothing being done with what is returned?
     return dsv.csv({method: 'GET', url: aCsvFileRelativeUrl}, function(d) {
       rowCount++;
       if( rowCount < 2 ) {
+	console.log('sample row:');
 	console.log(d);
         }
       return { indicator: d.Indicator, country: d.Country, date: new Date(d.Date), value: parseInt(d.value) };
@@ -105,20 +118,35 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'd
   }
 
   function onSuccessfulDataParse(anOutbreakTimeSeries) {
-    console.log('onSuccessfulDataParse()');
+    console.log('onSuccessfulDataParse() called, passing data to $scope. Which will start rendering of many rows...');
     $scope.dataPoints = anOutbreakTimeSeries;
   }
 
-  $scope.onPaginate = function (page, limit) {
+  vm.onHamburgerClick = function (){
+    console.log('toggling main nav, was ' + $scope.isSidenavToBeLockedOpen );
+    if( $mdSidenav('mainNav').isLockedOpen() ) {
+      $scope.isSidenavToBeLockedOpen = false;
+      $mdSidenav('mainNav').close();
+      } else {
+        $mdSidenav('mainNav').toggle();
+        }  
+    
+    //$scope.isSidenavToBeLockedOpen = !$scope.isSidenavToBeLockedOpen;
+    };
+
+  $scope.isSidenavToBeLockedOpen = $mdMedia('gt-sm');
+  
+  vm.onPaginate = function (page, limit) {
     startFetchOfOutbreakTimeSeries(angular.extend({}, $scope.query, {page: page, limit: limit}));
   };
 
-  $scope.onReorder = function (order) {
+  vm.onReorder = function (order) {
     startFetchOfOutbreakTimeSeries(angular.extend({}, $scope.query, {order: order}));
   };
 
   // start init load of data
-  startFetchOfOutbreakTimeSeries($scope.query);
+  
+  (function (){startFetchOfOutbreakTimeSeries($scope.query);})();
 
   /*
   This was durnig dev: don't want an unnecessary watch so just called getDesserts() during the controllers init, i.e. added the previous line of code above here. 
@@ -127,10 +155,28 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'd
   getDesserts($scope.query);  
   });
   */
-    
-}]);
+}
+  
+DataTableController.$inject = ['dummyOutbreakTimeSeriesFactory', 'dsv', '$scope', '$window', '$mdSidenav', '$mdMedia', '$log' ];
+
+  
+omolumeterApp.controller('DataTableController', DataTableController);
+  
 
 
+  
+  
+
+omolumeterApp.controller('MainNavController', function($scope, $mdSidenav) {
+  $scope.openMainMenu = function() {
+    $mdSidenav('mainNav').toggle();
+  };
+});
+
+
+
+
+  
 
 
 /*******************  OutbreakTimeseriesService ****************************/
@@ -139,7 +185,7 @@ aDemoApp.controller('dataTableController', ['dummyOutbreakTimeSeriesFactory', 'd
  * OTService will fetch and parse Resources as needed and cache instantiated objects of data model.
  *
  */
-aDemoApp.factory('OutbreakTimeSeriesService', ['$http', function($http){
+omolumeterApp.factory('OutbreakTimeSeriesService', ['$http', function($http){
   return {
     getTimeseries: function(){
       return $http.get(aCsvFileRelativeUrl).then(function(response){
@@ -159,7 +205,7 @@ dummyOutbreakTimeSeries.data = [
   {_id: 'row4', indicator: "Cumulative number of confirmed, probable and suspected Ebola deaths", country: 'Sierra Leone', date: "2016-03-28", value: "5"}
   ];
 
-aDemoApp.factory( 'dummyOutbreakTimeSeriesFactory', ['$q', function ($q){
+omolumeterApp.factory( 'dummyOutbreakTimeSeriesFactory', ['$q', function ($q){
   return $q.resolve(dummyOutbreakTimeSeries);
   }]);
 
@@ -167,3 +213,4 @@ aDemoApp.factory( 'dummyOutbreakTimeSeriesFactory', ['$q', function ($q){
 
 //console.log('finished parsing main.js');
 
+})();
