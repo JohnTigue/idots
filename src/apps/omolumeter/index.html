@@ -54,18 +54,24 @@
 	      <!--
 	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 		<div class="md-list-item-text" layout="column">
-		  <h3>Chart</h3>
+		  <h3>Chart</h3> <a href='http://apps.who.int/ebola/ebola-situation-reports'>WHO: 2 bars (cases, deaths) per country</a>
 		</div>
 	      </md-list-item>
 	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 		<div class="md-list-item-text" layout="column">
-		  <h3>Smart table</h3>
+		  <h3>Table, pinfinite scroll</h3>
 		</div>
 	      </md-list-item>
-                -->
+              -->
+	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
+		<div class="md-list-item-text" layout="column" >
+		  <h3>WHO sit-rep March 2016</h3>
+		</div>
+	      </md-list-item>
+	      
 	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 		<div class="md-list-item-text" layout="column" md-sidenav-focus>
-		  <h3>Raw data</h3>
+		  <h3>Table, paginated</h3>
 		</div>
 	      </md-list-item>
 	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
@@ -82,7 +88,7 @@
 	    <md-button id="main" class='menu md-icon-button' ng-click="vm.onHamburgerClick()" aria-label="Show Menu" layout='row' layout-align='start' >
               <md-icon md-svg-icon="menu"  ></md-icon>
 	    </md-button>
-	    <h2 class="md-toolbar-tools">Omolumeter - raw data<!-- timeseries2table --></h2>
+	    <h2 class="md-toolbar-tools">Omolumeter<!-- timeseries2table --></h2>
 	  </md-toolbar>
 	  	   
 	  <md-card>
@@ -96,7 +102,7 @@
 	      
 	      <!-- exact table from live demo -->
 	      <md-table-container>
-		<table md-table md-row-select='false' ng-model="selected" md-progress="promise">
+		<table md-table md-row-select='false' ng-model="selected" md-progress="timeSeriesPromise">
 		  <thead md-head md-order="orderingCol" md-on-reorder="onReorder">
 		    <tr md-row>
 		      <th md-column md-order-by='date'><span>Date</span></th>
@@ -106,9 +112,11 @@
 		    </tr>
 		  </thead>
 		  <tbody md-body ng-cloak>
-		    <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select ng-repeat="dataPoint in dataPoints.data | orderBy: orderingCol">
-		      <td md-cell>{{dataPoint.date | date}}</td>
-		      <td md-cell>{{dataPoint.country}}</td>
+		    <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select
+			ng-repeat="dataPoint in dataPoints.data | offset: query.page*query.limit | limitTo: query.limit | orderBy: orderingCol"
+			>
+		      <td md-cell style='white-space: nowrap'>{{dataPoint.date | date}}</td>
+		      <td md-cell style='white-space: nowrap'>{{dataPoint.country}}</td>
 		      <td md-cell>{{dataPoint.indicator}}</td>
 		      <td md-cell>{{dataPoint.value | number : 0}}</td>
 		    </tr>
@@ -117,16 +125,22 @@
 	      </md-table-container>
 
 	      <div layout="column" layout-sm="column" layout-align="center center" ng-show='isDataStillLoading' class='md-hue-3'>
-		<md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular>
+<!--		<md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular> -->
 		<br/>
 		<p class='md-hue-3'>
 		  Loading 1000 CSV rows of data...
 		</p>
 	      </div>
 
-	      <!-- No pagination in early versions. Just throw whole file on screen, no md-virual-repeat in early versions
-		   <md-table-pagination md-limit="query.limit" md-page="query.page" md-total="{{dataPoints.rowCount}}" md-on-paginate="onPaginate" md-page-select></md-table-pagination>
-		   -->
+	      <md-table-pagination
+		 ng-disabled="false"
+		 md-limit-options="[10, 25, 100]"
+		 md-limit="query.limit"
+		 md-on-paginate="vm.onPaginate"
+		 md-page="query.page"
+		 md-page-select
+		 md-total="{{dataPoints.rowCount}}"
+		 ></md-table-pagination>
 	    </div>
 	  </md-card>
 
