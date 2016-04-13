@@ -3,6 +3,7 @@
   <head>
     <title>Omolumeter</title>
 
+    <base PROD_href='/projects/omolumeter/src/apps/omolumeter/' href='/src/apps/omolumeter/' />
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="">
@@ -21,202 +22,41 @@
           display: none !important;
         }
     </style>
+    <script type='text/javascript'>
+      // shim for old safari
+      
+      if (!String.prototype.startsWith) {
+        String.prototype.startsWith = function(searchString, position){
+          position = position || 0;
+          return this.substr(position, searchString.length) === searchString;
+          };
+      }
+    </script>
   </head>
-  <body ng-app='mdDataTableDemo' layout='column' style='background-color:#F0F0F0'>
+  <body ng-app='omolumeterApp' layout='column' style='background-color:#F0F0F0'>
+
+    <!--
     <div id='appInitializingDialog' style='display:none'>
       Omolumeter v0.2.0 loading...
       <md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular>
     </div>
-    
-    <div ng-controller='DataTableController as vm' >
-      <section ng-controller='MainNavController as navCtrl' layout='row' flex>
-	<md-sidenav
-           ng-click='vm.toggleMainNav()'
-           class='site-sidenav md-sidenav-left md-whiteframe-z2'
-           md-component-id="mainNav"
-           md-is-locked-open="isSidenavToBeLockedOpen"
-           md-disable-backdrop
-           NOTmd-whiteframe="4"
-	   aria-label='Select Visualization'
-	   flex='25'
-	   >
-	  <md-toolbar class="">                     
-            <h1 class="md-toolbar-tools"></h1>
-	  </md-toolbar>
-	  
-	  <md-content layout-padding nOTg-controller="LeftCtrl">
-	    <md-list class='md-dense md-hue-3' flex>	      
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Introduction</h3>
-		</div>
-	      </md-list-item>
-	      <!--
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Chart</h3> <a href='http://apps.who.int/ebola/ebola-situation-reports'>WHO: 2 bars (cases, deaths) per country</a>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>Table, pinfinite scroll</h3>
-		</div>
-	      </md-list-item>
-              -->
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column" >
-		  <h3>WHO sit-rep March 2016</h3>
-		</div>
-	      </md-list-item>
-	      
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column" md-sidenav-focus>
-		  <h3>Table, paginated</h3>
-		</div>
-	      </md-list-item>
-	      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		<div class="md-list-item-text" layout="column">
-		  <h3>About this code v0.2.0</h3>
-		</div>
-	      </md-list-item>
-	    </md-list>
-	  </md-content>
-	</md-sidenav>
+     -->
+    <omolumeter layout='row'></omolumeter>
 
-	<md-content layout="column" flex NOTlayout-padding style='background-color:#F0F0F0'>
-	  <md-toolbar layout='row' layout-align='start center'>
-	    <md-button id="main" class='menu md-icon-button' ng-click="vm.onHamburgerClick()" aria-label="Show Menu" layout='row' layout-align='start' >
-              <md-icon md-svg-icon="menu"  ></md-icon>
-	    </md-button>
-	    <h2 class="md-toolbar-tools">Omolumeter<!-- timeseries2table --></h2>
-	  </md-toolbar>
-	  	   
-	  <md-card>
-	    <div >
-	      <!-- straight out of the docs: https://github.com/daniel-nagy/md-data-table -->
-	      <md-toolbar class="md-table-toolbar md-default">
-		<div class="md-toolbar-tools">
-		  <span>Ebola 2014 West Africa</span>
-		</div>
-	      </md-toolbar>
-	      
-	      <!-- exact table from live demo -->
-	      <md-table-container>
-		<table md-table md-row-select='false' ng-model="selected" md-progress="timeSeriesPromise">
-		  <thead md-head md-order="orderingCol" md-on-reorder="onReorder">
-		    <tr md-row>
-		      <th md-column md-order-by='date'><span>Date</span></th>
-		      <th md-column md-order-by='country'><span>Country</span></th>
-		      <th md-column md-order-by='indicator'><span>Indicator</span></th>
-		      <th md-column md-numeric><span>Value</span></th>
-		    </tr>
-		  </thead>
-		  <tbody md-body ng-cloak>
-		    <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select
-			ng-repeat="dataPoint in dataPoints.data | offset: query.page*query.limit | limitTo: query.limit | orderBy: orderingCol"
-			>
-		      <td md-cell style='white-space: nowrap'>{{dataPoint.date | date}}</td>
-		      <td md-cell style='white-space: nowrap'>{{dataPoint.country}}</td>
-		      <td md-cell>{{dataPoint.indicator}}</td>
-		      <td md-cell>{{dataPoint.value | number : 0}}</td>
-		    </tr>
-		  </tbody>
-		</table>
-	      </md-table-container>
-
-	      <div layout="column" layout-sm="column" layout-align="center center" ng-show='isDataStillLoading' class='md-hue-3'>
-<!--		<md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular> -->
-		<br/>
-		<p class='md-hue-3'>
-		  Loading 1000 CSV rows of data...
-		</p>
-	      </div>
-
-	      <md-table-pagination
-		 ng-disabled="false"
-		 md-limit-options="[10, 25, 100]"
-		 md-limit="query.limit"
-		 md-on-paginate="vm.onPaginate"
-		 md-page="query.page"
-		 md-page-select
-		 md-total="{{dataPoints.rowCount}}"
-		 ></md-table-pagination>
-	    </div>
-	  </md-card>
-
-	  
-	  <md-card >
-	    <div>
-	      <md-toolbar layout="row" class="md-hue-3">
-		<div class="md-toolbar-tools">
-		  <span>Intro & Goals</span>
-		</div>
-	      </md-toolbar>
-	      <md-list class='md-dense md-hue-3' flex>	      
-		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		  <div class="md-list-item-text" layout="column">
-		    <h3>Audience</h3>
-		    <p>This simple table view, called timeseries2table, is a low level debug tool. No end-user would normally see this view of the data but it will be part of the Omolumeter as an advanced view.</p>
-		  </div>
-		</md-list-item>
-		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		  <div class="md-list-item-text" layout="column">
-		    <h3>Read CSV data file</h3>
-		    <p>Fetch and parse a CSV file. These tools are applications. They load data which are web resources separate from the app; outbreak data is not hardcoded into the app. The data comes from CSV files.</p>
-		  </div>
-		</md-list-item>
-		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		  <div class="md-list-item-text" layout="column">
-		    <h3>Build out Outbreak Time Series object model</h3>
-		    <p>Explore what the JavaScript object model should look like. Best way to do this is load CSVs (CSVW, eventually) from different sources until data model handles all cases.</p>
-		  </div>
-		</md-list-item>
-		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		  <div class="md-list-item-text" layout="column">
-		    <h3>Visualize object model</h3>
-		    <p>This current raw table view is the most basic visualization. But, clearly each row should be a time interval. And each row has one sub row for each indicator measured. Then horizontally one column for each location (for however many locations). Each cell has 3 numbers (suspected, probable, confirmed). Those 3 numbers are the values for a given indicator during a given interval.</p>
-		  </div>
-		</md-list-item>
-		<md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-		  <div class="md-list-item-text" layout="column">
-		    <h3>Test drive table widgets</h3>
-		    <p>There are lots of ways to draw tables with Angular. Optimally, there is an open source, high performant one with Material Design styling. Definitely with virtual repeat to handle large datasets, which this current implementation does not have. This demo is loading 1000 rows. On larger data (17K rows) things worked but took minutes to render.</p>
-		  </div>
-		</md-list-item>
-	      </md-list>
-	    </div>
-	  </md-card>
-
-
-	  <md-card>
-	    <div>
-	      <md-toolbar layout="row" class="md-hue-3">
-		<div class="md-toolbar-tools">
-		  <span>Tech implementation further reading</span>
-		</div>
-	      </md-toolbar>
-	      <md-list class='md-dense md-hue-3' flex>
-		<md-list-item class="md-2-line" ng-repeat='detail in techDetails' ng-click='openUrlInNewTab(detail.url)'>
-		  <div class="md-list-item-text" layout="column" >
-		    <h3>{{detail.title}}</h3>
-		    <p><a>{{detail.buttonLabel}}</a></p>
-		  </div>
-		</md-list-item>
-	      </md-list>
-	    </div>
-	  </md-card>
-
-	</md-content>
-      </section>	
-    </div>
-
-    <script type='text/javascript' src='../../../bower_components/angular/angular.js' ></script>
+    <script type='text/javascript' src='https://code.angularjs.org/snapshot/angular.js' ></script>
+<!--    <script type='text/javascript' src='../../../bower_components/angular/angular.js' ></script> -->
+    <script type='text/javascript' src='../../../node_modules/@angular/router/angular1/angular_1_router.js' ></script>
     <script type='text/javascript' src='../../../bower_components/angular-animate/angular-animate.js' ></script>
     <script type='text/javascript' src='../../../bower_components/angular-aria/angular-aria.js' ></script>
     <script type='text/javascript' src='../../../bower_components/angular-material/angular-material.js' ></script>
     <script type='text/javascript' src='../../../bower_components/angular-material-data-table/dist/md-data-table.min.js'></script>
     <script type='text/javascript' src='../../../bower_components/angular-dsv/angular-dsv.js' ></script>
-    <script type='text/javascript' src='js/main.js' ></script>
-
+    <script type='text/javascript' src='components/bibliography/bibliography.js' ></script>
+    <script type='text/javascript' src='components/introduction/introduction.js' ></script>
+    <script type='text/javascript' src='components/omolumeter/omolumeter.js' ></script>
+    <script type='text/javascript' src='components/rawdata/rawdata.js' ></script>
+    <script type='text/javascript' src='components/sidenav/sidenav.js' ></script>
+    <script type='text/javascript' src='components/titlebar/titlebar.js' ></script>
+    <script type='text/javascript' src='services/outbreak/outbreak.js' ></script>
   </body>
 </html>

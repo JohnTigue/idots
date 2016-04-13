@@ -1,0 +1,59 @@
+<md-card WASng-controller='DataTableController as vm'>
+  <div>
+    <md-toolbar class="md-table-toolbar md-default">
+      <div class="md-toolbar-tools">
+	<span>Ebola 2014 West Africa</span>
+      </div>
+    </md-toolbar>
+
+    <p layout-padding>
+      This is a low-level table view of the raw data that Omolumeter reads.
+      This data is then used to build the Outbreak API object model in JavaScript, which the visualizations render on the screen.
+    </p>
+    
+    <md-table-container>
+      <table md-table md-row-select='false' ng-model="vm.csvTable" md-progress="vm.timeSeriesPromise">
+	<thead md-head md-order="orderingCol" md-on-reorder="onReorder">
+	  <tr md-row>
+	    <th md-column md-order-by='date'><span>Date</span></th>
+	    <th md-column md-order-by='country'><span>Country</span></th>
+	    <th md-column md-order-by='indicator'><span>Indicator</span></th>
+	    <th md-column md-numeric><span>Value</span></th>
+	  </tr>
+	</thead>
+	<tbody md-body ng-cloak>
+	  <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select
+	      ng-repeat="dataPoint in vm.csvTable.data | offset: vm.pagination.page*vm.pagination.limit | limitTo: vm.pagination.limit | orderBy: orderingCol"
+	      >
+	    <td md-cell style='white-space: nowrap'>{{dataPoint.date | date}}</td>
+	    <td md-cell style='white-space: nowrap'>{{dataPoint.country}}</td>
+	    <td md-cell>{{dataPoint.indicator}}</td>
+	    <td md-cell>{{dataPoint.value | number : 0}}</td>
+	  </tr>
+	</tbody>
+      </table>
+    </md-table-container>
+    
+    <!--
+    <div layout="column" layout-sm="column" layout-align="center center" ng-show='isDataStillLoading' class='md-hue-3'>
+      --		<md-progress-circular md-mode="indeterminate" md-diameter="96" class='md-accent md-hue-3'></md-progress-circular> 
+      --
+      <br/>
+      <p class='md-hue-3'>
+	Loading 1000 CSV rows of data...
+      </p>
+    </div>
+      -->
+    <md-table-pagination
+       ng-disabled="false"
+       md-limit-options="[10, 25, 100]"
+       md-limit='vm.pagination.limit' 
+       md-on-paginate="vm.onPaginate"
+       md-page="vm.pagination.page"
+       md-page-select
+       md-total="{{vm.csvTable.rowCount}}"
+       ></md-table-pagination>
+  </div>
+
+</md-card>
+

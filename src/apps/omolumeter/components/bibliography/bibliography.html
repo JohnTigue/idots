@@ -1,0 +1,17 @@
+<md-card flex='grow' >
+  <div>
+    <md-toolbar layout="row" class="md-hue-3">
+      <div class="md-toolbar-tools">
+	<span>Tech implementation further reading</span>
+      </div>
+    </md-toolbar>
+    <md-list class='md-dense md-hue-3' flex>
+      <md-list-item class="md-2-line" ng-repeat='detail in vm.techDetails' ng-click='vm.openUrlInNewTab(detail.url)'>
+	<div class="md-list-item-text" layout="column" >
+	  <h3>{{detail.title}}</h3>
+	  <p><a>{{detail.buttonLabel}}</a></p>
+	</div>
+      </md-list-item>
+    </md-list>
+  </div>
+</md-card>

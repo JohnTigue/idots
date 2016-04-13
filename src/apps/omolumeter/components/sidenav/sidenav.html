@@ -1,0 +1,38 @@
+<md-sidenav
+   ng-click='vm.toggleMainNav()'
+   class='site-sidenav md-sidenav-left md-whiteframe-z2'
+   md-component-id="mainNav"
+   md-is-locked-open="$mdMedia('gt-sm')" WAS="vm.isSidenavToBeLockedOpen"
+   md-disable-backdrop
+   aria-label='Select Visualization'
+   >
+  <md-toolbar class="" ng-click='vm.toggleMainNav()'>                     
+    <h1 class="md-toolbar-tools"></h1>
+  </md-toolbar>
+  
+  <md-content layout-padding>
+    <md-list class='md-dense md-hue-3' flex>	     
+      <md-list-item class="md-2-line" ng-click='vm.navigate("Informational")'>
+	<div class="md-list-item-text" layout="column" md-sidenav-focus>
+	  <h3>About</h3>
+	</div>
+      </md-list-item>
+<!--      <md-list-item class="md-2-line" ng-click='vm.navigate("OutbreakTable")'>
+	<div class="md-list-item-text" layout="column" >
+	  <h3>Outbreak table</h3>
+	</div>
+      </md-list-item>
+ -->
+      <md-list-item class="md-2-line" ng-click='vm.navigate("RawDataTable")'>
+	<div class="md-list-item-text" layout="column" >
+	  <h3>Raw data</h3>
+	</div>
+      </md-list-item>
+      <md-list-item class="md-2-line" ng-click='vm.navigate("Bibliography")'>
+	<div class="md-list-item-text" layout="column">
+	  <h3>Bibliography</h3>
+	</div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</md-sidenav>

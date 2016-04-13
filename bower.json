@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "snap.svg": "~0.4.1",
-    "angular-material-data-table": "^0.9.14",
+    "angular-material-data-table": "^0.10.4",
     "angular-dsv": "^1.0.0"
   }
 }
