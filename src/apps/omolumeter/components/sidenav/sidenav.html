@@ -1,36 +1,62 @@
 <md-sidenav
+   md-component-id='mainNav'
    ng-click='vm.toggleMainNav()'
    class='site-sidenav md-sidenav-left md-whiteframe-z2'
-   md-component-id="mainNav"
-   md-is-locked-open="$mdMedia('gt-sm')" WAS="vm.isSidenavToBeLockedOpen"
+   md-is-locked-open="$ctrl.isSideNavLockedOpen"
    md-disable-backdrop
    aria-label='Select Visualization'
    >
-  <md-toolbar class="" ng-click='vm.toggleMainNav()'>                     
-    <h1 class="md-toolbar-tools"></h1>
+  <md-toolbar class='' ng-click=''>                     
+    <div class="md-toolbar-tools">
+      <h1 class='md-toolbar-tools' ></h1>
+      <span flex></span>
+      <md-button id='closeSideNav'
+		 class="menu md-icon-button md-accent"
+		 ng-hide="vm.showCloseSideNav"
+		 ng-click="vm.closeMainNav()"
+		 aria-label="Close Side Nav"
+	     >
+	<md-icon md-svg-icon='close' class="" style='fill:#000000;' ></md-icon>
+      </md-button>
+
+    </div>
   </md-toolbar>
   
-  <md-content layout-padding>
+  <md-content layout-padding >
     <md-list class='md-dense md-hue-3' flex>	     
       <md-list-item class="md-2-line" ng-click='vm.navigate("Informational")'>
 	<div class="md-list-item-text" layout="column" md-sidenav-focus>
 	  <h3>About</h3>
 	</div>
       </md-list-item>
-<!--      <md-list-item class="md-2-line" ng-click='vm.navigate("OutbreakTable")'>
+
+      <md-list-item class="md-2-line" ng-click='vm.navigate("Epicurves")'>
 	<div class="md-list-item-text" layout="column" >
-	  <h3>Outbreak table</h3>
+	  <h3>Epicurves</h3>
 	</div>
       </md-list-item>
- -->
+      
+      <md-list-item class="md-2-line" ng-click='vm.navigate("OutbreakTimeSeriesTable")'>
+	<div class="md-list-item-text" layout="column" >
+	  <h3>Time series table</h3>
+	</div>
+      </md-list-item>
       <md-list-item class="md-2-line" ng-click='vm.navigate("RawDataTable")'>
 	<div class="md-list-item-text" layout="column" >
-	  <h3>Raw data</h3>
+	  <h3>Raw data table</h3>
+	</div>
+      </md-list-item>
+      <md-list-item class="md-2-line" ng-click='vm.navigate("DataSources")'>
+	<div class="md-list-item-text" layout="column" >
+	  <h3>Data sources</h3>
 	</div>
       </md-list-item>
       <md-list-item class="md-2-line" ng-click='vm.navigate("Bibliography")'>
 	<div class="md-list-item-text" layout="column">
-	  <h3>Bibliography</h3>
+	  <h3>Software details</h3>
+	  <!-- "Software details" becomes "Settings". There can be found the Licenses dialog that mentions what OSS was used. 
+	       There things like language (i18n in angular) are set.
+	       -->
 	</div>
       </md-list-item>
     </md-list>

@@ -1,70 +1,72 @@
 (function(){
 'use strict';
   
-
 var omolumeterApp = angular.module('omolumeterApp', [
+  'gridshore.c3js.chart',
+  'hc.dsv',
   'omolumeter.bibliography',
+  'omolumeter.dataSources',
+  'omolumeter.epicurves',
+  'omolumeter.geopolitic',
   'omolumeter.introduction',
   'omolumeter.rawdata',
   'omolumeter.sidenav',
+  'omolumeter.timeSeriesTable',
   'omolumeter.titleBar',
   'ngComponentRouter',
   'ngMaterial',
-  'md.data.table',
-  'hc.dsv']);
+  'md.data.table'
+  ]);
 
+    
 // Stock config for app having / URLs, not # URLs
 omolumeterApp.config(['$locationProvider', function($locationProvider) {
   $locationProvider.html5Mode(true);
-}]);
+  }]);
 
 omolumeterApp.config(['$compileProvider', '$mdIconProvider', '$mdThemingProvider', function ($compileProvider, $mdIconProvider, $mdThemingProvider) {
   'use strict';
   $compileProvider.debugInfoEnabled(false);
 
   $mdIconProvider
-    .defaultIconSet("../../assests/svg/ic_menu_black_24px.svg", 128) // JFT-TODO: default what?
-    .icon("menu"  , '../../assests/svg/ic_menu_black_24px.svg', 24);
-  
+    //.defaultIconSet("svg/ic_menu_black_24px.svg", 128) // JFT-TODO: default what?
+    .icon("menu",     'svg/md_icons/ic_menu_black_24px.svg', 24)
+    .icon("settings", 'svg/md_icons/ic_settings_black_24px.svg', 24)
+    .icon("omolu",    'svg/md_icons/ic_brightness_low_black_24px.svg', 24)
+    .icon("close",    'svg/md_icons/ic_close_black_24px.svg', 24);
+    
   $mdThemingProvider.theme('default')
     .primaryPalette('grey')
-    .accentPalette('red');
+    .accentPalette('orange');
   }]);
+  // JFT-TODO: pre-cache icons: https://material.angularjs.org/latest/demo/icon
+  /* .run(function($http, $templateCache) {
+    var urls = [
+      'img/icons/sets/core-icons.svg',
+      'img/icons/cake.svg',
+      'img/icons/android.svg'
+    ];
+    // Pre-fetch icons sources by URL and cache in the $templateCache...
+    // subsequent $http calls will look there first.
+    angular.forEach(urls, function(url) {
+      $http.get(url, {cache: $templateCache});
+    });
+    })*/
 
-
-  
   
 // Set up $routerRootComponent:
 omolumeterApp.component('omolumeter', {
   templateUrl: 'components/omolumeter/omolumeter.html', 
   $routeConfig: [
-    {path:'/introduction', name:'Informational', component:'introduction', useAsDefault: true},
-    {path:'/rawdata',      name:'RawDataTable',  component:'rawDataTable', useAsDefault: false},
-    {path:'/bibliography', name:'Bibliography', component:'bibliography', useAsDefault: false}
+    {path:'/introduction', name:'Informational',           component:'introduction',          useAsDefault: false},
+    {path:'/epicurves',    name:'Epicurves',               component:'epicurves',             useAsDefault: true },
+    {path:'/timeseries',   name:'OutbreakTimeSeriesTable', component:'timeSeriesTable',       useAsDefault: false},
+    {path:'/rawdata',      name:'RawDataTable',            component:'rawDataTable',          useAsDefault: false},
+    {path:'/data_sources', name:'DataSources',             component:'omolumeterDataSources', useAsDefault: false},
+    {path:'/bibliography', name:'Bibliography',            component:'bibliography',          useAsDefault: false}
   ]});
 omolumeterApp.value('$routerRootComponent', 'omolumeter');
 
-/*  
-angular.module('informational', [])
-.component('informational', {
-  template: '<ng-outlet></ng-outlet>',
-  $routeConfig: [
-    {path: '/intro',        name: 'Introduction', component: 'introduction', useAsDefault: true},
-    {path: '/bibliography', name: 'Bibliography', component: 'bibliography'}
-  ]
-})
-
-angular.module('views', [])
-.component('views', {
-  template: '<h2>views</h2><ng-outlet></ng-outlet>',
-  $routeConfig: [
-    {path: '/',    name: 'ViewList',   component: 'ViewList', useAsDefault: true},
-    {path: '/datatable', name: 'HeroDetail', component: 'heroDetail'}
-    ]
-  })
-*/
-
-  
   
 // For paginating data clientside, called on in table-body's ngRepeat
 // http://fdietz.github.io/recipes-with-angular-js//common-user-interface-patterns/paginating-through-client-side-data.html

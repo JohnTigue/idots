@@ -1,79 +1,62 @@
-<md-card>
+<!-- <md-card> -->
   <div>
     <md-toolbar layout="row" class="md-hue-3">
       <div class="md-toolbar-tools">
 	<span>About</span>
       </div>
     </md-toolbar>
-    <md-list class='md-dense-not md-hue-3' flex>	      
+<md-content>    
+    <md-list class='NOTmd-dense md-hue-3' flex>	      
       <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 	<div class="md-list-item-text" layout="column">
 	  <h3>Purpose</h3>
 	  <p>
-	    This web-app provides a high level dashboard for epidemological disease outbreaks.
+	    The subject of this project is epidemiological disease outbreaks.
+	    This Omolumeter app provides a high level dashboard for outbreaks, with information presented as an <a target='_blank' href='http://worrydream.com/ExplorableExplanations/'>explorable explanation</a>.
+	  </p>
+<!--	  <p>
 	    This project has two deliverables:
 	    define a data standard for outbreak information and produce software which reads the data standard.
 	  </p>
+  -->
 	</div>
       </md-list-item>
+      
       <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 	<div class="md-list-item-text" layout="column">
-	  <h3>Outbreak data standard</h3>
+	  <h3>Deliverable #1: outbreak data standard</h3>
 	  <p>
 	    The first deliverable of the project is to define a data standard for epidemiological outbreaks.
-	    The data standard (or API, or format) is called Outbreak Time Series Specification.
-	  </p>
-	</div>
-      </md-list-item>
-      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-	<div class="md-list-item-text" layout="column">
-	  <h3>Outbreak software</h3>
-	  <p>
-	    Omolumeter is the second of the two deliverables: software which reads Outbreak Time Series Specification compliant data and then visualizes that data.
-	    The OTSS files are read and a JavaScript object model of the data is made available to the visualizations to render.
-	    Data is read from multiple sources (web sites), a task with which the standard Outbreak API is most useful.
-	    The Omolumeter is the software which visualizes the Outbreak Time Series data.	    
-	  </p>
-	</div>
-      </md-list-item>
-      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-	<div class="md-list-item-text" layout="column">
-	  <h3>Version</h3>
-	  <p>
-	    This is Omolumeter version 0.2.4
+	    The data standard is called <a target='_blank' href='https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-Time-Series-Specification-Overview'>Outbreak Time Series Specification</a>.
 	  </p>
 	</div>
       </md-list-item>
 
-      <!--
       <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 	<div class="md-list-item-text" layout="column">
-	  <h3>Build out Outbreak Time Series object model</h3>
-	  <p>Explore what the JavaScript object model should look like. Best way to do this is load CSVs (CSVW, eventually) from different sources until data model handles all cases.</p>
+	  <h3>Deliverable #2: outbreak visualization software</h3>
+	  <p>
+	    Omolumeter is the second of the two deliverables: software which reads Outbreak Time Series Specification compliant data and then visualizes that data.
+	    <!-- Data files are read, based upon which a JavaScript object model of the data is made available for the visualizations to render in the web page. -->
+	    Data is read from multiple API sources (web sites).
+	    The Omolumeter proves that arbitrary web apps can be built which work with the new data standard.
+	    This sofware runs completely in the web browser; there is no server-side code. On the web server there is nothing but static files.
+	    Omolumeter can also be packages as native apps for iOS and Andriod (via Cordova).
+	  </p>
 	</div>
       </md-list-item>
+
       <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
 	<div class="md-list-item-text" layout="column">
-	  <h3>Visualize object model</h3>
-	  <p>This current raw table view is the most basic visualization. But, clearly each row should be a time interval. And each row has one sub row for each indicator measured. Then horizontally one column for each location (for however many locations). Each cell has 3 numbers (suspected, probable, confirmed). Those 3 numbers are the values for a given indicator during a given interval.</p>
+	  <h3>Version</h3>
+	  <p>
+	    This is Omolumeter version 0.4.5.
+	  </p>
 	</div>
       </md-list-item>
-      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-	<div class="md-list-item-text" layout="column">
-	  <h3>Data table view</h3>
-	  <p>There are lots of ways to draw tables with Angular.
-	    Currently the table widget being used is md-data-table, which is an open source, high performant data table with Material Design styling.
-	    Next UI improvement will be an Outbreak API-aware infinite scroll table with virtual repeat to handle large datasets,
-	</div>
-      </md-list-item>
-      <md-list-item class="md-2-line" ng-click="null" ng-disabled='true'>
-	<div class="md-list-item-text" layout="column">
-	  <h3>Data is read separately from the Application</h3>
-	  <p>The Omolumeter app fetches and parses outbreak data from a CSV file.
-	    They load data which are web resources separate from the app; outbreak data is not hardcoded into the app. The data comes from CSV files.</p>
-	</div>
-      </md-list-item>
--->
+
+      
     </md-list>
+</md-content>
   </div>
-</md-card>
+<!-- </md-card> -->

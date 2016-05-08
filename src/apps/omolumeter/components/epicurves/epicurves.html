@@ -1,0 +1,108 @@
+<div id='epicurveComponentsDiv' layout='column' flex style='NOT_border:2px #600000 solid'>
+  <md-toolbar class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools">
+      <span hide show-gt-xs>Cumulative deaths:&nbsp;</span><span>{{$ctrl.outbreak.metadata.label}}</span>
+    </div>
+  </md-toolbar>
+  <md-content
+     layout='column'
+     layout-padding
+     flex
+     style='NOT_border:2px #008 solid;'
+     >
+
+    <style>
+      .c3-line {
+        stroke-width:4px;
+        opacity: 0.2;
+        stroke: red;
+        fill:white;
+        }
+      .c3-circle {
+        
+        }
+      .c3-axis-x {
+        
+        }
+      .c3 .c3-axis path, .c3 .c3-axis line {
+        stroke-width:2px;
+        }
+      .c3-axis-x .tick, .c3-axis-y .tick {
+        font-weight:bold;
+        }
+    </style>
+
+    <div id='chartParent' flex style='NOT_border:2px pink solid'>
+    <c3chart       
+       style='NOT_border:1px black solid'
+       padding-left='30px'
+       bindto-id='chart1'
+       chart-columns='$ctrl.locationColumnDefs'
+       chart-data='$ctrl.timeSeriesData'
+       chart-x='{"id":"x"}'
+       callback-function='$ctrl.onChartInstantiated'
+       >
+      <NOT_chart-size chart-height='100%' chart-width='100%' />
+      <chart-points point-radius="1"
+                    show-point="false"
+                    point-expand-enabled="true"
+                    point-expand-radius="10"/>
+      <chart-axis>
+	<chart-axis-x axis-id="x" axis-type="timeseries" >
+          <chart-axis-x-tick
+	     tick-values='2014-10-01,2015-02-01,2015-07-01,2015-11-01'
+	     tick-format-function='$ctrl.formatXTick'
+	     tick-outer='false'
+	     NOT_tick-count='5'
+	     NOTtick-format="%Y"
+	     />
+	</chart-axis-x>
+	<chart-axis-y
+	   axis-id="y"
+	   axis-inner='false'
+	   axis-label__OFF__='Cumulative Deaths'
+	   axis-position='outer-center'
+           padding-bottom='1'
+	   >
+          <chart-axis-y-tick
+	     tick-values='1000,2000,3000,4000,5000'
+	     tick-format-function='$ctrl.formatYTick'
+	     tick-outer='false'
+	     NOT_tick-count='2'
+	     NOT_tick-format=".4r" />
+	</chart-axis-y>
+      </chart-axis>
+      <chart-legend
+	 show-legend='false'
+	 legend-position="inset"
+	 legend-inset="top-left"
+	 /> 
+    </c3chart>
+    </div>
+
+    <!--
+    <style>
+      #epicurvesSettings {
+        margin: 0 0;
+        height:      48px;
+        width:       48px;
+        line-height: 48px;
+        min-width:     0;
+        padding-left:  0;
+        padding-right: 0;
+        }
+    </style>
+    <md-button id='epicurvesSettings'
+	       class='md-fab md-fab-bottom-right'
+	       class_OFF_="md-icon-button md-accent md-fab md-fab-bottom-right"
+	       ng-click="$ctrl.showBottomSheet()"
+	       aria-label="Settings"
+	       style_OFF_='height:48px;width:48px;line-height:48px;min-width:0'
+	       ><md-icon
+		   md-svg-icon='settings'
+		   note= 'display:block below fixed the misaligned icon in fab button. https://github.com/angular/material/issues/2597'
+		   style='display:block;NOT_fill:#D50000;fill:#000000;height:36px;width:36px' ></md-icon>
+    </md-button>
+    -->
+  </md-content>
+</div>

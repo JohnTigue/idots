@@ -6,17 +6,31 @@ angular.module('omolumeter.titleBar', [])
   templateUrl: 'components/titlebar/titlebar.html', //'sidenav!',
   controllerAs: 'vm',
   bindings: { $router: '<' },
+  require: {
+      sidenav: "^omolumeter"
+    },
   controller: ['$scope', '$mdMedia', '$mdSidenav', '$log', '$rootRouter', function($scope, $mdMedia, $mdSidenav, $log, $rootRouter){
     var vm = this;
 
     vm.junk = 'junkier';
 
+      vm.showHamburger = false;
+	  var junk = function (){
+      // problem is it can only talk to parent controller. And omolumeter is a routers i.e. no controller. so cannot hang a global state on that.
+      // Is it going to have to be a service?
+	return false;//true;
+      return !sidenav.isSideNavLockedOpen();
+      }
 
+      
     // Set vm.showHamburger, and set a watch (on $scope) for resizes to decide it show/hide hamburger stack on resize 
-    vm.showHamburger = $mdMedia('gt-sm');
+/*
+      vm.showHamburger = $mdMedia('gt-sm');
     $scope.$watch(function() { return $mdMedia('gt-sm'); }, function(isGreaterThanSmall) {
       vm.showHamburger = isGreaterThanSmall;
-      });
+    });
+*/
+      
     /*    
     This is where this button shoud ng-click='vm.onHambugerClick' but that just inter component comm's to side nav component which should know it's business.
       Or maybe this just $mdSidenav('mainNav').toggle() and if locked open then nothing happens

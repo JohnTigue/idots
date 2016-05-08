@@ -14,32 +14,12 @@ angular.module('omolumeter.bibliography', []).component('bibliography', {
 
     this.techDetails = [
       {
-      title : 'Specification definition',
-      url : 'https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-Time-Series-Specification-Overview',
-      buttonLabel : 'Outbreak Time Series Specification' 
-      },
-      {
-      title : 'Time series data source',
-      url : 'https://data.hdx.rwlabs.org/dataset/ebola-cases-2014',
-      buttonLabel : 'WHO 2016-03-20' 
-      },
-      {
-      title : 'Sit rep data source',
-      url : 'http://apps.who.int/gho/athena/xmart/EBOLA_MEASURE/CASES,DEATHS.json?filter=COUNTRY:*;LOCATION:-;DATAPACKAGEID:2016-03-30;INDICATOR_TYPE:SITREP_CUMULATIVE;INDICATOR_TYPE:SITREP_CUMULATIVE_21_DAYS',
-      buttonLabel : 'WHO situation report 2016-03-20' 
-      },
-      {
-      title : 'CSV loaded during initialization',
-      url : outbreakService.timeSeriesDataUrl,
-      buttonLabel : outbreakService.timeSeriesDataUrl
-      },
-      {
       title : 'code which reads Outbreak Time Series Spec files',
       url : 'https://github.com/JohnTigue/outbreak_time_series/wiki/outbreak_time_series_reader-module',
-      buttonLabel : 'outbreak_time_series_reader module (JavaScript)' 
+      buttonLabel : 'outbreak_time_series_reader module' 
       },
       {
-      title : 'JavaScript Framework',
+      title : 'JavaScript application framework',
       url : 'http://angularjs.blogspot.com/2016/02/angular-150-ennoblement-facilitation.html',
       buttonLabel : 'Angular 1.5' 
       },    
@@ -49,10 +29,25 @@ angular.module('omolumeter.bibliography', []).component('bibliography', {
       buttonLabel : 'angular-dsv (part of D3.js)' 
       },
       {
-      title : 'Table UI',
+      title : 'Paginated table UI',
       url : 'http://danielnagy.me/md-data-table/',
       buttonLabel : 'Material Design Data Table' 
-      }
+      },
+      {
+      title : 'Flags',
+      url : 'https://github.com/lipis/flag-icon-css',
+      buttonLabel : 'flag-icon-css' 
+      },
+      {
+      title : 'Charts',
+      url : 'http://jettro.github.io/c3-angular-directive/',
+      buttonLabel : 'C3JS Angular directives' 
+      },
+      {
+      title : 'Maps',
+      url : 'http://leafletjs.com/',
+      buttonLabel : 'Leaflet' 
+      }      
     ];
     }
   ]});  

@@ -1,0 +1,173 @@
+<style type='text/css'>
+  md-virtual-repeat-container {
+    height: 450px;
+    _NOT_width: 100%;
+    _NOT_border: 3px orange solid;
+    }
+  .repeated-item {
+    border-bottom: 1px solid #ddd;
+    box-sizing: border-box;
+    height: 70px;
+    padding-top: 10px;
+    NOTborder: 1px green solid;
+  }
+  
+  /*  http://www.tayloredmktg.com/rgb/ */
+  .repeated-item.header {
+    text-align: right;
+    font-weight: bold;
+    padding-top: 0px;
+    NOT___border: 1px black solid;
+    background-color: #E0E0E0; OK_greyAqua:#99b4b4; was2: #D3D3D3; was: #106CC8;
+    color: #696969;
+    }
+  NOT.header {
+    padding-top: 0px;
+    border: 1px black solid;
+    background-color: #99b4b4; was2: #D3D3D3; was: #106CC8;
+    color: #696969;
+    text-align: center;
+    font-weight: bold;
+    }
+
+  .otss_indicate_deaths {
+    NOT_border: 1px black solid;
+    color: #B71C1C; 
+    text-align: rigth; /* Only works as style value not, from here? */
+    width: 60px;
+    margin-right: 10px;
+    }
+  .otss_indicate_deaths_bar {
+    border:1px #B71C1C solid;
+    background-color: #B71C1C;
+    height: 15px;
+    padding-left: 0px;
+    }
+
+  .otss_indicate_cases {
+    NOT_border: 1px blue solid;
+    color: #0D47A1;
+    width: 60px;
+    margin-right: 10px;
+    }
+  .otss_indicate_cases_bar {
+    color: #0D47A1;
+    border:1px #0D47A1 solid;
+    background-color: #0D47A1;
+    height: 15px;
+    padding-left: 0px;
+    }
+
+  .otss_total{
+    opacity: 0.9;
+    }
+
+  /* http://stackoverflow.com/a/13515693/4669056 */
+  .BAD_ALIGNER_iso3Bumpersticker {
+    text-align: center;
+    position: relative;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    }
+
+  .iso3Bumpersticker {
+    color:#404040;
+    margin: 5px;
+    padding: 3px;
+    padding-top: 9px;
+    font-weight: bold;
+    NOT_border:2px black solid;
+    border-radius: 15px;
+    text-align: center;
+    display:table-cell;
+    vertical-align:middle;
+    width:40px
+    }
+</style>
+
+
+<div id='timeSeriesTableDiv' layout="column" flex NOT_ng-cloak              style='NOT_border: 4px orange solid;'>
+  <md-toolbar md-scroll-shrink which-doesnt-work-even-with-md-content-height-100-percent class="md-table-toolbar md-default">
+    <div class="md-toolbar-tools" layout='row'>
+      <span hide show-gt-xs >Time series table:&nbsp;</span><span>{{$ctrl.outbreak.metadata.label}}</span>
+    </div>
+  </md-toolbar>
+  
+  <md-content
+     layout='column'
+     flex 
+     style='height:100%; NOT_background-color:#FF0000;NOT_border: 4px red solid;'
+     ng-style='$ctrl.ngRepeatsHeight'
+     >
+    
+    <md-virtual-repeat-container id='mdVirtRepeatContainer' flex ng-style='$ctrl.ngRepeatsHeight'> 
+      <div id='mdVirtRepeat' md-virtual-repeat='aDateCountryCombo in $ctrl.dateCountryCombos' class='repeated-item' ng-class='{header: aDateCountryCombo.isHeader}' md-item-size='70' flex layout-padding layout='column' NOT_____layout-align='center start' style='NOT_border:1px green solid'>
+	<!--date sub-headers i.e. not a data row -->
+        <div ng-if='aDateCountryCombo.isHeader' style='padding-top:17px;text-align:center; NOT____border:1px green solid' >
+          {{aDateCountryCombo.intervalLabel | date: medium}}
+        </div>
+	
+        <!-- Real country data for a day, i.e. not just an interval's subheader -->
+        <div ng-if='!aDateCountryCombo.isHeader' layout='row' style='NOT_border:1px green solid'>
+          <!-- JFT-TODO: slow when ng-repeat.... <md-icon md-svg-icon='{{::aLocation.flagIcon}}' style='width:24px;height:24px' ></md-icon> -->
+
+          <!-- country flag and ISO3 codename -->
+	  <div layout='row'>
+  	    <md-tooltip md-direction='right'>
+	      {{$ctrl.getCountryNameByIso3Code(aDateCountryCombo.location.location.iso3Code)}}
+	    </md-tooltip>
+	    <div class='iso3Bumpersticker' style='padding-right:9px'>{{aDateCountryCombo.location.location.iso3Code}}</div>
+            <img src='{{aDateCountryCombo.location.location.flagUrl}}'
+		 NOT_ng-click='$ctrl.showToastForCountry(aDateCountryCombo.location.location.iso3Code,$element)'
+		 style='vertical-align:middle; width:36px; height:36px; opacity:0.8; padding-right:3px'/>
+          </div>
+	  
+	  <!-- Tests:	       
+	       <div style='text-align:right' class='otss_indicate_deaths'>{{aDateCountryCombo.location.indicators['otss_deaths_all'] | number }}</div> 
+	       <div class='otss_indicate_deaths' style="width:{{aDateCountryCombo.location.indicators['otss_deaths_all'] / 10}}px" >OK</div>
+	       -->
+	  
+	  <div flex layout='column' style='NOT_border:1px pink solid'>
+
+	    <!-- Deaths: -->
+            <div layout='row' layout-align='start center'>
+	      <div style="text-align:right;NOT_width:{{aDateCountryCombo.location.indicators['otss_deaths_all']}}px;"
+		   class='otss_indicate_deaths'
+		   >{{aDateCountryCombo.location.indicators['otss_deaths_all'] | number }}
+	      </div>
+	      <div flex style='border__OFF__:1px black solid'>
+		<div class='otss_indicate_deaths_bar otss_total'
+		     style="width:{{$ctrl.getPercentageWidthForIndicator(aDateCountryCombo.location.indicators['otss_deaths_all']) }};"
+		     ><!--tooltip indicator's label (confirmed, suspected, probable); not this: {{aDateCountryCombo.location.indicators['otss_deaths_all']}}-->
+		</div>
+	      </div>
+	    </div>
+
+	    <!-- Cases -->
+	    <div layout='row'>
+	      <div class='otss_indicate_cases' style='text-align:right'>{{aDateCountryCombo.location.indicators['otss_cases_all'] | number }} </div>
+	      <div flex style='border__OFF__:1px black solid'>
+  	        <div class='otss_indicate_cases_bar otss_total'
+		     style="width: {{ $ctrl.getPercentageWidthForIndicator(aDateCountryCombo.location.indicators['otss_cases_all']) }};"
+		     >
+		</div>
+	      </div>
+	    </div>
+	    
+	  </div>
+        </div>
+      </div>
+    </md-virtual-repeat-container>
+
+    <!--
+    <md-button id='timeSeriesSettings'
+	       class="md-accent md-fab md-fab-bottom-right"
+	       ng-click="vm.closeMainNav()"
+	       aria-label="Settings"
+	       ><md-icon md-svg-icon='settings' style='NOT_fill:#D50000;fill:#000000;height:36px;width:36px' ></md-icon>
+    </md-button>
+      -->
+  </md-content>
+</div>

@@ -1,15 +1,19 @@
-<md-card WASng-controller='DataTableController as vm'>
+<!-- <md-card> -->
   <div>
-    <md-toolbar class="md-table-toolbar md-default">
+    <md-toolbar md-scroll-shrink='false' class="md-table-toolbar md-default">
       <div class="md-toolbar-tools">
-	<span>Ebola 2014 West Africa</span>
+	<span hide show-gt-xs >Raw CSV data:&nbsp;</span><span>{{vm.outbreak.metadata.label}}</span>
       </div>
     </md-toolbar>
-
-    <p layout-padding>
-      This is a low-level table view of the raw data that Omolumeter reads.
-      This data is then used to build the Outbreak API object model in JavaScript, which the visualizations render on the screen.
-    </p>
+    <!--this md-content for above md-scroll-shrink. But it cuts off the md-table-pagination so disabled. <md-content>-->
+    
+    <div layout-padding>
+      <p>
+	This is a low-level table view of the raw data that Omolumeter reads.
+	This data is used to build the Outbreak API object model in JavaScript, which the visualizations render on the screen.
+	The raw data was loaded from <a target='_blank' href='{{vm.csvUrl}}' style='padding:0px;'>a 17,000 row CSV file</a>.
+      </p>
+    </div>
     
     <md-table-container>
       <table md-table md-row-select='false' ng-model="vm.csvTable" md-progress="vm.timeSeriesPromise">
@@ -25,9 +29,13 @@
 	  <tr md-row md-select="dataPoint" md-select-id="{{dataPoint.name}}" md-auto-select
 	      ng-repeat="dataPoint in vm.csvTable.data | offset: vm.pagination.page*vm.pagination.limit | limitTo: vm.pagination.limit | orderBy: orderingCol"
 	      >
-	    <td md-cell style='white-space: nowrap'>{{dataPoint.date | date}}</td>
+	    <td md-cell style='white-space: nowrap'>{{dataPoint.dateStr }}</td>
 	    <td md-cell style='white-space: nowrap'>{{dataPoint.country}}</td>
-	    <td md-cell>{{dataPoint.indicator}}</td>
+	    <td md-cell style='white-space: nowrap'>{{dataPoint.indicator}}</td>
+	    <!-- JFT-TODO: could truncate these indicators on narrow display via $mdMedia('sm') or such. 
+		 So a method on vm.getIndicatorID(dataPoint.indicator) and if $mdMedia says "go short" then do so
+		 Or could be vm.shortenIndicatorLable(dataPoint.indicator) and that would remove "Ebola" and "Cumulative number of" become "Cum.#"
+                 -->
 	    <td md-cell>{{dataPoint.value | number : 0}}</td>
 	  </tr>
 	</tbody>
@@ -53,7 +61,9 @@
        md-page-select
        md-total="{{vm.csvTable.rowCount}}"
        ></md-table-pagination>
+
+    <!--</md-content>-->
   </div>
 
-</md-card>
+<!-- </md-card> -->
 
