@@ -1,4 +1,6 @@
 ## outbreak_time_series
+The live demo is at [omolumeter.com](http://omolumeter.com), using the data from the 2014 Ebola outbreak in West Africa.
+
 The `outbreak_time_series` project defines a web-friendly data standard for outbreak time series. Additionally the project is developing open source web technology for visualizing the spatiotemporal progress of epidemiological outbreaks. Primarily that means web page components and hybrid mobile apps, but there is also a need for various secondary tools such as data aggregators, validators, converters, and the like. 
 
 The goal is to make widely available open source equivalents along the lines of the follow examples. (Note: the examples by Simon Johnson are already [open source](https://github.com/SimonbJohnson/Ebola-Timeline-Map/blob/master/LICENSE) and can be modified to read data compliant with the Outbreak Time Series spec, which is defined as part of this project.)
