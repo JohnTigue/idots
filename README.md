@@ -1,17 +1,13 @@
-## outbreak_time_series
-The live demo is at [omolumeter.com](http://omolumeter.com), using the data from the 2014 Ebola outbreak in West Africa.
+## Outbreak Time Series Project
+This project is about infectious disease outbreaks, specifically their time series data. This is an attempt to come up with a Web-native data standard for such data. 
 
-The `outbreak_time_series` project defines a web-friendly data standard for outbreak time series. Additionally the project is developing open source web technology for visualizing the spatiotemporal progress of epidemiological outbreaks. Primarily that means web page components and hybrid mobile apps, but there is also a need for various secondary tools such as data aggregators, validators, converters, and the like. 
-
-The goal is to make widely available open source equivalents along the lines of the follow examples. Note: the examples by Simon Johnson are already [open source](https://github.com/SimonbJohnson/Ebola-Timeline-Map/blob/master/LICENSE) and can be modified to read data compliant with the Outbreak Time Series spec, which is defined as part of this project. **None of the following are based on software from this repository:**  
-
-<a href='https://github.com/JohnTigue/outbreak_time_series/wiki/Gallery-of-Ebola-Visualizations-Found-Across-the-Web'>![](https://raw.githubusercontent.com/JohnTigue/ebola-viz-twumbshots/gh-pages/not-golden-ratio/nine-up-vizes.png)</a>
+The project also involves producing open source Web software for interacting with the data standard, including visualizers such as the Omolumeter; a live demo using 2014 Ebola data is at [omolumeter.com](http://omolumeter.com).
 
 This project defines [the Outbreak Time Series Specification](#outbreak_time_series_spec). The Spec describes a way to markup outbreak time series interchangeably in CSV, JSON, and XML. The Spec describes a data model for epidemiological outbreaks: essentially a sequence of geo-maps, each map a slice-of-time snapshot of new case data. The spec has the capacity to define arbitrary affected sub-populations (e.g. first responders, children, etc.). Oversimplifying, the fundamental messages encoded by the spec are of the form: **For disease D, during time interval I (moment-1 to moment-2), at location L, for population P: recorded were X new cases, Y new deaths, etc.**
 
-The Outbreak Time Series Spec defines the data structure and the `Omolumeter` software can visualize the data in a highly interactive manner leveraging only web standard technologies including SVG, JavaScript, CSS, and HTML. Taken together the code and the data spec can be deployed atop existing Internet infrastructure to create a global outbreak monitoring network. The first iteration is intentionally simple yet useful; it demonstrates how such things can be easily done and will hopefully be built upon in the future in various infectious disease outbreak responses -- seemingly [things are going to be interesting for the foreseeable future.](http://bigstory.ap.org/article/db7d627eb16841f7b78909b035e96e6f/experts-it-was-busy-black-eye-year-disease-control)
+In more informal terminology, an Outbreak Time Series is an infectious disease's microblog: "Today I killed 100 in Nottatown; I also caused 1500 cases. Over in Whereastan, I killed..."
 
-(Note: this project was originally called EbolaMapper. Eventually the scope grew to encompass tracking any infectious disease outbreaks. There is nothing Ebola specific about the project. Therefore the name was changed to `outbreak_time_series`.)
+The Outbreak Time Series Spec defines the data structure, and the `Omolumeter` software can visualize the data in a highly interactive manner leveraging only web standard technologies including SVG, JavaScript, CSS, and HTML. 
 
 ### Status
 This project is a side project, as such there is no scheduled attached. See, [the wiki](https://github.com/JohnTigue/outbreak_time_series/wiki#status) for more details.
