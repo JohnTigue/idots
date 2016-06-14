@@ -1,9 +1,9 @@
 ## Outbreak Time Series Project
 This project is about infectious disease outbreaks, specifically their time series data. This is an attempt to come up with a Web-native data standard for such data. 
 
-The project also involves producing open source Web software for interacting with the data standard, including visualizers such as the Omolumeter; a live demo using 2014 Ebola data is at [omolumeter.com](http://omolumeter.com).
+The project also involves producing open source Web software for interacting with the data standard. For example, the Omolumeter is a Web visualizer of outbreak time series data. A live Omoluter demo (using 2014 Ebola data) is at [omolumeter.com](http://omolumeter.com).
 
-This project defines [the Outbreak Time Series Specification](#outbreak_time_series_spec) (the Spec). The Spec describes an abstract data model for epidemiological outbreaks time series data. The abstract data model can be represented in Web-native data formats as CSV, JSON, and XML.
+This project defines [the Outbreak Time Series Specification](#outbreak_time_series_spec) (the Spec). The Spec describes an abstract data model for time series data about infectious disease outbreaks. The abstract data model can be represented in Web-native standards such as CSV, JSON, and XML.
 
 Oversimplifying, the fundamental messages encoded by the spec are of the form: **For disease D, during time period T, at location L, for population P the following was recorded: X new deaths, Y new suspected cases, etc.**
 
