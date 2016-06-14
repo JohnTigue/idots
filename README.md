@@ -16,15 +16,6 @@ The Outbreak Time Series Spec defines the data structure and the `Omolumeter` so
 ### Status
 This project is a side project, as such there is no scheduled attached. See, [the wiki](https://github.com/JohnTigue/outbreak_time_series/wiki#status) for more details.
 
-### Description
-With tongue in cheek, `outbreak_time_series` can be described as **modern open-source anti-virus software**. That phrase can be broken out as follows.
-
-**Modern**: this means highly interactive web browser based visualizations leveraging SVG, via D3.js. outbreak_time_series's dependencies works with any browser newer than IE8 (which is already fading fast in late 2014, at less than 10% of global usages, and Microsoft will stop supporting it in 2016). outbreak_time_series also uses AnjularJS 1.3.x, another project which recognizes that IE8 is not worth the limitations it imposes on any forward looking effort. So, this is designed to be useful for the foreseeable future.
-
-**Open-source**: The code is Apache 2.0 licensed (that is, do with it freely as you wish, commercially or otherwise). Data for the 2014 Ebola Outbreak in West Africa is also made available, as free open data ([PDDL licensed](http://opendatacommons.org/licenses/pddl/)). We have curated data and provide it via a RESTful web service API based on the [Outbreak Time Series Specification](https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-Time-Series-Specification-Overview).
-
-**Anti-virus software**: Ebola is a virus and this software project is anti-ebola (and pro-geeky humor).
-
 ### Uses
 outbreak_time_series enables historical outbreak data visualization. The "historical" distinction is made here to imply that, so far, outbreak_time_series is a reporting tool and not a forecasting tool. It enables interactive [explorable explanations](http://worrydream.com/ExplorableExplanations/) of an outbreak. The term "situational awareness" might be appropriate. Conceivably, outbreak_time_series could be used to "play" the output of a simulated or modeled outbreak. Currently though the main, first goal is to provide tools for reporter and the public to use to quickly comprehend the existing situation, rather than providing explorable explanations of forecasts and models, tools which are also dearly needed but that are not currently within the scope of this project, currently.
 
