@@ -5,7 +5,7 @@ The project also involves producing open source Web software for interacting wit
 
 This project defines [the Outbreak Time Series Specification](#outbreak_time_series_spec) (the Spec). The Spec describes an abstract data model for epidemiological outbreaks time series data. The abstract data model can be represented in Web-native data formats as CSV, JSON, and XML.
 
-Oversimplifying, the fundamental messages encoded by the spec are of the form: **For disease D, during time interval I (moment-1 to moment-2), at location L, for population P: recorded were X new cases, Y new deaths, etc.**
+Oversimplifying, the fundamental messages encoded by the spec are of the form: **For disease D, during time period T, at location L, for population P the following was recorded: X new deaths, Y new suspected cases, etc.**
 
 Or in more informal terminology, an Outbreak Time Series is an infectious disease's microblog: "Today I killed 100 in Nottatown; I also caused 1500 cases. Over in Whereastan, I killed..."
 
