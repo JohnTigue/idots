@@ -1,5 +1,5 @@
-## Outbreak Time Series Project
-This project is about infectious disease outbreaks, specifically their time series data. This is an attempt to come up with a Web-native data standard for such data. 
+## IDOTS Project
+This project is about infectious disease outbreaks, specifically their time series data. This is an attempt to come up with a Web-native data standard for such data. IDOTS is an acronym for Infectious Disease Outbreak Time Series. This project is about connecting the IDOTS on the Web.
 
 The project also involves producing open source Web software for interacting with the data standard. For example, the Omolumeter is a Web visualizer of outbreak time series data. A live Omoluter demo (using 2014 Ebola data) is at [omolumeter.com](http://omolumeter.com).
 
