@@ -1,0 +1,202 @@
+The =outbreak_time_series_reader= module is JavaScript which can read
+data conforming to the [[Outbreak Time Series Specification]] (The
+Spec). It can read all three serializations defined in The Spec.
+
+Relevant convenience utilities are also provided. For example in the
+JSON format data is grouped primarily by =time_interval= yet
+=outbreak_time_series_reader= provides an index of data sorted by
+=location=. Another example:
+=outbreak.time_series.maximums.otss_cases_all= is a count of the maximum
+value of =otss_cases_all= encountered while reading a Outbreak Time
+Series document, which is useful information for scaling markers and
+calibrating dimensions in visualizations.
+
+This is JavaScript code. JavaScript has various naming conventions. OTSS
+abstract data model names are algorithmically translated to JavaScript
+names, with JavaScript naming conventions. For example, =foo_bar= would
+be translated to =fooBar=.
+
+** Table of Contents
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-contents
+   :END:
+
+-  [[introduction][Introduction]]
+-  [[context][Architectural context]]
+-  [[object_model][Object model]]
+-  [[outbreak][=outbreak=]]
+
+   -  [[metadata][=metadata=]]
+   -  [[time_series][=time_series=]]
+   -  [[maximums][=maximums=]]
+
+-  [[examples][Examples]]
+-  [[omolumeter][Omolumeter]]
+
+** Introduction @@html:<a name='introduction'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: introduction
+   :END:
+
+=outbreak_time_series_reader= is a JavaScript module which works with: -
+web browsers (stand alone) - the AngularJS framework in a browser -
+node.js, in a server or the command line
+
+This document describe how to code against the
+=outbreak_time_series_reader= API. If you are interested in issues
+related to the raw JSON of the Outbreak Time Series Specification, check
+out [[Outbreak Time Series Specification Tutorial]].
+
+The main reason to use =outbreak_time_series_reader= rather than just
+directly ripping up the data through
+[[https://es5.github.io/x15.12.html][the JSON object]] is that you get
+an easy to use model of the data that you can dot into, yet the data
+modeled could have come from any one of the three serializations defined
+in [[Outbreak Time Series Specification]]: JSON, XML, and CSV.
+
+Do not underestimate CSV in the browser context, compared to the more
+common syntax of JSON; in the humanitarian community there are
+significant use cases where info is exported from spreadsheets to CSV.
+So, if you code up an outbreak visualization in a browser primarily for
+a data-in-JSON context but you nonetheless code against the
+=outbreak_time_series_reader= API, then folks who know how to export
+data from a spreadsheet program to CSV will be able to reuse your code
+without modification. That is, someone who can export CSV from Excell
+(of course, formatting the data according to the guidelines in The Spec)
+can immediately use your code. This use case is surprisingly prevalent
+in the humanitarian community. They will shower you with roses.
+
+** Architectural context @@html:<a name='context'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: architectural-context
+   :END:
+
+=outbreak_time_series_reader= is just a parsers and object model
+generator. It is intentionally designed without assumptions of the
+context within which it will be used. For example it can be used in a
+node server or in an Angular SPA, but there are no dependencies on those
+context.
+
+@@html:<img title='outbreak_time_series_reader in multiple contexts' src='https://s3-us-west-2.amazonaws.com/jft-blog-images/outbreak_time_series/reader_in_multi_contexts.jpg' width='600' />@@
+
+** Object model@@html:<a name='object_model'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: object-model
+   :END:
+
+The =outbreak_time_series_reader= JavaScript object model is simply the
+abstract model of the [[Outbreak Time Series Specification]] realized in
+JavaScript. There is a one-to-one correspondence between each part of
+the abstract model and the various object types described here. There
+are also conveniences added in, e.g.:
+
+#+BEGIN_EXAMPLE
+    aPopulation.deaths.confirmed === aPopulation.attributes( "deathsConfirmed" ).value;
+    aPopulation.deaths.suspected === aPopulation.attributes( "deathsSuspected" ).value;
+#+END_EXAMPLE
+
+*** outbreak @@html:<a name='outbreak`>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: outbreak
+    :END:
+
+An =outbreak= has 2 members: - =metadata= - `time\_series
+
+**** outbreak.metadata @@html:<a name='metadata'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: outbreak.metadata
+     :END:
+
+***** =payload_manifest=
+      :PROPERTIES:
+      :CUSTOM_ID: payload_manifest
+      :END:
+
+This is a quick summary of which data attributes where actually found
+while parsing a Resource.
+
+**** outbreak.time\_series @@html:<a name='time_series'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: outbreak.time_series
+     :END:
+
+A =time_series= is a sequence of =time_intervals=, and some metadata.
+
+***** outbreak.time\_series.maximums
+@@html:<a name='maximums'>@@@@html:</a>@@
+      :PROPERTIES:
+      :CUSTOM_ID: outbreak.time_series.maximums
+      :END:
+
+After loading an Outbreak Time Series document,
+'outbreak.time\_series.maximums' will have the maximum encountered value
+for all population properties found in the docs that begin with the
+prefix =otss_=.
+
+So, if the document has data for: - =otss_cases_all= - =otss_deaths_all=
+- =otss_basic_reproductive_number=
+
+Then there will be the following properties: -
+=outbreak.time_series.maximums.otss_cases_all= -
+=outbreak.time_series.maximums.otss_deaths_all= -
+=outbreak.time_series.maximums.otss_basic_reproductive_number=
+
+If the data has sub-population data, the =maximums= will be across all
+sub-populations
+
+** Examples @@html:<a name='examples'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: examples
+   :END:
+
+#+BEGIN_EXAMPLE
+    var anOutbreakReader = require("outbreak_time_series_reader");
+
+    // Data loading starts from JSON because the data in CSVW (essentially CSV plus a wee bit of JSON)
+    anOutbreakReader.read( "https://example.com/an_outbreak.json" );
+    ...
+#+END_EXAMPLE
+
+** Omolumeter @@html:<a name='omolumeter'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: omolumeter
+   :END:
+
+[[http://omolumeter.com][Omolumeter]] is an Angular SPA web-app which
+reads OTSS data and presents it via various visualizations.
+
+Omolumeter is the proof of concept software for OTSS. As such the APIs
+of the =OutbreakService= are crude at this time (May 2016) but they do
+their job. This section documents the APIs for the =OutbreakService= as
+implemented in Omolumeter. Point is: Omolumeter and =OutbreakService=
+are Angular things -- JavaScript yes, but APIs on a higher level than
+those of =outbreak_time_series_reader=.
+
+*** OutbreakService
+    :PROPERTIES:
+    :CUSTOM_ID: outbreakservice
+    :END:
+
+**** Deprecated
+     :PROPERTIES:
+     :CUSTOM_ID: deprecated
+     :END:
+
+***** outbreak.time\_series.intervals.bySequence
+      :PROPERTIES:
+      :CUSTOM_ID: outbreak.time_series.intervals.bysequence
+      :END:
+
+The array =outbreak.time_series.intervals.bySequence= should probably
+not be used. This is the sequence of =intervals= as they occurred as
+rows in the CVS files. It is not the temporalIndex; rather, that array
+is called =outbreak.time_series.intervals.byTime=. For example, in
+certain WHO files, the sequence of rows in the CSV is not the same
+sequence as when those rows (read:=intervals=) occurred in time.
+
+***** interval.locations.bySequence
+      :PROPERTIES:
+      :CUSTOM_ID: interval.locations.bysequence
+      :END:
+
+Same problem as =outbreak.time_series.intervals.bySequence= above.

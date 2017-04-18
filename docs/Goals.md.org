@@ -1,0 +1,68 @@
+The goal of this project is to make outbreak data a first class object
+type in a web-native, machine readable fashion. The Spec enables that.
+The proof of any data spec is its reference implementation (read:
+software that actually works with data compliant with the
+specification), which in this case is [[Omolumeter]].
+
+It is completely unacceptable that in 2016 even
+[[https://maimunamajumder.wordpress.com/2016/06/05/ddd-zika-in-colombia/][MIT
+researchers have to scrounge for data on outbreaks]]: >Unfortunately,
+one of the issues we've faced during the ongoing Central and South
+American Zika outbreak has been a dearth of official case count data. In
+recent weeks, this has been partially mitigated thanks to this
+interactive, case count visualization PAHO released a little while ago.
+However, it's worth noting that these data aren't in a machine-readable
+format (and scraping from interactive visualizations can often be more
+challenging than doing so from PDFs).
+
+Although there is /some/ publicly published infectious disease outbreak
+time series (sometimes referred to as case counts) there is no current
+standard for interoperability. In June of 2016, The New England Journal
+of Medicine published a "Perspective" article, entitled
+[[http://www.nejm.org/doi/full/10.1056/NEJMp1605148][Avoiding Data
+Dumpsters --- Toward Equitable and Useful Data Sharing]]. Quoting: >One
+of the risks posed by these expanding repositories is the production of
+“data dumpsters”: repositories of data without the metadata, data
+dictionaries, or documentation needed for meaningful or correct
+reanalysis.
+
+With regards to infectious disease outbreak time series, the Web is
+currently a data dumpster.
+
+** === Needs rewrite ===
+   :PROPERTIES:
+   :CUSTOM_ID: needs-rewrite
+   :END:
+
+Turns out a major task of this project is to define the [[Outbreak Time
+Series Specification|Outbreak Time Series Specification Overview]],
+curate some outbreak data, and the provide/host the curated/compiled
+data as a Web service at omolumeter.com
+
+[[Omolumeter]] initially was a tool for validating the data from any Web
+service conformant with the [[Outbreak Time Series
+Specification|Outbreak Time Series Specification Overview]]. It is also
+intended demonstrate multiple world-class visualizations of ebola
+outbreak data; it is not just supposed to be some lame, minimal
+proof-of-concept (which is all it is as of 2016-06-13). It is intended
+to be the very best of its breed. That is to say the global Web game on
+epidemic visualization needs to be seriously stepped up and
+[[Omolumeter]] is intended to be the pace car.
+
+There are many ebola visualization but very, very few that can be
+considered excellent, and of those none are open source code that reads
+open data via standard APIs. When [[Omolumeter]] has been deployed on
+multiple Web sites (white labeled, locally styled, without any credit
+given to this project) then this effort can be considered a success.
+Further success will be evidenced by a speedier engagement of the world
+during future outbreaks. i.e. this is not some one-off ebola specific
+project. (In the parlance of the medical governmental types this is
+"multi-use".)
+
+A very important goal is to work with news outlets with an eye towards
+the future. Work with them so that their internal cultures know of the
+Omolumeter visualization codebase and [[Outbreak Time Series
+Specification|Outbreak Time Series Specification Overview]] so that they
+will know how to get info out earlier next time. In this view, Ebola2014
+is just a trial run for future outbreaks, certainly with regard to these
+tools which came too late. Next time though...

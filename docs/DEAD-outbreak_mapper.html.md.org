@@ -1,0 +1,11 @@
+outbreak\_mapper.html is simply a single page app which hosts the
+=outbreak_mapper= widget. Yet it may well be the main user experience,
+especially for those who need to take the app to offline contexts.
+
+[Currently, I have no idea what chrome will be the context around the
+=outbreak_mapper= widget on =outbreak_mapper.html= but is should show
+off how the thing is a white label-able product for the purposes of the
+[[White Label]] documentation.
+
+There needs to be a cache.manifest file referenced from the HTML (with
+the content type text/cache-manifest) etc. See [[Offline Mode]].

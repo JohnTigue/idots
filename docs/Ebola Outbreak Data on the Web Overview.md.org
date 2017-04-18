@@ -1,0 +1,125 @@
+This page is a curated collection of ebola outbreak data on the Web.
+This collection provides an overview of the state of the situation via
+notable examples. It is not meant to be an exhaustive catalog.
+
+[[Recommendations for Data to Use in Web Apps]] is the place to go if
+looking for data to code against.
+
+The examples are broken down into three types.
+
+1. [[catalogs][Data catalogs]]: human readable documents and Web sites
+   which enumerate collections of known URLs at which ebola outbreak
+   numbers are available.
+2. [[repositories][Data repositories]]: Web sites at which multiple
+   ebola datasets can be found. These are Web apps where data resides,
+   as opposed to items in #1 above which are simply contain pointers to
+   where data can be found.
+3. [[api-feeds][Data via APIs]]: ebola outbreak data available via
+   private APIs.
+
+** Motivation
+   :PROPERTIES:
+   :CUSTOM_ID: motivation
+   :END:
+
+The goal of this *EbolaMapper* project is to have open source code
+(Apache 2.0 licensed) which can interactively visualize ebola outbreak
+data in Web browsers (and do the same during future epidemic outbreaks,
+ebola or otherwise). By definition, folks are free to do whatever they
+like with Apache 2.0 licensed code. For example, say, a national health
+ministry wishes to visualize their private info: they can deploy
+*EbolaMapper* privately and knock themselves out, it's no one else's
+business.
+
+Ebola outbreak data is available at this project via the [[Outbreak Time
+Series Specification|Outbreak Time Series Specification Overview]],
+licensed as open data under
+[[http://opendatacommons.org/licenses/pddl/][PDDL]]. Real success will
+be when other sites also provide data through the same APIs.
+
+The following information was collected early in development while
+searching for dataset that could be format via the [[Outbreak Time
+Series Specification|Outbreak Time Series Specification Overview]] such
+that *EbolaMapper* could have some data to visualize.
+
+** Catalog documents @@html:<a name='#catalogs'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: catalog-documents
+   :END:
+
+1. Gapminder's list\\
+   [[https://docs.google.com/document/d/1heaGh57rLNxvuvgBrnrlu1HKUy6oVqJQBKoSkOgSCFg/edit][List
+   of datasources on the Web]] (a Google Doc)\\
+   They also maintain
+   [[https://www.google.com/calendar/embed?src=gapminder.org_9juis638146ec8q16297gugedg@group.calendar.google.com&ctz=Europe/Stockholm][a
+   calendar of report release dates]]
+
+2. Ebola Data Jam\\
+   http://eboladata.org/dataset\\
+   Analysis can be found on this wiki's page, [[Datasets Listed on
+   eboladata.org]]
+
+3. data.gov\\
+   https://catalog.data.gov/dataset?q=ebola\\
+   No analysis of this search result yet but a quick glance leads one to
+   think there is significant overlap with what the eboladata.org effort
+   has curated.
+
+4. Another GoogleDoc spreadsheet\\
+   [[https://docs.google.com/spreadsheets/d/1t-CA4FCupjXDC6rM5_aKCd_LnpO0MwPd1PCrNxwiYoM][A
+   spreadsheet of ebola outbreak data]]\\
+   This one was found via http://www.reddit.com/r/ebola
+
+** Repositories @@html:<a name='#repositories'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: repositories
+   :END:
+
+These repositories currently have ebola outbreak data but not real data
+rich usable APIs, yet, although that is changing. These two are the most
+important, as I believe they will be the two first place to deploy the
+[[Outbreak Time Series Specification|Outbreak Time Series Specification
+Overview]] due to their current activity in the ebola response.
+
+1. The Humanitarian Data Exchange (HDX)\\
+   See [[HDX repository]]
+
+2. Open Humanitarian Data Repository (OHDR)\\
+   See [[OHDR repository]]
+
+** API feeds@@html:<a name='#api-feeds'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: api-feeds
+   :END:
+
+There are a very few, about four, instances of Ebola2014 data available
+in any form that could be called an API. CSV is being excluded from this
+definition, even though its inclusion could be argued, especially in
+light of standards like #HXL. No use of #HXL for Ebola2014 data is known
+of.
+
+Since before this project there was no API for outbreak data, the
+instances of ebola-outbreak-data-in-JSON that have been found have
+simply been JSON quickly banged out for the purposes of getting the data
+from one server to one client. Let us call this a "private API." These
+bits of JSON served their one-time purposes.
+
+A goal of this project is that ebola outbreak information be available
+via a standard APIs. This is what is being called [[Outbreak Time Series
+Specification|Outbreak Time Series Specification Overview]]. For future
+outbreaks, ebola or otherwise, having a simple yet well defined API will
+enable that speedy proliferation of outbreak data across the Web and
+into Web site applications and mobile device apps (read: iPhone and
+Android apps).
+
+This project is the first and, as of yet, only source of HTTP Resources
+which contains representations of outbreak data made available via the
+[[Outbreak Time Series Specification|Outbreak Time Series Specification
+Overview]].
+
+See [[JSON Ebola2014 Data Found on the Web]] for detailed analysis of
+the few private APIs found on the Web. They were used during analysis to
+come up with a global harmonized non-ebola specific set of [[Outbreak
+Time Series Specification|Outbreak Time Series Specification Overview]],
+which has turned out to be one of the two major deliverables of this
+project.

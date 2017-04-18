@@ -1,0 +1,423 @@
+This page provides a technical analysis of the 4 know JSON feeds of
+Ebola2014 data found on the Web. This was done in order to ensure that
+the [[Outbreak Time Series Specification|Outbreak Time Series
+Specification Overview]] would serve potential adopters well.
+
+Arguably any machine readable structured data could be called an API.
+The JSON data feeds discussed on this page could be called APIs. They
+are private APIs, though, in that they were (I assume) banged out simply
+to get Ebola2014 outbreak data from a particular Web server to one of
+the site's pages running JavaScript in a Web browser.
+
+The goal of the [[Outbreak Time Series Specification|Outbreak Time
+Series Specification Overview]] is to have a public API, and that it not
+be Ebola2014 specific. Also, the API will be used by servers, such at
+node.js based server, not just browsers. HDX is obviously heading in
+[[http://docs.hdx.rwlabs.org/an-api-for-ebola-data/][the direction of a
+public API as well]]. John Tigue is approach them to see if they might
+consider the [[Outbreak Time Series Specification|Outbreak Time Series
+Specification Overview]] defined in this project.
+
+*** Table of contents
+    :PROPERTIES:
+    :CUSTOM_ID: table-of-contents
+    :END:
+
+-  [[hdx][HDX]]
+-  [[hdx-api-experiment][The 2014-11 API experiment]]
+-  [[hdx-ebola-dashboard][The ebola dashboard]]
+-  [[simon-johnson][Simon Johnson]]
+-  [[Liberias-site][Liberia's site]]
+-  [[nytimes][New York Times]]
+
+*** HDX
+    :PROPERTIES:
+    :CUSTOM_ID: hdx
+    :END:
+
+For more on the HDX repository, see [[HDX Repository]]. ### HDX API
+experiment@@html:<a name='hdx-api-experiment'>@@@@html:</a>@@
+
+On 2014-11-12 CJ Hendrix blogged about ebola data API experiments going
+on at HDX [[http://docs.hdx.rwlabs.org/an-api-for-ebola-data/][An API
+for Ebola Data]]. This is a high level API which does not cover the
+information modeled in this [[Outbreak Time Series
+Specification|Outbreak Time Series Specification Overview]]. Hopefully,
+we can work with the on deploying the Outbreak Dashboard API there.
+
+As CJ Hendrix wrote: >HDX maintains a dataset of top line figures for
+the Ebola crisis. It contains information for six indicators:\\
+Cumulative Cases of Ebola\\
+Cumulative Deaths from Ebola\\
+Open Ebola Treatment Centers\\
+People Receiving Food Aid\\
+Appeal Coverage\\
+Currently Affected Countries
+
+A link to
+[[https://data.hdx.rwlabs.org/dataset/topline-ebola-outbreak-figures/resource/a02903a9-022b-4047-bbb5-45127b591c85][the
+HTML page of an example dataset]] is provided. Look for the "DATA API"
+button for more info. There the following text can be found.
+
+#+BEGIN_EXAMPLE
+    Query (via SQL) http://data.hdx.rwlabs.org/api/action/datastore_search_sql
+    Query example (via SQL statement)
+    http://data.hdx.rwlabs.org/api/action/datastore_search_sql?sql=SELECT * from "a02903a9-022b-4047-bbb5-45127b591c85" WHERE title LIKE 'jones'
+#+END_EXAMPLE
+
+*Yowza!* That looks dangerous. A malicious hacker might want to know
+about that!
+
+Moving on. Sample code is provided that demonstrates hot to use the API
+in JavaScript.
+
+#+BEGIN_EXAMPLE
+    A simple ajax (JSONP) request to the data API using jQuery.
+      var data = {
+        resource_id: 'a02903a9-022b-4047-bbb5-45127b591c85', // the resource id
+        limit: 5, // get 5 results
+        q: 'jones' // query for 'jones'
+      };
+      $.ajax({
+        url: 'http://data.hdx.rwlabs.org/api/action/datastore_search',
+        data: data,
+        dataType: 'jsonp',
+        success: function(data) {
+          alert('Total results found: ' + data.result.total)
+        }
+      });
+#+END_EXAMPLE
+
+To fetch the full 6 values:
+
+#+BEGIN_EXAMPLE
+    http://data.hdx.rwlabs.org/api/action/datastore_search?resource_id=a02903a9-022b-4047-bbb5-45127b591c85
+#+END_EXAMPLE
+
+This URL will fetch just the appeal coverage:
+
+#+BEGIN_EXAMPLE
+    http://data.hdx.rwlabs.org/api/action/datastore_search?resource_id=a02903a9-022b-4047-bbb5-45127b591c85&q=appeal coverage
+#+END_EXAMPLE
+
+The heart of that response looks like (heavily edited down):
+
+#+BEGIN_EXAMPLE
+    {
+    "latest_date":"2014-11-20T00:00:00",
+    "title":"Appeal Coverage",
+    "source_link":"https://data.hdx.rwlabs.org/dataset/fts-ebola-coverage",
+    "notes":"",
+    "value":0.507,
+    "source":"OCHA FTS",
+    "explore":"http://simonbjohnson.github.io/ebola-fts-dashboard/",
+    "_full_count":"1",
+    "rank":0.0901673,
+    "units":"ratio",
+    "_id":3
+    }
+#+END_EXAMPLE
+
+So, basically an association of Simon Johnson's
+[[http://simonbjohnson.github.io/ebola-fts-dashboard/][Ebola Financial
+Tracking Dashboard]] and
+[[https://data.hdx.rwlabs.org/dataset/fts-ebola-coverage][the source of
+the data for that dashboard]].
+
+**** The HDX ebola
+dashboard@@html:<a name='hdx-ebola-dashboard'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: the-hdx-ebola-dashboard
+     :END:
+
+URL: https://data.hdx.rwlabs.org/ebola\\
+GitHub repo: https://github.com/OCHA-DAP/hdxviz-ebola-cases-total
+
+Internally the visualization app is called =ebolaVizApp=. AngularJS and
+C3.js (et ergo D3.js) are used.
+
+The =ebolaVizApp='s code is at:\\
+https://github.com/OCHA-DAP/hdxviz-ebola-cases-total/blob/gh-pages/js/ebolaviz-app.js
+
+The raw JSON data that =ebolaVizApp= reads is at
+
+#+BEGIN_EXAMPLE
+    data.hdx.rwlabs.org/api/3/action/datastore_search_sql
+#+END_EXAMPLE
+
+The SQL seems to be:
+
+#+BEGIN_SRC sql
+    SELECT \"Indicator\", \"Date\", \"Country\", value FROM \"f48a3cf9-110e-4892-bedf-d4c1d725a7d1\" 
+    WHERE \"Indicator\"='Cumulative number of confirmed, probable and suspected Ebola deaths' OR \"Indicator\"='Cumulative number of confirmed, probable and suspected Ebola cases' 
+    ORDER BY \"Date\"
+#+END_SRC
+
+i.e. for case and deaths, get Indicator(text), Date(timestamp),
+Country(text)
+
+The data is fetched via HTTP POST. Here's the curl command for that:
+
+#+BEGIN_EXAMPLE
+    curl 'https://data.hdx.rwlabs.org/api/3/action/datastore_search_sql' --data $'%7B%22sql%22%3A%22SELECT%20%5C%22Indicator%5C%22%2C%20%5C%22Date%5C%22%2C%20%5C%22Country%5C%22%2C%20value%20FROM%20%5C%22f48a3cf9-110e-4892-bedf-d4c1d725a7d1%5C%22%20WHERE%20%5C%22Indicator%5C%22%3D\'Cumulative%20number%20of%20confirmed%2C%20probable%20and%20suspected%20Ebola%20deaths\'%20OR%20%5C%22Indicator%5C%22%3D\'Cumulative%20number%20of%20confirmed%2C%20probable%20and%20suspected%20Ebola%20cases\'%20ORDER%20BY%20%5C%22Date%5C%22%22%7D' 
+#+END_EXAMPLE
+
+That can be run through Apache Spark to detect the schema:
+
+#+BEGIN_EXAMPLE
+    >spark-shell       
+    scala> :paste
+    val aSqlContext = new org.apache.spark.sql.SQLContext( sc )
+    val hdxData = aSqlContext.jsonFile( "hdx_ebola_dashboard_data.json" )
+    hdxData.printSchema
+    [Ctrl][D]
+    root
+     |-- help: string (nullable = true)
+     |-- result: struct (nullable = true)
+     |    |-- fields: array (nullable = true)
+     |    |    |-- element: struct (containsNull = false)
+     |    |    |    |-- id: string (nullable = true)
+     |    |    |    |-- type: string (nullable = true)
+     |    |-- records: array (nullable = true)
+     |    |    |-- element: struct (containsNull = false)
+     |    |    |    |-- Country: string (nullable = true)
+     |    |    |    |-- Date: string (nullable = true)
+     |    |    |    |-- Indicator: string (nullable = true)
+     |    |    |    |-- value: double (nullable = true)
+     |    |-- sql: string (nullable = true)
+     |-- success: boolean (nullable = true)
+#+END_EXAMPLE
+
+Where Indicator will be either: -
+="Cumulative number of confirmed, probable and suspected Ebola cases"= -
+="Cumulative number of confirmed, probable and suspected Ebola deaths"=
+
+So, essentially it returns a flat list in the form of:
+
+#+BEGIN_EXAMPLE
+
+    {
+      "Date":"2014-10-10T00:00:00",
+      "Country":"Spain",
+      "Indicator":"Cumulative number of confirmed, probable and suspected Ebola cases",
+      "value":1
+    },
+    {
+      "Date":"2014-10-10T00:00:00",
+      "Country":"Spain",
+      "Indicator":"Cumulative number of confirmed, probable and suspected Ebola deaths",
+      "value":0
+    }
+    ...
+#+END_EXAMPLE
+
+That is, for each (country,day) there are two objects, one for deaths
+and one for cases. There is only one date per week, so this is a weekly
+report.
+
+The server code that generates this data fetches is from
+scraperwiki.com:\\
+https://github.com/OCHA-DAP/hdxviz-ebola-cases-total/blob/gh-pages/js/ebolaviz-services.js
+
+*** Simon Johnson
+    :PROPERTIES:
+    :CUSTOM_ID: simon-johnson
+    :END:
+
+Simon's work is some of the very best on the Web for ebola outbreak and
+response.
+
+For [[http://simonbjohnson.github.io/Ebola-Timeline-Map/][The Ebola
+Timeline Map]] he used JSON.
+
+[[http://simonbjohnson.github.io/Ebola-Timeline-Map/data/totalCasesAndDeaths.js][totalCasesAndDeaths.js]]:
+
+#+BEGIN_EXAMPLE
+    var totalCasesAndDeaths = [{"Date":"31/03/2014","newCases":46,"newDeaths":25},
+            {"Date":"07/04/2014","newCases":49,"newDeaths":32},
+            {"Date":"14/04/2014","newCases":29,"newDeaths":18},
+            {"Date":"21/04/2014","newCases":23,"newDeaths":16},
+            {"Date":"28/04/2014","newCases":14,"newDeaths":14},
+            {"Date":"05/05/2014","newCases":14,"newDeaths":12},
+            {"Date":"12/05/2014","newCases":17,"newDeaths":20},
+            ...
+#+END_EXAMPLE
+
+[[http://simonbjohnson.github.io/Ebola-Timeline-Map/data/region_cases.js][region\_cases.js]]:
+
+#+BEGIN_EXAMPLE
+    var regionCases = [ 
+      {"Date":"31/03/2014","Cases":[
+        {"Region":"GIN001001","Cases":"0"},
+        {"Region":"GIN001002","Cases":"0"}, 
+        {"Region":"GIN002001","Cases":"11"},
+        ...
+        {"Region":"MLI001","Cases":"0"},    
+        {"Region":"MLI009","Cases":"0"} 
+      ]},
+      {"Date":"07/04/2014","Cases":[    
+        {"Region":"GIN001001","Cases":"0"}, 
+        {"Region":"GIN001002","Cases":"0"}, 
+        ...
+#+END_EXAMPLE
+
+*** Liberia's site
+    :PROPERTIES:
+    :CUSTOM_ID: liberias-site
+    :END:
+
+[[http://ebolainliberia.org/dashboard.html][ebolainliberia.org]]
+
+This is good work. This is an excellent example for how this should be
+done. The map is implemented via CartoDB, an high quality service.
+
+*The interesting part*: they have a separate counter for "hcw" i.e.
+Health Care Workers. This brings in a whole new dimension to the data,
+sub-sets of a population. The API will need to handle this in an
+expandable way. For example, perhaps the breakdown is "male" and
+"female" and "child." Point is the API needs to be able to allow use of
+arbitrary labels for subsets. (Call these "population-id" or such?
+Dunno.)
+
+They also have percentage change fields, e.g. 'pct\_change\_death\_hcw'.
+Herm, that seems like a derivable number. Not sure if that should go in
+the API.
+
+One of the maps on that site seems to use this dataset:
+https://unc-crisis-team.cartodb.com/viz/374d1302-3140-11e4-9ca7-0edbca4b5057/public\_map
+
+The datafeed URL is
+http://ebolainliberia.org/data/export\_main\_weekly.json. That returns a
+JSON object for each weekly situation report. Pretty printed, each looks
+like:
+
+#+BEGIN_EXAMPLE
+    {
+    cases_cum_probable: 2104,
+    deaths: 16,
+    hc_workers: null,
+    total_deaths_suspected: 658,
+    auto_new_deaths: null,
+    hcw_cases_cum: 226,
+    sit_rep__day_of_year: 291,
+    CFR: "66",
+    new_weekly_deaths: 280,
+    new_deaths_confirmed: null,
+    location__slug: "national",
+    new_deaths_probable: null,
+    total_deaths_confirmed: 1235,
+    total_deaths_probable: 801,
+    hcw_deaths_cum: 101,
+    total_deaths_all: 2694,
+    pct_change_cases: 55.56,
+    cases_cum_confirmed: 959,
+    new_weekly_deaths_hcw: 8,
+    location__name: "National",
+    cases_cum_suspected: 1594,
+    hcw_cases_new: 2,
+    new_weekly_cases_hcw: 20,
+    sit_rep__date: "2014-10-18",
+    pct_change_death: 30.23,
+    new_weekly_cases: 448,
+    pct_change_death_hcw: 700,
+    cases_new_confirmed: 7,
+    cases_new_suspected: 37,
+    new_deaths_suspected: null,
+    cases_cum: 4657,
+    hcw_deaths_new: 0,
+    cases_new_total: 64,
+    pct_change_cases_hcw: 25,
+    cases_new_probable: 20
+    }
+#+END_EXAMPLE
+
+They also have JSON for a weekly drilldown:\\
+http://ebolainliberia.org/data/regional\_drilldown.json
+
+This has detailed data for each county, for example
+
+#+BEGIN_EXAMPLE
+    {
+    new_weekly_cases: [
+    -632,
+    3,
+    -2,
+    91,
+    891,
+    1090,
+    -2068,
+    1755,
+    -1757,
+    1632,
+    -1477,
+    -158,
+    3,
+    336,
+    -339,
+    0,
+    17,
+    22,
+    -39,
+    1215,
+    -1215,
+    46,
+    1372,
+    -1418,
+    228,
+    -160,
+    60,
+    -119,
+    492
+    ],
+    cases_cum: 2073,
+    location__name: "Montserrado County",
+    hcw_cases_cum: 94,
+    hcw_deaths_cum: 34,
+    total_deaths_all: 1369,
+    new_weekly_deaths: [
+    -522,
+    0,
+    1,
+    62,
+    545,
+    761,
+    -1366,
+    1220,
+    -1223,
+    1081,
+    -949,
+    -131,
+    0,
+    257,
+    -258,
+    1,
+    14,
+    20,
+    -35,
+    741,
+    -740,
+    36,
+    890,
+    -926,
+    189,
+    -136,
+    64,
+    -109,
+    357
+    ]
+    },
+#+END_EXAMPLE
+
+*** New York Times@@html:<a name='nytimes'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: new-york-times
+    :END:
+
+[[http://www.nytimes.com/interactive/2014/07/31/world/africa/ebola-virus-outbreak-qa.html][The
+New York Times ebola visualization]] uses 3 URLs for JSON data about the
+outbreak. -
+http://graphics8.nytimes.com/newsgraphics/2014/07/31/ebola-qa/647495c5817baefdea1cc891eface83f8b1e4f57/cases.json
+-
+http://graphics8.nytimes.com/newsgraphics/2014/07/31/ebola-qa/647495c5817baefdea1cc891eface83f8b1e4f57/national.json
+-
+http://graphics8.nytimes.com/packages/js/newsgraphics/2014/08/06-eboal-cases-deaths.js?21

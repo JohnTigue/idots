@@ -1,0 +1,130 @@
+* Motivation
+  :PROPERTIES:
+  :CUSTOM_ID: motivation
+  :END:
+
+This project seeks to define a simple data standard for infectious
+disease outbreaks, and atop of that provide free software source code
+which can visualize that information using web technology. This page
+describes the motivation.
+
+In researching the 2014 Ebola Outbreak in West Africa situation, the
+main conclusion of this Outbreak Time Series project was that readily
+available, *liberally licensed open source tools for producing visually
+engaging outbreak dashboards* would help mobilize a response earlier and
+[[http://www.theguardian.com/commentisfree/cartoon/2014/oct/06/first-dog-how-to-beat-ebola][maintain
+public awareness]] for the duration of a crisis.
+
+An even deeper problem is the lack machine readable data standards for
+outbreak data. During the Zika outbreak of 2016,
+[[https://maimunamajumder.wordpress.com/2016/06/05/ddd-zika-in-colombia/][MIT
+researchers were slowed down by a lack of data standards]]: >it's worth
+noting that these data [from PAHO] aren't in a machine-readable format
+(and scraping from interactive visualizations can often be more
+challenging than doing so from PDFs). This, of course, adds an
+additional, unnecessary step for researchers and curious minds alike
+
+What millions of people might see is clearly of the greatest impact, but
+more importantly there is a serious need for a data standard for
+outbreak data. In other words, there needs to be standard data
+structures and APIs to outbreak data. Visualizations implemented upon
+Web technologies (and that can be as simple as a static image in JPEG,
+PNG, GIFF, etc.) are by definition first class objects in the Web. *What
+is missing is for the data behind the visualization to also be first
+class objects on the Web.* The way to make that happen is for APIs and
+Web-native formats. For data on the Web that means
+[[http://www.json.org/][JSON]] and
+[[https://www.w3.org/2013/csvw/wiki/Main_Page][CSV]], and to a lesser
+extent [[https://www.w3.org/TR/REC-xml/#sec-xml-wg][XML]] (yup,
+shameless self-plug there).
+
+** Epidemic data for the 2014 Ebola Outbreak in West Africa
+   :PROPERTIES:
+   :CUSTOM_ID: epidemic-data-for-the-2014-ebola-outbreak-in-west-africa
+   :END:
+
+In February 2014, the first case reports of the West Africa ebola
+outbreak surfaced in Guinea, although via retroactive tracking it seems
+[[http://blogs.unicef.org/2014/10/27/ebola-finding-patient-zero/][the
+outbreak started in December 2013]]. For months, outbreak numbers had to
+be manually screen scraped from Web pages and PDF files. Therefore
+quality reusable data only became
+[[https://blog.datamarket.com/2014/10/15/ebola-data-on-datamarket/][widely
+available to the public]] in mid October 2014.
+
+What if someone in Guinea could have started engagingly publishing their
+own data back in February 2014? What if MSF had been able to cheaply and
+easily deploy compelling visualizations on their Website? Open data,
+well defined by a simple [[Outbreak Time Series Specification|Outbreak
+Time Series Specification Overview]], published simply on the Web and
+visualized by liberally licensed
+([[http://en.wikipedia.org/wiki/Gratis_versus_libre][gratis and
+libre]]), pre-built tools would have helped.
+
+It is expected that more and more infectious disease outbreaks will
+occur in the near future.
+@@html:<a href='https://www.theguardian.com/culture/gallery/2016/jun/11/winners-2016-agar-art-competition-photos'>@@
+[[https://raw.githubusercontent.com/JohnTigue/ebola-viz-twumbshots/gh-pages/not-golden-ratio/twelve-year-of-yuck.png]]@@html:</a>@@
+(via
+[[https://www.theguardian.com/culture/gallery/2016/jun/11/winners-2016-agar-art-competition-photos][The
+Guardian]])
+
+** Map data
+   :PROPERTIES:
+   :CUSTOM_ID: map-data
+   :END:
+
+As the recent financial support contributed by MSF and the Red Cross to
+[[http://hot.openstreetmap.org/][HOT's]] recent
+[[http://www.economist.com/news/international/21632520-rich-countries-are-deluged-data-developing-ones-are-suffering-drought][MissingMaps.org]]
+project demonstrates, the need for quality maps needs to be solved
+proactively for future outbreak and other disaster responses. Clearly,
+HOT is a successful open source community yet in the venture capital
+fuled software start-up context such open source projects are actually
+funded by commercial interests. Now with the added fuel,
+MissingMaps.org's work will proceed much more quickly. But now ask: what
+tools will global and local parties use that track an outbreak, using
+the OSM maps?
+
+* The vision
+  :PROPERTIES:
+  :CUSTOM_ID: the-vision
+  :END:
+
+Which leads me to the Outbreak Time Series project. Consider the
+Liberian government's ebola outbreak dashboard
+[[http://ebolainliberia.org/][ebolainliberia.org]]
+
+As the site states:\\
+>This project commissioned by Liberia's Ministry of Information and
+Communication seeks to provide a central location for the latest data
+about the Ebola Epidemic.
+
+This is the sort of thing that should just come out of the box for
+future epidemics. Note that [[http://ebolainliberia.org/about.html][15
+professionals]] were involved in producing that site. The goal of this
+Outbreak Time Series project is for such a team to consist of one
+amateur "script-kiddie" in the future.
+
+Using [[Simon Johnson's work|Other-Coders#simon-johnson]] as evidence,
+one D3.js coder can work wonders. And if a data API were available with
+which to feed data into such visualization, then there is reusable
+front-end or a global outbreak monitoring network. If such dashboard
+widgets were made freely available, then in the future a "script kiddie"
+could put up a dashboard in a few hours. And that would be only the
+first use of the data standard; next the data would be publishable and
+aggregate-able which leads to all manner of interesting possibilities...
+
+** Outbreak Time Series project blog
+   :PROPERTIES:
+   :CUSTOM_ID: outbreak-time-series-project-blog
+   :END:
+
+http://tigue.com/
+
+Tigue has recorded the ongoing story of the Outbreak Time Series project
+in [[http://tigue.com][his blog]], which also is arguably the best place
+on the Web for pictures of and links to [[visualizations of the 2014
+Ebola 2014 Outbreak in West Africa|Gallery of Ebola Visualizations Found
+Across the Web]]. Reading through those posts is a great way to see what
+motivated this project.

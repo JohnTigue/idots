@@ -1,0 +1,32 @@
+*EbolaMapper* is code that runs completely client-side i.e. in a Web
+browser capable of being hosted from a simple static Web server via
+http:// URLs and, getting to the point, even from file:// URLs.
+
+Therefore just as *EbolaMapper* can be run in [[Offline Mode]] (i.e.
+served via http:// URLs and then cached as a HTML5 Offline Web
+applications) if properly package with its data *EbolaMapper* could be
+passed between people as a single file. This packaging in a zipfile is
+also useful for distribution via USB sticks.
+
+One way for distributing the packaged app is via P2P networks. In that
+case there will be multiple versions of *EbolaMapper* packaged with data
+for different periods of time.
+
+** File naming
+   :PROPERTIES:
+   :CUSTOM_ID: file-naming
+   :END:
+
+So, there needs to be a standard file name which indicates what the
+files is. Surely it starts with EbolaMapper. Then a [ISO 8601
+interval]http://en.wikipedia.org/wiki/ISO\_8601#Time\_intervals). Then
+probably a filename extension. For example:\\
+EbolaMapper.2014-03-01--2014-11-10.zip
+
+JFT: I did see some mentions of Week10, or Week 12. Not sure I like
+that.
+
+Perhaps there should be an
+[[http://en.wikipedia.org/wiki/8.3_filename][8.3 FILENAME]] for
+situations where the OS is old DOS. But would such an OS have the
+ability to run a Web browser which can render D3.js apps?

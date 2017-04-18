@@ -1,0 +1,251 @@
+This report was prepared by
+[[https://www.linkedin.com/in/johntigue][John Tigue]] ahead of
+[[https://github.com/JohnTigue/EbolaMapper/wiki/Africa-Open-Data-Group#meetup-of-2014-12-05][the
+Africa Open Data Group (AODG) conference call of December 5th, 2014]].
+It includes a status report of Tigue's action items from the group's
+previous meeting. It also introduces various things produced while
+following through on the action items, including: - [[Outbreak Time
+Series Specification|Outbreak Time Series Specification Overview]], an
+open data spec for epidemic outbreak time series APIs -
+[[https://github.com/JohnTigue/EbolaMapper][EbolaMapper]], open source
+software which can read data conformant to the spec - [[A
+survey|Datasets Listed on eboladata.org]] of all datasets listed on
+http://eboladata.org - [[A survey|Gallery of Ebola Visualizations Found
+Across the Web]] of Ebola outbreak visualizations from across the Web\\
+- [[The EbolaMapper wiki|Home]], of which this report is a member.
+
+The primary take away is that while surveying the situation (Tigue's
+original action items) it became clear that there are deeper issues
+which Tigue believes can be addressed with the proposed Outbreak Time
+Series Specification, which hopefully can break future log jams
+preventing the early, factual dissemination of outbreak numbers.
+
+The *EbolaMapper* visualization tools are the proof of the concept yet
+they are general purpose enough so that they can be reused in future
+outbreaks. Both the software and the spec are in development and will be
+usable by the end of December 2014.
+
+** Table of contents
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-contents
+   :END:
+
+-  [[introduction][Introduction]]
+-  [[survey][Survey of the Web's ebola 2014 outbreak data and
+   visualizations]]
+-  [[analysis][Analysis of the situation]]
+-  [[next-actions][Next actions]]
+-  [[further-info][Further information]]
+
+** Introduction
+   :PROPERTIES:
+   :CUSTOM_ID: introduction
+   :END:
+
+The previous meeting of the [[Africa Open Data Group]] was on
+[[http://www.meetup.com/Africa-Open-Data/events/210071892/][November
+7th, 2014]], during which the Ebola Open Data Jam was reviewed. Tigue
+went away from that meeting with action items to: - review the datasets
+cataloged during the Jam, at [[http://eboladata.org][eboladata.org]] -
+code up some visualizations with those datasets
+
+In the process of following through on the above action items, deeper
+issues became clear as illustrated by the story of open data around the
+2014 Ebola Outbreak in West Africa. To address both the above action
+items and the deeper issues, which are not specific to the current ebola
+outbreak, the following two closely related projects have been started
+since the previous meeting of the group. - The [[Outbreak Time Series
+Specification|Outbreak Time Series Specification Overview]] is a simple
+spec for defining Web service APIs and machine readable documents which
+represent time series of epidemic outbreaks. -
+[[https://github.com/JohnTigue/EbolaMapper][*EbolaMapper*]] is a new
+open source software project for Web components which can read data
+conformant to the Outbreak Time Series Specification, and optionally
+visualize such outbreaks.
+
+**** This report is a page in a wiki
+@@html:<a name='context'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: this-report-is-a-page-in-a-wiki
+     :END:
+
+This document is a page in a github.com hosted wiki. GitHub is *the*
+Website where programmers share and collaborate on source code. In this
+case the project is called *EbolaMapper*. The sidebar to the right of
+this text, entitle *Pages*, list all the pages in this wiki alphabetical
+by title.
+
+This document weaves this wiki into a coherent story with many links
+into the rest of this wiki. This report is short and high level, yet the
+links quickly lead down into the technical nitty gritty of an open
+source project.
+
+** Survey of the Web's ebola 2014 outbreak data and
+visualizations@@html:<a name='survey'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: survey-of-the-webs-ebola-2014-outbreak-data-and-visualizations
+   :END:
+
+The good news is that since our previous meeting,
+[[http://www.meetup.com/Africa-Open-Data/events/210071892/][the Africa
+Open Data Group Conference Call of November 7th, 2014]], the Web's
+availability of quality ebola outbreak visualizations has increased
+significantly. See this wiki's [[Gallery of Ebola Visualizations Found
+Across the Web]] for multiple examples, some of which are highly
+interactive.
+
+One of Tigue's action items from the previous meeting was to review the
+datasets on http://eboladata.org. See [[Datasets Listed on
+eboladata.org]] for brief comments on each of the 32 datasets. That page
+in turn links into detailed technical analysis of some of the more
+interesting datasets. In summary is a short list which can be found at
+[[Recommendations for Data to Use in Web Apps]].
+
+The conclusion of the above mentioned analysis is that by mid October
+Web app usable data was available, in the form of CSV files and [[a
+smattering of JSON hiding in places|JSON Ebola2014 Data Found on the
+Web]]. Representative sources are cataloged in this wiki's page, [[Ebola
+Outbreak Data on the Web Overview]]. Some examples worth noting:
+
+1. On
+   [[https://twitter.com/HansRosling/status/522906648638418944][2014-10-16
+   Hans Rosling tweeted]], "The UN data on the Ebola epidemic is now
+   freely available on the Internet" That data seems to be based on one
+   of the [[datasets cataloged by the Ebola Data Jam|Datasets Listed on
+   eboladata.org#ebola-data-jam]], specifically [[Caitlin Rivers'
+   GitHub|Other Coders#caitlin-rivers]], which is very good work.
+
+2. Currently, [[http://www.unocha.org/ochain/2010/rowca.html][The UN's
+   OCHA ROWCA]] is updating a quality dataset on
+   [[https://data.hdx.rwlabs.org/dataset/rowca-ebola-cases][the UN OCHA
+   Humanitarian Data Exchange (HDX)]]. (The Ebola Data Jam also
+   [[http://eboladata.org/dataset/sub-national-time-series-data-ebola-cases-and-deaths-guinea-liberia-sierra-leone-nigeria-and][found
+   this dataset]].) This dataset is getting widely used, for example see
+   [[http://www.nytimes.com/interactive/2014/07/31/world/africa/ebola-virus-outbreak-qa.html][the
+   New York Times' ebola visualization]]. It is assumed that this
+   dataset also drives [[https://data.hdx.rwlabs.org/ebola][the HDX
+   ebola outbreak visualization]]. (It is an open question as to whether
+   or not this dataset is derived from the Rivers dataset. The former is
+   a spreadsheet, the latter is CSV.)
+
+3. On 2014-11-12 [[HDX|HDX Repository]] blogged about [[ebola data API
+   experimentation|HDX Repository#apis]]. Although this is not a
+   dataset, this is relevant to point out here because APIs are what are
+   really needed to solve this sort of problem.
+
+Once data was available the count of high quality ebola outbreak
+visualizations increased, as evidence by [[this wiki's gallery|Gallery
+of Ebola Visualizations Found Across the Web]]. Yet, the situation would
+be much better if there were a standard API for outbreak time series
+thereby enabling interoperability.
+
+**** Kudos@@html:<a name='kudos' >@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: kudos
+     :END:
+
+Three people deserve special mention for their excellent work in this
+area, see [[Other Coders]] for more details. - Caitlin Rivers has
+manually collected outbreak time series data and maintained it in a
+GitHub repository, which currently gets updated API-grade CSV files
+roughly daily with 27 people contributing to the repository. - Simon
+Johnson has banged out by far the best visualizations to date. - Luis
+Capelo has done excellent work at the HDX on the back end repository and
+their ebola dashboard.
+
+** Analysis@@html:<a name='analysis'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: analysis
+   :END:
+
+In researching this topic it became clear that the core issue is that
+there is a serious problem with getting outbreak data publicly available
+and visualized early in an emergency.
+
+The heart of the data publishing process for the 2014 Ebola Outbreak in
+West Africa started out with motivated volunteers manually screen
+scraping data from Web pages and PDFs. The screen scraping became
+[[https://github.com/luiscape/who-new-figures-alert][somewhat
+automated]] later on but still this is 2014!
+
+The convoluted story of
+[[http://docs.hdx.rwlabs.org/a-new-ebola-crisis-page-built-with-open-data/][how
+usable open data on the ebola outbreak was built up]] should never have
+happened and must be prevented from reoccurring during future outbreaks.
+Bravo to the folks who worked on the problem but the situation is
+completely unacceptable in this day and age.
+
+Another issue raised is that software tools must not assume a persistent
+network connection. The West African context of the current ebola
+outbreak has made it clear that outbreak monitoring tools need to work
+in remote contexts without access to the Internet, which is simply not
+how most Web sites are designed, see [[Internet and InterNOT]] for more
+details.
+
+** Next Actions @@html:<a name='next-actions' >@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: next-actions
+   :END:
+
+As [Rob Baker(@rrbaker)](https://twitter.com/rrbaker) at USAID
+[[https://twitter.com/rrbaker/status/530760280448704512][tweeted]]: >A
+main takeaway from #iccmnyc: stop building closed off, complex shit.
+Help an org turn their Excel files into APIs.
+
+Once good data can be easily accessed then engagingly interactive
+visualizations can illustrate an outbreak story. This seems like a
+perfect situation for open source code reading open data through some
+simple API. Defining APIs and writing software is what Tigue does
+professionally. So, this open source project, *EbolaMapper*, has been
+started with the following goals.
+
+1. Define a simple epidemiological [[Outbreak Time Series
+   Specification|Outbreak Time Series Specification Overview]] for use
+   by Web services etc.\\
+2. Develop open source Web visualizations that engagingly present data
+   read via the Outbreak Dashboard API
+
+Hopefully, the above mentioned spec and software will accelerate the
+diffusion across the Web of high-quality visualizations of the 2014
+Ebola Outbreak and, arguably more valuably, prepare for quickly
+visualizing future outbreaks.
+
+These Web page based tools are being designed to work without live
+Internet access.
+
+It is a goal of this project to very quickly support the deployment of
+Ebola 2014 Outbreak visualizations on various Web sites (governmental,
+NGO, philanthropics, news outlets, and blogs). This will help maintain
+the current outbreak's visibility in the public's mind.
+
+After validation of this effort is realized by helping the world to
+visualize the 2014 Ebola Outbreak in West Africa, the tools will be
+thoroughly documented so that they are at the ready for the next
+outbreak, global or local.
+
+**** Call to action @@html:<a name='call-to-action'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: call-to-action
+     :END:
+
+If all this sounds interesting to you then please jump in and help with
+this open source project. All skills, technical or not, can be brought
+to bear. -
+[[https://github.com/JohnTigue/EbolaMapper/wiki/To-Do-List][The To Do
+List]] provides an overview of where things are at.\\
+- [[https://github.com/JohnTigue/EbolaMapper/issues][The Issue Tracker]]
+is where to find the nitty-gritty.
+
+** Further information @@html:<a name='further-info'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: further-information
+   :END:
+
+Tigue's blog posts on the topic can be found at:\\
+http://tigue.com/
+
+Most information is in this project's wiki:\\
+https://github.com/JohnTigue/EbolaMapper/wiki
+
+To contact Tigue, the [[https://www.linkedin.com/in/johntigue][LinkedIn
+profile]] has the info.

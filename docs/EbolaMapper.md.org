@@ -1,0 +1,4 @@
+This project was originally called EbolaMapper. Eventually the scope
+grew to encompass tracking any infectious disease outbreaks. There is
+nothing Ebola specific about the project. Therefore the name was changed
+to the Outbreak Time Series Project, or =outbreak_time_series=.

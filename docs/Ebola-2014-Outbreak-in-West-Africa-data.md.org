@@ -1,0 +1,6 @@
+-  [[http://apps.who.int/gho/data/node.ebola-sitrep.quick-downloads?lang=en][WHO's
+   Ebola data (CSV & JSON)]]
+
+Need to work out CORS issues of hosting the data on GitHub.
+
+See [[https://github.com/JohnTigue/EbolaMapper/issues/36][Issue #36]]

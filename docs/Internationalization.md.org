@@ -1,0 +1,11 @@
+Spanish, French (large language in West Africa), and English come out of
+the box
+
+How is this handled in an extensible manner?
+
+| Codename         | English          | French   | Spanish               |
+|------------------+------------------+----------+-----------------------|
+| women\_pregant   | pregnant women   | ?        | mujeres embarazadas   |
+
+Some Spanish: -
+https://twitter.com/HelenBranswell/status/746408918071402496

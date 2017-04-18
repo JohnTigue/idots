@@ -1,0 +1,305 @@
+This page is a collection of Zika outbreak visualizations found on the
+Web. All visualizations listed on this page are *not* based on Outbreak
+Time Series Specification and related software. This gallery is broken
+down into three sections according to the level of interactivity of the
+visualization.
+
+Click on any image below to visit the original site where the
+visualization can be found.
+
+Zika - [[https://twitter.com/hashtag/outbreak_viz][#outbreak\_viz]]: a
+Twitter hashtag for outbreak visualizations, not specifically Zika
+related, but currently (mid-2016) many tweets tagged as such are about
+Zika - [[http://ais.paho.org/phip/viz/ed_zika_epicurve.asp][PAHO's
+epicurve viz]] -
+[[http://simonbjohnson.github.io/zika-epi-curves/][Simon B. Johnson]]
+
+*[Below here is Ebola stuff i.e. template out of which this doc was
+started]*
+@@html:<!-- For visualizations based on **outbreak_mapper** see [[Gallery of outbreak_mapper Visualizations]]. -->@@
+
+** High interactivity D3 based visualizations
+   :PROPERTIES:
+   :CUSTOM_ID: high-interactivity-d3-based-visualizations
+   :END:
+
+Viz based on [[http://d3js.org/][D3.js]] are by nature highly
+interactive. By collecting multiple D3 implementations together the
+audience can quickly get a feel for how D3-base viz compare to other
+non-D3 interactive visualizations.
+
+(Note: D3 is permissively licensed open source based on open Web
+standards technology: HTML, CSS, JavaScript, and SVG. Proprietary Flash
+is not involved.)
+
+#+BEGIN_HTML
+  <table>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>NYTimes<br/>
+      <a href='http://www.nytimes.com/interactive/2014/07/31/world/africa/ebola-virus-outbreak-qa.html'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/nytimes.png' width='188' /></a>
+    </td>
+    <td width='193'>HDX<br/>
+      <a href='https://data.hdx.rwlabs.org/ebola'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/hdx-dashboard.png' width='188' /></a>
+    </td>
+    <td width='193'>Healthmap<br/>
+      <a href='http://healthmap.org/ebola/#timeline'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/healthmap-map.png' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>Simon Johnson<br/>
+      <a href='http://simonbjohnson.github.io/Ebola-Narrative/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/johnson-narrative.png' width='188' /></a>
+    </td>
+    <td width='193'>Simon Johnson<br/>
+      <a href='http://simonbjohnson.github.io/Ebola-3W-Dashboard/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/johnson-3w.png' width='188' /></a>
+    </td>
+    <td width='193'>Simon Johnson<br/>
+      <a href='http://simonbjohnson.github.io/Ebola-Timeline-Map/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/johnson-timeline-map.png' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>Simon Johnson<br/>
+      <a href='http://simonbjohnson.github.io/ebola-fts-dashboard/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/johnson-fts.png' width='188' /></a>
+    </td>
+    <td width='193'>The Economist<br/>
+      <a href='http://www.economist.com/blogs/graphicdetail/2014/11/interactive-ebola-map'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/economist-d3.png' width='188' /></a>
+    </td>
+    <td width='193'>The WHO sit rep<br/>
+      <a href='http://maps.who.int/MapJournal/?appid=223bd87700304b6a87178dacfe714bd0'><img src='https://raw.githubusercontent.com/JohnTigue/ebola-viz-twumbshots/gh-pages/twumbshot/who-sit-rep.png' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <!--
+    <tr height='193' valign='top'>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+    </tr>
+  -->
+#+END_HTML
+
+#+BEGIN_HTML
+  </table>
+#+END_HTML
+
+** Medium interactivity, non-D3 visualizations
+   :PROPERTIES:
+   :CUSTOM_ID: medium-interactivity-non-d3-visualizations
+   :END:
+
+Items in this section cluster towards the highly interactive end of the
+spectrum yet they are *not* based on D3. Rather slightly older
+JavaScript libraries, such as jQuery, are used with or without SVG.
+
+#+BEGIN_HTML
+  <table>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>WHO<br/>
+      <a href='https://who-ocr.github.io/ebola-data/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/who-ebola-data.png' width='188' /></a>
+    </td>
+    <td width='193'>Google Public Data<br/>
+      <a href='http://www.google.com/publicdata/explore?ds=eq10po6kah9si_&ctype=m&strail=false&bcs=d&nselm=s&met_s=cases_cum&scale_s=lin&ind_s=false&ifdim=district&tunit=D&pit=1412892000000&hl=en&dl=en&ind=false&xMax=-5.891764156250019&xMin=-18.94352196875002&yMax=4.0345925292218&yMin=11.99141057995339&mapType=t&icfg=eq10po6kah9si_%253A2%253Adistrict%26%264:-71:-40:%7Ceq10po6kah9si_%253A2%253Adistrict%26%2611:24:-45:&iconSize=0.47'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/google-pub-data.png' width='188' /></a>
+    </td>
+    <td width='193'>PBS Frontline<br/>
+      <a href='http://www.pbs.org/wgbh/pages/frontline/health-science-technology/ebola-outbreak/map-how-the-ebola-outbreak-spread-through-africa/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/pbs-frontline.png' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>DataMarket<br/>
+      <a href='https://datamarket.com/en/data/set/4spl/#!ds=4spl!88d0=1x.r.20.9.1o.g.f.1s.h.13.1z.1j.a.1n.1w.c.y.1y.e.14.15.16.p.17:88d1=1&display=line&title=Ebola+cases(cumulative)+by+Guinea+Subdivisions+since+April+4'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/datamarket.png' width='188' /></a>
+    </td>
+    <td width='193'>Simon Johnson<br/>
+      <a href='http://brcmapsteam.github.io/Ebola-Web-Map/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/johnson-ebola-web-map.png' width='188' /></a>
+    </td>
+    <td width='193'><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <!--
+    <tr height='193' valign='top'>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+    </tr>
+  -->
+#+END_HTML
+
+#+BEGIN_HTML
+  </table>
+#+END_HTML
+
+** Low interactivity visualizations
+   :PROPERTIES:
+   :CUSTOM_ID: low-interactivity-visualizations
+   :END:
+
+These viz are essentially static. Static viz can be very good and they
+have their place. But there are tons of those available so there really
+is not a problem that needs to be addressed with new tools.
+*outbreak\_mapper* is all about open sourcing highly interactive
+outbreak visualizations. These viz are collected here because they each
+have at least one interesting technique that is worth considering for
+inclusion in the various *outbreak\_mapper*-based visualizations.
+
+#+BEGIN_HTML
+  <table>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>The Economist<br/>
+      <a href='http://www.economist.com/blogs/graphicdetail/2014/11/ebola-graphics'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/economists-ebola-graphic.png' width='188' /></a>
+    </td>
+    <td width='193'>National Geographic<br/>
+      <a href='http://news.nationalgeographic.com/news/2014/09/140925-mapping-the-spread-of-ebola/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/nat-geo-calendar.png' width='188' /></a>
+    </td>
+    <td width='193'>CDC<br/>
+      <a href='http://www.cdc.gov/vhf/ebola/outbreaks/2014-west-africa/distribution-map.html'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/cdc.png' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>Views of the World<br/>
+      <a href='http://www.viewsoftheworld.net/?p=4160'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/views-of-the-world.png' width='188' /></a>
+    </td>
+    <td width='193'>The Economist<br/>
+      <a href='http://www.economist.com/news/international/21632520-rich-countries-are-deluged-data-developing-ones-are-suffering-drought'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/economist-on-missingmaps.png' width='188' /></a>
+    </td>
+    <td width='193'>MSF<br/>
+      <a href='http://www.msf.org/article/ebola-online-briefing-now-available-public'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/msf.png' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'>National Geographic<br/>
+      <a href='http://news.nationalgeographic.com/news/2014/10/141025-ebola-epidemic-perspective-history-pandemic/'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/nat-geo-historical-epidemics.png' width='188' /></a>
+    </td>
+    <td width='193'>MapAction<br/>
+      <a href='http://www.mapaction.org/map-catalogue/maps.html?deployment_filter=232'><img src='https://johntigue.github.io/ebola-viz-twumbshots/twumbshot/mapaction.png' width='188' /></a>
+    </td>
+    <td width='193'><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <!--
+    <tr valign='top'>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+      <td width='193'>Website<br/>
+        <a href=''><img src='' width='188' /></a>
+      </td>
+    </tr>
+  -->
+#+END_HTML
+
+#+BEGIN_HTML
+  </table>
+#+END_HTML
+
+** Goal
+   :PROPERTIES:
+   :CUSTOM_ID: goal
+   :END:
+
+This collection is maintained in order to:
+
+1. Have a centralized place on the web which provides a quick survey of
+   what other folks have created.
+2. Set the bar for what =outbreak_mapper= has to do better than.
+3. Provide a loose list of micro-features to potentially implement.
+4. Provide eye candy to this project.
+
+Visualizations on the Web can be classified as interactive or static.
+With the Web the distinction is not quite binary, rather is it more of a
+spectrum; for example, is a zoomable map really “interactive”? In the
+classification used on this page, the answer is no.

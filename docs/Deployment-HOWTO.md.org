@@ -1,0 +1,78 @@
+This document describes how to deploy Omolumeter. For customizing the
+look (colors, fonts, etc.) see also [[White Labeling]]. Since Omolumeter
+is licensed such that anyone is free to do anything with the source
+code, modifying the code is an avenue to endless possibilities; this
+document is for the simpler deploy use cases.
+
+** Configuring Omolumeter's data source
+   :PROPERTIES:
+   :CUSTOM_ID: configuring-omolumeters-data-source
+   :END:
+
+*TBD [[https://github.com/JohnTigue/outbreak_time_series/issues/3][issue
+#3]]*\\
+Perhaps even a default relative file URL so folks can just drop a
+properly named data file in the same directory as omolumeter and be off
+and running without even looking in any HTML or JS files. Make it a
+directory s.t. directory listing can provide multiple files? But that
+leaves open much potential complication (does the server has Collection
+Indexing on? Which servers?).
+
+** Widget congifs
+   :PROPERTIES:
+   :CUSTOM_ID: widget-congifs
+   :END:
+
+*** URL paramaters
+    :PROPERTIES:
+    :CUSTOM_ID: url-paramaters
+    :END:
+
+-  *css=xzy*: CSS file, possibly remote. Say, the widget is hosted on
+   server-a.com but visually is embedded in an iframe on a page on
+   server-b.com (e.g. The Economist has done iframe embedding with their
+   D3 ebola widget). If server-b.com is concerned about the widget
+   having the same styling a the rest of server-b.com then the widget
+   loaded into the iframe via a server-a.com URL can have as an URL
+   param the name of a CSS file on server-b.com. If the widget is iframe
+   embeddedy, no end user would see an nasty long URL with tons of
+   params on it. If long URLs are a concern then use the default CSS
+   URL, or go in and modify the code.
+
+*** Data configs
+    :PROPERTIES:
+    :CUSTOM_ID: data-configs
+    :END:
+
+*TBD*\\
+Config/deploy related information i.e. client things. - [ ] how to add a
+data URL to the dropdown in the UI - [ ] how to specify as an URL param
+
+*** Map control
+    :PROPERTIES:
+    :CUSTOM_ID: map-control
+    :END:
+
+-  what part of the world to show
+-  globe
+-  West Africa
+-  specific country(ies)
+-  panable?
+-  zoomable?
+
+*** UI styling
+    :PROPERTIES:
+    :CUSTOM_ID: ui-styling
+    :END:
+
+-  icons
+-  CSS
+
+** Server issues
+   :PROPERTIES:
+   :CUSTOM_ID: server-issues
+   :END:
+
+*TBD* Notes about configuring HTTP servers such as Content-Type
+issues.\\
+- [ ] how to use your own data files and/or Web services. - CORS

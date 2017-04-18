@@ -1,0 +1,101 @@
+This is a high level summary of what needs to be done. For nitty-gritty
+details see
+[[https://github.com/JohnTigue/outbreak_time_series/issues][the issues
+tracker]].
+
+If you want to jump in and help then these topics are sorted roughly
+with the lower intensity and possibly more entertaining tasks listed
+first.
+
+** Cataloging of outbreak visualizations found on the Web
+   :PROPERTIES:
+   :CUSTOM_ID: cataloging-of-outbreak-visualizations-found-on-the-web
+   :END:
+
+If you find any interesting visualizations, a gallery is maintained.
+Please link to them at [[Gallery of Ebola Visualizations Found Across
+the Web]]. Also search Twitter for
+[[https://twitter.com/search?q=%23outbreak_viz&src=typd][#outbreak\_viz]].
+
+If you have any comments about this the issue is
+[[https://github.com/JohnTigue/EbolaMapper/issues/4][#4]].
+
+** Indicator ontology
+   :PROPERTIES:
+   :CUSTOM_ID: indicator-ontology
+   :END:
+
+An effort is underway to define an [[[indicator-ontology][Indicator
+Ontology]]] so the machine readable encodings can be generated for terms
+such as the following: "all deaths in the last 7 days," or "cumulative
+suspected cases to date, in children." The Spec needs a vocabulary of
+domain objects, the domain being infectious disease monitoring.
+
+** Demo with Zika virus outbreak data
+   :PROPERTIES:
+   :CUSTOM_ID: demo-with-zika-virus-outbreak-data
+   :END:
+
+The Omolumeter is deployed with 2014 Ebola data. Another deploy with
+2016 Zika data is needed.
+
+** Outreach
+   :PROPERTIES:
+   :CUSTOM_ID: outreach
+   :END:
+
+*** Work with major news outlets, educating them to what is available.
+    :PROPERTIES:
+    :CUSTOM_ID: work-with-major-news-outlets-educating-them-to-what-is-available.
+    :END:
+
+We need to reach out to various news orgs and show them how easy it is
+to get an exciting ebola visualization widget on their site.
+
+*** Help NGOs and philanthropics deploy Omolumeter as a widget
+    :PROPERTIES:
+    :CUSTOM_ID: help-ngos-and-philanthropics-deploy-omolumeter-as-a-widget
+    :END:
+
+Work with an NGO to deploy a pre-build visualization with the help of
+the [[Deployment HOWTO]].
+
+** Documentation needed
+   :PROPERTIES:
+   :CUSTOM_ID: documentation-needed
+   :END:
+
+Documenting how to use such tools in preparation for whatever infectious
+disease outbreak next occurs (globally or locally) will be a main
+deliverable of this project. Provide introductory HOWTO instructions for
+various levels of technical expertise on how to deploy these tools
+during future outbreaks.
+
+These items are roughly sorted such that first is end-user stuff, then
+deployer needs, then developer.
+
+-  [ ] Exporting How to export data and visualizations out of
+   Omolumeter. See [[Exporting from Omolumeter]]
+
+-  [ ] HTML5 offline application instructions\\
+   See [[Offline Mode]]
+
+-  [ ] White label instructions\\
+   See [[White Labeling]]
+
+-  [ ] Localization How to localize to a language. See [[Localization]]
+   page.
+
+-  [ ] The outbreak data API\\
+   See [[Outbreak API]]
+
+** Cataloging of data sources
+   :PROPERTIES:
+   :CUSTOM_ID: cataloging-of-data-sources
+   :END:
+
+This is much less light fun but is arguably more important. This has
+proven to be a major time sink. It has also made very clear how
+important it is to not have this happen in the future. See [[Ebola
+Outbreak Data on the Web Overview]] for much more detail. That's the
+place to add anything found.

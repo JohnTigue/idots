@@ -1,0 +1,97 @@
+Omolumeter (pronounced OMO·lum·eter) is the main end user experience of
+this project. It is liberally licensed open source, the code for which
+is in
+[[https://github.com/JohnTigue/outbreak_time_series/tree/master/src/apps/omolumeter][this
+repository]]. The Omolumeter code is deployed at
+[[http://omolumeter.com][omolumeter.com]], but can very easily be
+incorporated into other web sites as all that is required is to host
+some static files. Please do so and feel free to reach out for help.
+Contact [[mailto:john@tigue.com][John Tigue]] via email to discuss this.
+
+In techno-babble: >Omolumeter is the proof-of-concept (read: reference
+implementation of the Spec), front-end, Web browser-based, white-label
+widgetry (read:
+[[http://en.wikipedia.org/wiki/Single-page_application][single page
+apps]], optionally iframe embeddable) that can parse and visualize
+outbreak data found on the Web.
+
+*** Description
+    :PROPERTIES:
+    :CUSTOM_ID: description
+    :END:
+
+With tongue in cheek, =outbreak_time_series= can be described as *modern
+open-source anti-virus software*. That phrase can be broken out as
+follows.
+
+*Modern*: this means highly interactive web browser based visualizations
+leveraging SVG, via D3.js. outbreak\_time\_series's dependencies works
+with any browser newer than IE8 (which is already fading fast in late
+2014, at less than 10% of global usages, and Microsoft will stop
+supporting it in 2016). outbreak\_time\_series also uses AnjularJS
+1.3.x, another project which recognizes that IE8 is not worth the
+limitations it imposes on any forward looking effort. So, this is
+designed to be useful for the foreseeable future.
+
+*Open-source*: The code is Apache 2.0 licensed (that is, do with it
+freely as you wish, commercially or otherwise). Data for the 2014 Ebola
+Outbreak in West Africa is also made available, as free open data
+([[http://opendatacommons.org/licenses/pddl/][PDDL licensed]]). We have
+curated data and provide it via a RESTful web service API based on the
+[[https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-Time-Series-Specification-Overview][Outbreak
+Time Series Specification]].
+
+*Anti-virus software*: Ebola is a virus and this software project is
+anti-ebola (and pro-geeky humor).
+
+** Status
+   :PROPERTIES:
+   :CUSTOM_ID: status
+   :END:
+
+The Omolumeter as deployed at [[http://omolumeter.com][omolumeter.com]]
+has the following visualization: - [[http://omolumeter.com/rawdata][Raw
+CSV table view]]: 17,000 rows of Ebola data -
+[[http://omolumeter.com/timeseries][Compiled table view]]: 17,000 row
+CSV ==> 258 days of by-country (~30) indicators -
+[[http://omolumeter.com/epicurves][Epicurves]] (cumulative deaths) for 3
+worst hit countries
+
+The above are the most basic visualizations. The next visualizations to
+be added are: - Static map - Animated time map
+
+** Future development
+   :PROPERTIES:
+   :CUSTOM_ID: future-development
+   :END:
+
+After the above, the Spec (in-development) will have been exercised
+enough in term of reading from Spec-compliant documents. That will
+inform the spec. E.g. does the JSON translate into an elegant JavaScript
+object model (read: JavaScript API), etc.
+
+The other dimension that the Spec needs to be exercised is in mapping to
+existing CSVs via CSVW schema. And surely it will turn out that various
+CSVs will need to be proxied on omolumeter.com, probably with some data
+translation (read: limitations of Spec, or simply things the Spec should
+not do simply because there is a legacy of such having happened). Or,
+even just having CORS set up such that omolumter.com can be an API
+server to arbitrary web browser clients with Spec visualizers running in
+pages hosted on any website on the web.
+
+Finally, after all the above, it will be time to make the existing
+Omolumeter visualization much more sophisticated data analysis and
+explanation machinery, specific to this one task: get more eyeballs
+seeing outbreaks.
+
+For example, the [[http://omolumeter.com/epicurves][Epicurves]] view
+should have a config dialog for selecting which countries to plot;
+currently that is hardwired to the top three highest deaths countries.
+Speaking of hardwired, only by-country data is viewable. Clearly this
+should be expanded to states, counties, city, and other arbitrary
+administrative units or even custom regions.
+
+Currently only one data source is plotting on the epicurves. It would be
+very interesting to plot numbers simultaneously from multiple sources.
+This is the sort of thing that a standard data interchange format makes
+much easier than is currently possible on the web.

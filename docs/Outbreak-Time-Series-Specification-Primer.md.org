@@ -1,0 +1,724 @@
+This is an informal introduction to the [[Outbreak Time Series
+Specification]], which in this document is referred as "The Spec". This
+is probably the best wiki page to start with in order to quickly
+understand what the Spec covers and the value the Spec provides.
+
+This is a minimally technical introduction to a technical data standard.
+On the other hand, the Spec was intentionally designed to be small in
+focus and simple to implement. As such, there is not too much to cover,
+especially if intentionally not diving into the technical nitty-gritty.
+All the concepts introduced are rather intuitive.
+
+*The Spec defines a standardizes way to mark-up CSV files which contain
+information about an infectious disease outbreak time series.* In the
+Spec, the phrase "Infectious Disease Outbreak Time Series" is
+abbreviated via the acronym IDOTS. In epidemiological terminology an
+IDOTS is the core information in
+[[https://maimunamajumder.wordpress.com/2016/06/05/ddd-zika-in-colombia/]["case
+count data."]] The Spec is the core deliverable of the IDOTS Project.
+
+** Status of This Document
+   :PROPERTIES:
+   :CUSTOM_ID: status-of-this-document
+   :END:
+
+Currently (as of 2016-06-19) this document is going through a major
+rewrite. v0.0.1 had CSV, JSON, and XML as equivalent serializations.
+v0.1.0, which is what the current rewrite is heading towards, has CSVW
+as the core primary serialization. Nonetheless, it still stands as the
+best introduction to the IDOTS Project's Outbreak Time Series
+Specification.
+
+** Table of contents
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-contents
+   :END:
+
+-  [[introduction][Introduction]]
+-  [[DoI][Diffusion of Innovation]]
+-  [[mental_model][Data model]]
+-  [[privacy_concerns][Privacy concerns]]
+-  [[enabled-tools][Examples of tools that can use The Spec]]
+-  [[predictive-modeling][Predictive modeling]]
+-  [[bulls_eye_plots][Bulls-eye plots]]
+-  [[quick_api_overview][Quick API overview]]
+-  [[populations][Populations]]
+-  [[other_standards][Other related standards]]
+-  [[csv][CSV]]
+-  [[hxl][HXL]]
+
+** Introduction @@html:<a name='introduction'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: introduction
+   :END:
+
+The briefest, most informal description of what the Spec provides might
+be: > An Outbreak Time Series is an infectious disease's microblog:
+"Today I killed 100 in Nottatown; I also caused 1500 cases. Over in
+Whereastan, I killed..." But instead of the disease speaking, the Spec
+enables discussing the same activity but as observed by possibly
+multiple sources. Infectious diseases don't know how to microblog, but
+someone(s) should write that down anyway, digitally in a way that is
+easy to share and compare.
+
+The core information of an outbreak time series is the table of disease
+metric recordings over time i.e. one simple table. One might wonder if
+such a simple thing even needs a standardization. Nonetheless, with just
+a bit more structured and well-defined "metadata" (as provided by the
+Spec) then the task can be automated thereby enabling the automatic
+exchange of infectious disease time series information.
+
+It is simple enough for a single person to receive data about an
+infectious disease and quickly do
+[[https://en.wikipedia.org/wiki/Extract,_transform,_load]["ETL"]].
+Usually that info would come as a CSV or a spreadsheet.\\
+The ETL work might involve opening the CSV and reading the column
+headers, then mapping that to names used by the person's local
+processing tools to, say, store the info in a relation database. The
+goal of The Spec is to take the manual part out of the process. Any
+random tool should be able to simply get an URL (or filename) to an
+outbreak time series and instantly (no manual ETL involved) load that
+data, even if the data was produced by some other tool.
+
+The Spec is a formal document meant to precisely define an outbreak time
+series data interchange format. Formal language should be as terse as
+possibly thereby reducing the possibility of errors. That is a good
+thing but it certainly does not make for good introductory reading.
+Doing so is the job of this document.
+
+Since the main envisioned use case for The Spec is the definition of
+APIs for Web services, this document describes how a programmer can
+interact with the GOMNO API which was designed based on The Spec. Other
+APIs can be realized from the Spec; the GOMNO API is used for
+illustration purposes simply because it is a concrete example with which
+to illustrate the concepts.
+
+Making a distinction between The Spec and an API might seem unnecessary
+but The Spec has other uses besides only Web service RESTful APIs. For
+example, the XML schema can be used to namespace the abstract model into
+an Atom feed. Nonetheless, for this document the distinction between The
+Spec and an API is not necessary and the two will be used
+interchangeably.
+
+The [[Outbreak Time Series Specification]] describes an abstract model
+for epidemiological outbreak data. The model is mapped to 3
+serializations: CSV, JSON, and XML. CSVW includes the concept of
+[[https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#dfn-transformation-definition][Transformation
+Definitions]] by which the Spec's infoset can be mapped to arbitrary
+formats.
+
+The Spec has been design to enable conformance with minimal effort on
+the part of adoptors. The lowest level is arguably simply a CSV file
+with certain columns formatted as described in The Spec. There are also
+higher levels of conformance, such as say an Atom feeds with The Spec's
+model XML namespaced in.
+
+In order to simplify, this tutorial will initially focus on only the
+JSON serialization. For the purposes of discussion the simplest cases
+will be introduces first.
+
+** Diffusion of Innovation@@html:<a name='DoI'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: diffusion-of-innovation
+   :END:
+
+[[https://en.wikipedia.org/wiki/Diffusion_of_innovations][Diffusion of
+Innovation]] describes characteristics of an innovation which are
+relevant to whether the innovation will be adopted throughout a social
+system. In the context of the IDOTS Project, the social system is the
+publishers and consumers of CSV encoded IDOTS data on the Web.
+
+The characteristics described by Diffusion of Innovation are as follows.
+- relative advantage (efficiencies relative to current tools or
+procedures) - compatibility with the pre-existing system - complexity or
+difficulty to learn - trialability or testability - potential for
+reinvention (using the tool for initially unintended purposes) -
+observed effects
+
+*** Relative advantage
+    :PROPERTIES:
+    :CUSTOM_ID: relative-advantage
+    :END:
+
+The IDOTS project has been designed to score high on these attributes.
+For example, early work on the spec was by people coming from a Web
+developer background; as such, JSON was the natural format and early
+work on the Spec was JSON centric. It turned out that the humanitarian
+community had more of a CSV centric mindset. Therefore the Spec was
+modified to use CSV as its primary serialization format. (CSVW does
+involve some JSON but humanitarian end users can ignore that part.)
+
+Consider the historical context of global infectious disease
+surveillance as described in
+[[https://wiki.ecdc.europa.eu/fem/w/wiki/the-components-of-surveillance.aspx][The
+Components of Surveillance]]: >In 1965, the Director General of the
+World Health Organization (WHO) established the epidemiological
+surveillance unit in WHO's Division of Communicable Diseases. In 1968,
+the 21st World Health Assembly affirmed the three main features of
+surveillance: a) the systematic collection of pertinent data, b) the
+orderly consolidation and evaluation of these data, and c) the prompt
+dissemination of results to those who need to know-particularly those in
+position to take action.
+
+The Spec makes it possible for the "consolidation and evaluation" to
+happen fully publicly on the Web. Any organization or person can publish
+data compliant with the Spec. Any collection (or sub-collection) of CSV
+files from across the Web can be be selected for "consolidation and
+evaluation." In other words, the Spec makes it possible to decentralized
+the "consolidation and evaluation" such that there is not single,
+central publishing authority.
+
+*** Compatibility with the pre-existing system
+    :PROPERTIES:
+    :CUSTOM_ID: compatibility-with-the-pre-existing-system
+    :END:
+
+Regarding the "compatibility with the pre-existing system"
+characteristic, the Spec can be used in a fashion such that many
+pre-existing IDOTS CSVs can -- without any modification -- be considered
+conformant with the Spec. For example, many pre-existing IDOTS CSVs can
+remain unmodified from their current state and location while CSVW
+metadata (the =csv-metadata.json= files) can be published (optionally at
+a website different than the website at which the CSV files is hosted)
+that links to the pre-existing CSVs. In this case the
+'csv-metadata.json` can be seen to map the pre-existing CSV to the
+Spec's data model.
+
+*** Complexity or difficulty to learn
+    :PROPERTIES:
+    :CUSTOM_ID: complexity-or-difficulty-to-learn
+    :END:
+
+TBD, but just CSVs (data) and JSON (metadata), the latter changes
+infrequently so for front-line users it will boil down to staying in
+CSVs and optionally running a validator (which consults the JSON).
+
+*** Trialability or testability
+    :PROPERTIES:
+    :CUSTOM_ID: trialability-or-testability
+    :END:
+
+*** Potential for reinvention (using the tool for initially unintended
+purposes)
+    :PROPERTIES:
+    :CUSTOM_ID: potential-for-reinvention-using-the-tool-for-initially-unintended-purposes
+    :END:
+
+*** Observed effects
+    :PROPERTIES:
+    :CUSTOM_ID: observed-effects
+    :END:
+
+** Data model @@html:<a name='mental_model'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: data-model
+   :END:
+
+The Spec mainly describes the structure of data about a single outbreak.
+The Spec also additionally models the concept of collections of multiple
+Spec-compliant documents. Collections allow for the Spec to describe a
+library of multiple outbreak time series. For example, a collection of
+multiple outbreaks of Ebola, or a collection containing time series for
+both Ebola and Zika. This could also enable tools which compare multiple
+data sources describing the same outbreak. In CSVW this concept is
+realized via
+[[https://www.w3.org/TR/2015/REC-tabular-data-model-20151217/#table-groups][table
+groups]].
+
+GeoJSON is, as the name implies, a JSON-based format for encoding
+geographical information. A simple GeoJSON file can be conformant to The
+Spec. The follow is an example GeoJSON file, hosted on GitHub.
+
+https://github.com/benbalter/dc-maps/blob/master/embassies.geojson
+
+Hover over a marker and a dialog will popup listing various properties
+defined for that location, such as the cases and deaths ebola data for
+the week of *TBD*. By itself the above is not a time series, rather it
+is simply one time interval in a time series yet that /is exactly/ the
+information that is contained in a report of latest cases. In other
+words, a document like the above is what a health treatment organization
+would publish once a week (outbreak reports are normally weekly,
+although The Spec does not impose a weekly constraint since any report
+periodicity can be used).
+
+The above rendering of the example GeoJSON document simply lists the
+properties defined because GitHub's GeoJSON renderer does not have code
+to do anything with Outbreak Time Series information. The following is
+the same document rendered in a Leaflet app which reads the GeoJSON file
+and also plots the Outbreak Time Series data.
+
+*https://gomno.org/example/1*
+
+Note that the latter, fancier rendering also displays some information
+that is not specific to any location. That information is also in the
+GeoJSON document on GitHub as can be seen from *the raw view of the
+GeoJSON file*. Specifically that information is contained in the
+=outbreak_time_series_metadata= object. The document is still a GeoJSON
+document because according to
+[[http://geojson.org/geojson-spec.html#geojson-objects][the GeoJSON
+spec]]: >The GeoJSON object may have any number of members (name/value
+pairs)
+
+GitHub's GeoJSON renderer does not doing anything with the
+=outbreak_time_series_metadata= but the metadata does not interfere with
+that GeoJSON renderer. The rendered on GOMNO does know what to do with
+the =outbreak_time_series_metadata=. That is to say the Outbreak Time
+Series Specification's JSON serialization builds upon the GeoJSON spec.
+
+** NEXT REWRITE
+   :PROPERTIES:
+   :CUSTOM_ID: next-rewrite
+   :END:
+
+=otss_basic_reproductive_number= can possibly be used for forecasting:
+[[http://www.ins.gov.co/boletin-epidemiologico/Boletn%20Epidemiolgico/2016%20Boletin%20epidemiologico%20semana%207.pdf][An
+IDEA for short term outbreak projection: nearcasting using the basic
+reproduction number (Spanish)]] as referenced from
+[[http://publichealth.jmir.org/2016/1/e30/][another journal article (ref
+#18)]].
+
+An Outbreak Time Series Spec comformant doc essentially just has an
+array of such interval frames, plus some metadata describing what the
+frames represent. Taken together the frames provide the information for
+an outbreak time series.
+
+Looking at the model from a JSON perspective, *an Outbreak Time Series
+Specification conformant document can be thought of as a GeoJSON movie*,
+where each frame (read: a GeoJSON object) enumerates the new cases,
+deaths, etcetera of a single interval of time for multiple locations and
+sub-populations.
+
+The Spec allows for the =time_interval= frames to either be references
+via URLs or to be directly embedded within the main document. GeoJSON
+only defines the structure of a GeoJSON object; it does not constrain
+the object's context therefore embedding a GeoJSON object(s) in another
+JSON blobject does not break conformance to that spec. In the case of
+=time_interval= frames being referenced via URL, those URLs can be
+directly fed to GeoJSON libraries for rendering. In the case of
+=time_interval= frames being directly embedded with a doc conformant to
+*The Spec* very significant efficiencies can be achieved, for example
+the =geometry=s can expressed once and then referenced by ID rather than
+being expressed in entirety every =time_interval= frame. In the later
+case the frames are still GeoJSON objects but no existing GeoJSON
+library will know what to do with the main doc nor with the =null=
+=geometry=s when referenced by ID.
+
+Using this conceptual model,
+[[http://www.nytimes.com/interactive/2014/07/31/world/africa/ebola-virus-outbreak-qa.html][the
+New York Times ebola visualization]] can be seen as a mechanism to step
+through the movie frame by frame, although that viz's internal JSON data
+is not explicitly structured in this "GeoJSON movie" fashion.
+
+Although there is no CSV or XML equivalent to GeoJSON, the CSV and XML
+serializations map one-to-one to the JSON model.
+
+Ignoring metadata, for sake of discussion, the core top level of the
+Outbreak Time Series Specification model is a time series: a sequence
+(read: a JSON array) of time\_intervals. Each time\_interval is
+basically a GoeJSON object (I am simplifying here yet nonetheless the
+GeoJSON spec is completely respected, not modified nor "embraced and
+extended"). The GeoJSON spec does have an extensibility mechanism build
+in, the =properties= member -- the contents of which can be any JSON
+object, including hierarchical information.
+
+Outbreak Time Series Specification builds within the GeoJSON spec by
+defining a model for data within the =properties=. Specifically, an
+array of (sub)-=population=s is the value of =properties=. Each
+=population= has attributes such as: - =otss_cases_all= -
+=otss_cases_probable= - =otss_cases_suspected= - =otss_cases_confirmed=
+- =otss_deaths_all= - =otss_deaths_probable= - =otss_deaths_suspected= -
+=otss_deaths_confirmed= - =otss_basic_reproductive_number=
+
+That's about it. It is that simple. The whole Outbreak Time Series
+Specification is designed to be extremely simple by building maximally
+on existing standards and specifications to describe an interchange
+format for serialized information describing the high level numbers of
+an epidemiological outbreak.
+
+** GeoJSON eg with sub-populations
+   :PROPERTIES:
+   :CUSTOM_ID: geojson-eg-with-sub-populations
+   :END:
+
+*Note*: this example is simply to illustrate the core model -- things
+are /slightly/ more complicated; for example, in a real Outbreak Time
+Series Spec comformant document the cases-and-deaths data is broken out
+into sub-populations for a location, but that wouldn't show up in the
+GitHub viewer. Also, even a one interval report would still need to be
+wrapped with metadata. For example, the follow is a real Spec conformant
+GeoJSON document (notice the properties view is not very helpful as
+GitHub's naive GeoJSON does not know what to do with the Outbreak Time
+Series info embedded in the =properites=):
+
+https://github.com/benbalter/dc-maps/blob/master/embassies.geojson
+
+*** Benefits of this model
+    :PROPERTIES:
+    :CUSTOM_ID: benefits-of-this-model
+    :END:
+
+The benefits of this design include: - Existing code can ignore the root
+and dot into a specific GeoJSON frame and render it. - Same for testing.
+- Less work writing spec with novel, unknown structures. - Better
+diffusion of innovation as folks can quickly grasp what is going on. -
+Hopefully deployers publishing data, say a health care NGO, will be able
+to easily build upon existing GIS machinery in order to implement The
+Spec's data model i.e. create data input and publishing tools. -
+Hopefully deployers visualizing data conformant to *The Spec* will be
+able to actually use existing GeoJSON code to actually create GeoJSON
+(stop motion) movie visualizations.
+
+** Privacy concerns @@html:<a name='privacy_concerns'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: privacy-concerns
+   :END:
+
+The Spec's model is intentionally designed to not include any
+[[http://en.wikipedia.org/wiki/Personally_identifiable_information][personally
+identifiable information (PII)]] about individuals; only populations are
+described. Perversely, populations of size one could be defined;
+nonetheless, this specification is not designed for such use cases.
+
+Nonetheless, the Spec intentionally lacks concepts such as index case
+(a.k.a. primary case or patient zero), contact tracing (a.k.a. contact
+listing), or line listing. This intentional avoidance of PII is
+explicitly stated in
+[[https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-Time-Series-Specification#out_of_scope][the
+Spec]]. Of course, such information would be valuable to model but is
+not valuable for the uses cases for which the Spec has been designed.
+Indeed, addressing such concepts would greatly harm the initial
+[[https://en.wikipedia.org/wiki/Diffusion_of_innovations][diffusion of
+this innovation]].
+
+** Examples of tools that can use The Spec
+@@html:<a name='enabled-tools'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: examples-of-tools-that-can-use-the-spec
+   :END:
+
+This section presents some use cases enabled by the Spec.
+
+Note: a situation report is simply a IDOTS with only one single
+interval, which is normally the "latest" numbers. The value of the Spec
+for situation reports is in the metadata which indicates which (single
+row'ed) column of the CSV is which indicator and the datatyping thereof.
+
+*** Predictive modeling
+@@html:<a name='predictive-modeling'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: predictive-modeling
+    :END:
+
+[[http://healthmap.org/ebola/#projection][HealthMap has an ebola case
+count projector]] which uses R0 (a.k.a. =basic_reproductive_number=) as
+the input to a predictive algorithm,
+[[http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0083622][An
+IDEA for Short Term Outbreak Projection: Nearcasting Using the Basic
+Reproduction Number]]. OutbreakTSS could be used to generate this via
+some client-side JavaScript, thereby freeing this valuable information
+from servers which may not be reachable from the front lines.
+
+** Bulls-eye plots @@html:<a name='bulls_eye_plots'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: bulls-eye-plots
+   :END:
+
+Using that basic model, things like the commonly seen bulls-eye plots
+can be derived. Usually a bulls-eye plot consists of a map with
+locations having bulls-eyes plotted on them, where the bulls-eye is two
+concentric circles. These are commonly used in reports based on weekly
+time intervals. A bulls-eye will show the total cases for a =location=
+as a circle with radius proportionate to the total number of cases (or
+deaths) as well as an inner concentric circle for cases (or deaths) new
+within the last 21 days (i.e. the total for the 3 most recent
+time\_intervals which are weeks; 3 x 7 = 21). This is a useful
+visualization to indicate whether or not things are heading in the right
+direction. When all the bulls-eyes on the map turn into simple circles
+the outbreak is over.
+
+A very simple use of Outbreak Time Series Spec'd data is to generate a
+static map with these bulls-eye plots. Indeed it can be done almost
+directly with the GeoJSON objects found in OutbreakTimeSeries objects.
+Simply extract from OutbreakTimeSeries the last TimeSeriesInterval's
+GeoJSON object. That object is a single "classic" GeoJSON document i.e.
+a document where the root object of the JSON is a GeoJSON object, as
+opposed to a document which as an OutbreakTimeSeries object as its root.
+It has features and/or points which each have on them defined the
+default OutbreakTimeSeries properties (e.g. =otss_cases_all= and
+=otss_deaths_all=). Transform that GeoJSON object to have one or two
+additional property, say =cases_all_last_21_days= and
+=deaths_all_last_21_days=. With just that the GeoJSON document can be
+feed to a trivial GeoJSON renderer that knows what to do with those
+properties in order to render the bulls eye plots. For example, a
+Leaflet app could simply lay down two circle marker with radii
+proportionate to sst\_deaths\_all and deaths\_all\_last\_21\_days.
+(Leaflet would need to map features to their centroid to figure where to
+center the circles.)
+
+Even simpler would be to post-process the GeoJSON doc with
+deaths\_all\_last\_21\_days such that there would be two stacked regular
+polygon markers (GeoJSON cannot do circles so, say, an octagon (a
+regular polygon) would approximate the circle) actually expressed as
+GeoJSON features, centered on each point (or centroid of feature). Then
+ANY generic GeoJSON render can show the data. This information could
+also be imported to other maps a layer.
+
+** Quick API overview
+@@html:<a name='quick_api_overview'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: quick-api-overview
+   :END:
+
+Here is a cut down example of what a Outbreak Time Series API JSON
+document would look like:
+
+#+BEGIN_EXAMPLE
+    {
+    outbreak_data: 
+      {
+      metadata: {},
+      time_series: [ {}, {}, ... ]
+      }
+    }
+#+END_EXAMPLE
+
+=metadata= defines which outbreak an =outbreak_data= applies to, the
+source of the data, the period and periodicity of the data, and related
+metadata, as well as a full enumeration of all locations referenced in
+the dataset and a full enumeration of all (sub)populations which the
+dataset applies to. For example:
+
+#+BEGIN_EXAMPLE
+    "metadata" : 
+    {
+      "name" : "2014 Ebola Outbreak in West Africa Time Series, sub-national",
+      "source" : "foobar",
+      "period" : "2014-05-01T00:00:00Z/2015-05-07T23:59:59Z",
+      "periodicity" : "P7D",
+      "locations" : [{"id": "Freetown_SL", "lat_long": [8.29, 13.14] }, { "id": "Conakry_GN", "lat_long": [9.31, 13.42] }, ... ],
+      "populations" : ["all", "healthcare works"]
+    }
+#+END_EXAMPLE
+
+=period= is an
+[[http://en.wikipedia.org/wiki/ISO_8601#Time_intervals][ISO8601 time
+interval]]. =periodicity= is an
+[[http://en.wikipedia.org/wiki/ISO_8601#Durations][ISO8601 period]], for
+example =P7D= means weekly.
+
+=time_series= is an array of =outbreak-interval=s. Each
+=outbreak-interval= looks like the following:
+
+#+BEGIN_EXAMPLE
+    {
+    intervals_index: 48,  
+    locations: [ {}, {}, ... ]
+    }
+#+END_EXAMPLE
+
+The =intervals_index= is derived from the =period= and =periodicity=
+information in the =metadata=. Note that some =intervals_index= MAY be
+missing.
+
+Each location looks like
+
+#+BEGIN_EXAMPLE
+    {
+    locations_index: 29,
+    populations: [ {}, {}, ...]
+    }
+#+END_EXAMPLE
+
+*** Populations @@html:<a name='populations' >@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: populations
+    :END:
+
+A =population= is the highest resolution object in The Spec. *The Spec
+is intentionally designed to have nothing to do with individuals.*
+
+The usual case for a =population= is a sub-population i.e. a subset of
+the overall population. Example populations could be: - all - health
+care workers - males, females
+([[[http://www.voanews.com/content/is-ebola-exacting-a-heavier-toll-on-women/2545987.html][1]]],
+[[[http://www.unwomen.org/en/news/stories/2014/12/un-women-action-to-confront-the-ebola-crisis][2]]],
+[[[https://data.hdx.rwlabs.org/dataset/sub-national-data-of-confirmed-cumulative-ebola-by-gender][3]]])
+- adults, children - etc.
+
+If there are no subsets of a population then the array of =populations=
+will have only one element, which can be labeled anything but
+nonetheless represents "all of the population."
+
+Note that =population=s may not even be humans. For example, in the case
+of ebola there could be
+[[http://www.pgafamilyfoundation.org/News/News-Articles/2014/12/Tracking-Ebola-in-Apes-Project-(1)][a
+=population= of gorillas]] or
+[[http://www.ncbi.nlm.nih.gov/pubmed/25201877][bats]].
+
+Each population looks like:
+
+#+BEGIN_EXAMPLE
+    {
+    populations_index: 3,
+    attributes: {}
+    }
+#+END_EXAMPLE
+
+=attributes= is an object with named attributes, the value of which is a
+JSON number. This specification enumerates the following pre-defined
+attributes but others can be added. - =cases_all= - =cases_probable= -
+=cases_suspected= - =cases_confirmed= - =deaths_all= - =deaths_probable=
+- =deaths_suspected= - =deaths_confirmed= - =basic_reproductive_number=
+(which, of course, will usually not be an integer)
+
+** Other related standards](#other\_standards)
+   :PROPERTIES:
+   :CUSTOM_ID: other-related-standardsother_standards
+   :END:
+
+*** CSV @@html:<a name='csv'/>@@
+    :PROPERTIES:
+    :CUSTOM_ID: csv
+    :END:
+
+As [Rob Baker(@rrbaker)](https://twitter.com/rrbaker) at USAID
+[[https://twitter.com/rrbaker/status/530760280448704512][tweeted]]: >A
+main takeaway from #iccmnyc: stop building closed off, complex shit.
+Help an org turn their Excel files into APIs.
+
+Although this tutorial has used JSON as the format with which to
+introduce the concepts of the Outbreak Time Series Specification, CSV
+and XML serializations are also described in The Spec. The CSV case is
+important because of the above quote from Rob Baker.
+
+If you are coming to this project from a Web dev perspective, it may be
+surprising just how much the humanitarian community works in
+spreadsheets, and that's it. Things like JSON are simply alien to the
+vast majority of the humanitarian community. Therefore to service
+interoperably with their modus operandi CSV, exported from spreadsheets
+has to be supported as an format of this Spec. CSVW is the way to do
+that.
+
+See the HXL docs for just
+[[http://hxlstandard.org/questions/approach/][how important it is to
+have CVS in the mix]]. Note the
+[[http://hxlstandard.org/standard/tagging/][attitude of HXL]]: >HXL is
+designed for exchanging tabular-style data within the humanitarian
+community. Our primary audience is information-management specialists
+who are familiar with spreadsheets or relational databases; our second
+audience is computer programmers and database specialists looking to
+consume data produced by those information-management specialists.
+
+Gotta go to where the users are if this innovation is to diffuse. Also
+from the previously linked document: >One or more rows of each data
+table will consist of human-readable headers.
+
+That is one reason why ISO-3166 alpha2 rather than ISO-3166 numeric3
+codes are used for countries and subdivisions (not to mention that there
+are no numeric3 codes for subdivisions; what's with that ISO?)
+
+Notice that the JSON serialization has an efficiency build in by have
+=populations= and =locations= in the metadata. This allows for the main
+data payload, the GeoJSON time\_interval frames, to simply reference a
+=population= or =location= by ID, rather than repeat those strings and
+geometries many times in API responses.
+
+This CSV serialization does not do the above for two reasons.
+
+1. Simply because that is not what is seen in practice.
+2. To implement an equivalent to the JSON serialization's
+   =populations_index= and =locations_index= would require more than a
+   single CSV files, which is not desirable given the use case of
+   someone exporting data from a spread sheet to CSV.
+
+* BELOW HERE: came from spec
+  :PROPERTIES:
+  :CUSTOM_ID: below-here-came-from-spec
+  :END:
+
+Why? The most important reason is to make it easy for users to deploy.
+Humanitarians seem to be into their spreadsheets. With spreadsheet apps
+it is easy to export to CSV. With a CSV reading *EbolaMapper*
+humanitarians could more easily make compelling visualization they could
+put on the Web to raise the alarm earlier.
+
+Some of the humanitarian folks have already done the work of compiling
+outbreak data into CSV files. So, this is the easiest way for many folks
+to feed data to *EbolaMapper*.
+
+*TODO* this is a CSV only comment:\\
+It might seem obvious that constantly repeating a string for location
+name repeatedly should be replace by a reference to an ID in order to
+make the JSON more compact. This starts to get complicated for folks
+manually exporting data from a spreadsheet to CSV. A future version of
+this API may well address this inefficiency.
+
+The =outbreak_time_series_reader.js= JavaScript Library can read this
+information?
+
+D3.js has CSV reading capability built-in.
+
+[[https://github.com/archan937/jsonv.sh][jsonv.sh]] A Bash command line
+tool for converting JSON to CSV will come in handy for taking a JSON
+file and dumping to CSV for testing.
+
+[[https://github.com/mbostock/d3/wiki/CSV][D3 assumes]] that CSV data
+will comply with [[http://tools.ietf.org/html/rfc4180][IEFT RFC 4180]]
+Common Format and MIME Type for Comma-Separated Values (CSV) Files.
+
+-  [ ] This should be confirmed via a naive tester (someone who has
+   never seen any of this *EbolaMapper* stuff before) but has a
+   spreadsheet they want to visualize. See
+   [[https://github.com/JohnTigue/EbolaMapper/issues/6][Issue #6]]
+
+**** How to structure your own CSV file
+     :PROPERTIES:
+     :CUSTOM_ID: how-to-structure-your-own-csv-file
+     :END:
+
+*TBD [[https://github.com/JohnTigue/EbolaMapper/issues/7][Issue #7]]*
+
+(Caitlin Rivers'
+CSV)[https://github.com/cmrivers/ebola/blob/master/country\_timeseries.csv]
+has column names like =Date=, =Day=, =Cases_Guinea=, =Deaths_Guinea=,
+... and it goes on for each country. Note =Cases_UnitedStates= doesn't
+look like any standard.
+
+*** HXL @@html:<a name='hxl'/>@@
+    :PROPERTIES:
+    :CUSTOM_ID: hxl
+    :END:
+
+[[http://hxlstandard.org/][Humanitarian Exchange Language (HXL)]] is a
+recent standard. HXL essentially creates a second header row in CVS, the
+cells of which contain data typing hashtags. HXL has value. The Spec
+does not directly use HXL. HXL is embedding the metadata in the CSV,
+while CSVW takes an approach where metadata for the CSV table is
+external to the CSV file.
+
+Nonetheless, HXLs vocabulary is useful. For example,
+[[http://demo.hxlstandard.org/data/rowca-gin-adm2/2014-11-11+04%3A14%3A43.241623/data][a
+demo HXL-ified CSV]] uses ISO3 Country Codes and denotes that fact with
+HXL hashtags: - =#adm1=, =#adm1_id= - =#adm2=, =#adm2_id=
+
+For another example,
+[[https://docs.google.com/spreadsheets/d/1iR-JFC3CUykIHfw88Plvfoukvww6AZaf-EYYrOn_KYw/edit#gid=1656685143][HDX's
+Ebola treatment centers spreadsheet]] uses multiple HXL hashtags that
+are relevant to the Sped: - #status\\
+- #loc\_id\\
+- #country\\
+- #adm1 #adm1\_id\\
+- #adm2#adm2\_id - #loc #loctype - #status\\
+- #people\_num\\
+- #x\_notes\\
+- #report\_date\\
+- #source\_lnk\\
+- #from\_date\\
+- #to\_date\\
+- #loc\_lnk\\
+- #lat\_deg\\
+- #lon\_deg\\
+- #x\_verified\\
+- #people\_num
+
+So, the HXL vocabular may well be reused in the Spec

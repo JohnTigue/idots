@@ -1,0 +1,620 @@
+The Outbreak Time Series Specification (the Spec) defines a data model,
+or infoset, for infectious disease outbreak time series. The core of the
+specification is a simple three-level abstract model describing the Who,
+What, Where, and When of outbreak time series.
+
+The Spec is designed to works well with existing Web infrastructure and
+standards, as well as common existing outbreak time series publishing
+techniques, which essentially amounts to CSV files marked up without a
+semantic standard for interoperability.
+
+The Spec also defines a serialization of the abstract model to CSV and
+JSON, compliant with the W3C's CSV for the Web Recommendations
+([[https://www.w3.org/2013/csvw/wiki/Main_Page][CSVW]]). The CSVW
+serialization can be further translated to pure JSON and/or XML
+serializations, which are also Web-native data formats.
+
+The model is intentionally designed to not include any
+[[http://en.wikipedia.org/wiki/Personally_identifiable_information][personally
+identifiable information (PII)]] about individuals; only populations are
+described. Perversely, populations of size one could be defined;
+nonetheless, this specification is not designed for such use cases.
+
+The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
+document are to be interpreted as described in
+[[http://www.ietf.org/rfc/rfc2119.txt][RFC 2119]].
+
+The Outbreak Time Series Specification is licensed under The Apache
+License, Version 2.0.
+
+** Status of This Document @@html:<a name='status'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: status-of-this-document
+   :END:
+
+Currently (as of 2016-06-15) this document is going through a major
+rewrite. v0.0.1 had CSV, JSON, and XML as equivalent serializations.
+v0.1.0, which is what the current rewrite is heading towards, has
+[[https://www.w3.org/2013/csvw/wiki/Main_Page][CSVW]] as the core
+primary serialization. CSVW is CSV plus a bit of metadata in JSON. The
+CSVW spec has mechanisms for algorithmically generating JSON and
+XML(RDF). The abstract model defined herein is not changed between
+v0.0.1 and v0.1.0.
+
+Additionally, the vocabulary of well-known indicators is being factored
+out to a separate specification, which is being tracked on the
+[[Indicator Ontology]] page.
+
+For further overview information, see [[Outbreak Time Series
+Specification Overview]].
+
+** Table of Contents
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-contents
+   :END:
+
+-  [[introduction][Introduction]]
+-  [[scope][Scope]]
+-  [[terminology][Terminology]]
+-  [[referenced-standards][Referenced standards]]
+-  [[abstract-data-model][Abstract data model]]
+-  [[metadata][=metadata=]]
+
+   -  [[periodicity][periodicity]]
+
+-  [[time_series][=time_series=]]
+
+   -  [[locations][=location=]]
+   -  [[populations][=population=]]
+
+      -  [[indicators][=indicators=]]
+
+-  [[serializations][Serializations]]
+-  [[json-serialization][JSON]]
+-  [[csv-serialization][CSV]]
+-  [[xml-serialization][XML]]
+
+** Introduction
+   :PROPERTIES:
+   :CUSTOM_ID: introduction
+   :END:
+
+Outbreak Time Series Specification defines an intentionally simple data
+model for epidemiological outbreak time series. The model essentially
+consists of a sequence of time intervals each of which enumerates
+geographical locations that have associated (sub)populations for which
+case summary data is summarized.
+
+The core data model can be summarized as follows. - An =outbreak= has -
+a =metadata= header - a =time_series= which is a sequence of
+=time_intervals= - Each (=time_interval=) has - a list of =locations=
+where each =location= is - an ISO country code (with optional
+subdivision) or - a [Longitude, Latitude] geographical coordinates -
+Each (=time_interval=, =location=) has - a list of (sub)=populations= -
+Each (=time_interval=, =location=, =population=) has - zero or more
+indicators
+
+The following =population= indicators are pre-defined in this
+specification: - =otss_cases_all= - =otss_cases_probable= -
+=otss_cases_suspected= - =otss_cases_confirmed= - =otss_deaths_all= -
+=otss_deaths_probable= - =otss_deaths_suspected= -
+=otss_deaths_confirmed= - =otss_basic_reproductive_number= -
+=otss_case_fatality_rate=
+
+Not all of the above indicators are guaranteed to be in an Outbreak Time
+Series Specification conformant Resource. Additional attribute
+assignments may also be enumerated because the population attribute
+naming mechanism was designed to be extensible.
+
+This simple information is sufficient for high level outbreak dashboards
+and similar visualization to be created.
+
+** Scope @@html:<a name='scope'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: scope
+   :END:
+
+The following sections describe what is in scope and what is out of
+scope of this specification. ### In scope Population level outbreak
+summary information enumerated over a set of time series intervals.
+
+The information this spec defines is simply the time series of summary
+information of an outbreak down to the level of sub-populations,
+information which should be publicly available and easy to propagate.
+
+*** Out of scope @@html:<a name='out_of_scope' />@@
+    :PROPERTIES:
+    :CUSTOM_ID: out-of-scope
+    :END:
+
+Although other aspects of epidemic outbreaks could be modeled with
+Web-native specifications and APIs, this Outbreak Time Series
+Specification intentionally does not address issues which require
+information identifying individuals (PII). As such there is no modeling
+of concepts such as index case, primary case, or patient zero.
+
+**** Contact tracing
+     :PROPERTIES:
+     :CUSTOM_ID: contact-tracing
+     :END:
+
+Contact tracing is out of scope. This spec does not address contact
+listing and contact tracing or any other information which might
+identify individuals, not even anonymized individual -- only population
+level information is involved. The highest resolution would be an
+individual treatment center. #### Line listings Lines listings involve
+PII such as name or identification number. Line listings also involve
+more detail than required for the scope of this effort and the
+information that needs to be quantified varies case-by-case.
+
+** Referenced
+standards@@html:<a name='#referenced-standards'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: referenced-standards
+   :END:
+
+The following standards are used in this specification. - CSV -
+[[https://www.w3.org/TR/2015/REC-tabular-data-model-20151217/][Model for
+Tabular Data and Metadata on the Web]] -
+[[https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/][Metadata
+Vocabulary for Tabular Data]] -
+[[http://dataprotocols.org/tabular-data-package/][Tabular Data Package]]
+- [[http://tools.ietf.org/html/rfc4180][RFC 4180: Common Format and MIME
+Type for Comma-Separated Values (CSV) Files]] - JSON -
+[[http://tools.ietf.org/html/rfc7158][RFC 7158: The JavaScript Object
+Notation (JSON) Data Interchange Format]] -
+[[http://www.ietf.org/rfc/rfc4627.txt][RFC 4627: The application/json
+Media Type for JavaScript Object Notation (JSON)]] - Geo -
+[[http://geojson.org/geojson-spec.html][The GeoJSON Format
+Specification]] - [[http://www.iso.org/iso/country_codes.htm][ISO 3166:
+Country Codes]] - [[https://tools.ietf.org/html/rfc5165][RFC 5165: A
+Uniform Resource Name (URN) Namespace for the Open Geospatial Consortium
+(OGC)]], specifically for [[http://www.opengeospatial.org/ogcna][OGC CRS
+URNs]] - Miscellaneous -
+[[http://xml2rfc.ietf.org/public/rfc/html/rfc3339.html#anchor14][RFC
+3339]] (seemingly supersedes
+[[https://www.w3.org/TR/NOTE-datetime][W3C's Date and Times Note]] e.g.
+the "T" can be replaced with a space) -
+[[https://www.ietf.org/rfc/rfc2119.txt][RFC 2119: Key words for use in
+RFCs to Indicate Requirement Levels]] -
+[[http://hxlstandard.org/][Humanitarian Exchange Language]] and its
+[[http://hxlstandard.org/standard/dictionary/][standard dictionary]]\\
+- [[https://tools.ietf.org/html/rfc5141][RFC 5141: A Uniform Resource
+Name (URN) Namespace for the International Organization for
+Standardization (ISO)]]
+
+** Terminology @@html:<a name='terminology'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: terminology
+   :END:
+
+**** Resource
+     :PROPERTIES:
+     :CUSTOM_ID: resource
+     :END:
+
+"Resource" in this document refers to the definition used for URIs
+(read: a file or Web page). This specification defines a data format for
+Resources, usually loaded via an URL of type =file:= or =http:= or
+=https:= although other URI schemes could be used. If the Resource
+identity starts with =file://= then the Resource will be the contents of
+a file. If the Resource identity starts with =http://= then the Resource
+will be the body of an HTTP response. The goal of this document is to
+define the structure of such Resources.
+
+** Abstract data model
+   :PROPERTIES:
+   :CUSTOM_ID: abstract-data-model
+   :END:
+
+This is the abstract model for the data. This abstract model can be
+represented in files in different formats. See the next section if you
+just want to see examples in a specific format and go from there.
+
+*TBD*
+[[https://github.com/JohnTigue/outbreak_time_series/issues/8][Issue #8:
+Define abstract data model, map it to JSON, CSV, etc.]]
+
+*** Metadata @@html:<a name='metadata' >@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: metadata
+    :END:
+
+*/This should also be summary info. The info in this section may be all
+the client wants. No need to bring down the relatively larger full time
+series. HDX calls this topline numbers. Maybe call this =properties= ala
+GeoJSON or would that just be confusing?/*
+
+*What about things like incubation\_period?*
+
+In some cases this information will be shown to end users, in titles and
+graph keys. - Title - Disease name - Label: e.g. "West Africa Ebola
+Outbreak 2014" *How to handle this regarding i18n?* - StartDate: -
+EndDate: - GeoArea: World, Africa, Country, or sub area. These are the
+ADM IDs in topoJSON. - Geospatial resolution: maximum precision of
+location identity - admin1 - admin2 - admin3 - admin4 -
+admin1\_plus\_cities - admin2\_plus\_cities - admin3\_plus\_cities -
+admin4\_plus\_cities - coordinates (if coordinates specify resolution
+precision) - ID (could be an URL) of data source - Source - Data license
+- could have code settings which say "only read data if it asserts"
+[[http://opendatacommons.org/licenses/pddl/][PDDL]] or such.
+
+Andrej Verity @andrejverity · Nov 7 >licencing of CODs much trickier
+than most imagine - it is often mashed together from multiple sources
+with own licences #iccmnyc
+
+*** =time_series= @@html:<a name='time_series'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: time_series
+    :END:
+
+http://en.wikipedia.org/wiki/Time\_series - time interval (full start
+and end time of time series) - time series
+
+A =time_series= is a sequence of of =time_interval=s.
+
+**** Periodicity @@html:<a name='periodicity'/>@@
+     :PROPERTIES:
+     :CUSTOM_ID: periodicity
+     :END:
+
+Each =time_interval= period is a single unit of the =periodicity=
+defined in the =metadata= (*TBD*: currently this is on the
+outbreak.time\_series.periodicity, not
+outbreak.metadata.periodicity)e.g. =day=, =week=, =month=, or =year=. It
+should not be assumed that all =time_interval=s are present in the
+sequence. There may be missing data in the =time_series=.
+
+For HDX data, just used =daily= and =weekly= but surely there are a nice
+set of periodicity values already defined in some standard (say, ISO8601
+or similar). In particular, the humanitarian community likes
+=year_and_week= such as "week 20 of 2015 through to week 47 of 2016."
+
+http://www.dhss.delaware.gov/dph/epi/principles.html:\\
+>Changing the unit of time on the x axis may be necessary to best "see"
+the outbreak. This will depend on the incubation period of the disease
+you are dealing with.
+
+**** =intervals= @@html:<a name='intervals'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: intervals
+     :END:
+
+=intervals= is a property of =time_series=. *Array? Object? What is best
+for multiple languages?*
+
+*** Location@@html:<a name='locations'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: location
+    :END:
+
+Location information can be specified in two ways: by name or by
+coordinates. - By geospatial coordinates [longitude, latitude] e.g.
+=[-122.3239,47.5987]=\\
+- By name - [[http://en.wikipedia.org/wiki/ISO_3166][ISO 3166]]
+specifically ISO 3166-1 numeric-3 and ISO 3166-2. -
+[[file:(http://en.wikipedia.org/wiki/ISO_3166-2)][ISO 3166]] country
+subdivision codes
+
+[*Note:*
+[[https://medium.com/@Simon_B_Johnson/how-hxl-is-being-used-at-the-british-red-cross-281c0b632df6#][HDX
+is calling these PCodes or p-codes]]]
+
+If both a name and coordinates are provided, the coordinates MUST be
+used over any point derived from the name. For example, if the name is
+an ADM2 code that code's geo-centroid MUST not be used over the
+explicitly provided coordinates.
+
+For reasons of localization,
+[[http://en.wikipedia.org/wiki/ISO_3166-1_numeric][ISO 3166-1 numeric]]
+(a.k.a. numeric-3) country codes are used for location identification,
+rather than the alpha-2 or alpha-3 codes.
+
+[ISO 3166-2] country subdivision codes "are represented as the alpha-2
+code for the country, followed by up to three characters." So if a
+=location= value starts with a numeral it is an 3166-1 value; if it
+starts with a alpha then it is a 3166-2 value.
+
+*** Populations @@html:<a name='populations' >@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: populations
+    :END:
+
+*(The domain term may well be "indicators" but that's an HDX label, not
+from the epi community.)*
+
+Example sub-populations: =male=/=female=, =<10yo=/=10yo+=,
+=health_care_workers=
+([[https://twitter.com/HarvardGH/status/748179201262559232]["community
+healthcare workers" (CHW)]], etc. Clearly these names are values and
+there is a list of know values/tags to use.
+
+There may only be one sub-population. Usually that would be =all= but
+that is not required to be the case.
+
+Note that HDX uses =population= as well:\\
+https://github.com/OCHA-DAP/hdxviz-ebola-cases-total/blob/gh-pages/js/ebolaviz-app.js\\
+$scope.indicators = dataService.getIndicators();\\
+$scope.selectedIndicator = "population";\\
+Not sure if that is the same thing.
+
+**** Population indicators@@html:<a name='indicators'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: population-indicators
+     :END:
+
+*Define indicator*
+
+Indicator is a flat namespace such that anyone can arbitrarily define a
+new indicator. Nonetheless, the following indicators are pre-defined in
+this Spec. - =otss_cases_all= - =otss_cases_probable= -
+=otss_cases_suspected= - =otss_cases_confirmed= - =otss_deaths_all= -
+=otss_deaths_probable= - =otss_deaths_suspected= -
+=otss_deaths_confirmed= - =otss_basic_reproductive_number= *TODO: can
+this really change? Rather, is this a prop of something else?*
+
+The main pre-defined indicators cover cases and deaths, with probability
+qualifiers: probable, suspected, or confirmed. There are eight
+permutations (2 x 4) so there are eight different pre-defined indicators
+for describing this info. =otss_cases_all= is supposed to equal
+=otss_cases_probable= plus =otss_cases_suspected= plus
+=otss_cases_confirmed=. Unfortunately that equation does not always
+hold; this Spec does not require that. Similiarly, =otss_deaths_all= may
+not equal =otss_deaths_probable= plus =otss_deaths_suspected= plus.
+=otss_deaths_confirmed=.
+
+=all= is included in the list of predefined indicators because sometime
+there is not a breakdown into =probable=, =suspected=, =confirmed= with
+which to apply the equation =all = probable + suspected + confirmed= and
+furthermore that equation may not even hold true with the provided
+numbers.
+
+** Serializations
+   :PROPERTIES:
+   :CUSTOM_ID: serializations
+   :END:
+
+Format is a less formal word for this; the more technical term is
+serializations or, in the case of REST, representations.
+
+This is the data format for outbreak info that can be read by
+*Omolumeter*, and any other software which knows how to work with this
+Spec. These are serializations of the in-memory JavaScript objects
+defined above.
+
+-  Times, dates, and periods are formatted according to the W3C's
+   ISO8601 profile,
+   [[http://www.w3.org/TR/NOTE-datetime][NOTE-datetime]]. Here's an
+   [[http://www.cl.cam.ac.uk/~mgk25/iso-time.html][overview]].
+
+*** JSON@@html:<a name='json-serialization'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: json
+    :END:
+
+For the JSON serialization, the names of items in the infoset are
+lowercased. For example =Timeseries= becomes ="timeseries"= and
+=Disease name= becomes =disease_name=.
+
+*TBD: Cannot simply the abstract names be ones that work in JSON, XML,
+and CSV? Does not
+[[https://en.wikipedia.org/wiki/Snake_case][snake\_case]] fit the
+criteria?*
+
+[[https://www.w3.org/TR/2015/REC-csv2json-20151217/][Generating JSON
+from Tabular Data on the Web W3C Recommendation 17 December 2015]]
+
+*TODO: define the JSON schema*\\
+http://en.wikipedia.org/wiki/JSON#Schema\_and\_Metadata
+
+JSON is JavaScript Object Notation. JSON is the default, de facto format
+for Web services.
+
+Note that there is a design requirement in V1 of this API that all
+information be fetchable via a single HTTP Request/Response i.e. the
+number of HTTP Resources required to acquire the full info set is one.
+This is to ensure simplicity of deployment if someone wants to just
+produce a single data file and package it up with *EbolaMapper* for
+deployment for contexts where there is not permanent Internet
+connectivity. For example, *EbolaMapper* could be distributed via USB
+sticks for remote locations without any network connectivity. So, yes,
+this could be used as a RESTful API interface, and in the case of
+http://outbreakapis.com served data that is exactly what it is.
+
+**** JSON examples
+     :PROPERTIES:
+     :CUSTOM_ID: json-examples
+     :END:
+
+There are sample OTSS-compliant sample files in the repository in
+=test/data/otss_examples/= including =ebola_2014_west_africa.json=.
+
+This will fetch all the information about the Ebola outbreak of 2014 for
+the whole world (e.g. that includes the USA and Spain cases):\\
+=http://outbreakapis.com/v1/ebola-2014/all-global-data=
+
+This will fetch just the top line numbers i.e. the Metadata and Summary
+info but not OutbreakTimeline. This is useful for small "ticker"
+widgets. The JSON is much smaller that =all-global-data=:\\
+=http://outbreakapis.com/v1/ebola-2014/top-line=
+
+*** CSV @@html:<a name='csv-serialization'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: csv
+    :END:
+
+**** Table of Contents
+     :PROPERTIES:
+     :CUSTOM_ID: table-of-contents-1
+     :END:
+
+-  [[csv_basics][CSV basics]]
+-  [[csv_csvw][CSVW]]
+-  [[csv_hxl][HXL]]
+-  [[csv_example][Example]]
+
+**** CSV basics @@html:<a name='csv_basics'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: csv-basics
+     :END:
+
+The info needed to model an outbreak is rather simple. CSV is already
+used in various outbreak modeling software. The core of an OTSS document
+can be expressed in a single CSV file. But this spec also defines a
+multi-document serialization which consists of multiple interlinking CSV
+files. I.e. CSV files that work together with pointers occurring between
+the CSV files, as is common in database serialization scenarios.
+
+The abstract data model has the concept of sub-populations. Each
+sub-population is serialized as a separate CSV file. *Why?* Could just
+have sub\_population\_id as a column then main data is all in one CSV.
+At least that has to be an option, such that folks can cram a
+full-but-simple report into one CSV.
+
+*Notes* - [[http://tools.ietf.org/html/rfc4180][IEFT RFC 4180]] Common
+Format and MIME Type for Comma-Separated Values (CSV) Files. - *TODO*
+what? cram GeoJSONs into a column? Clearly not the geometries, rather
+IDs/Names. Maybe just OGC CRS URNs?\\
+- http://www.convertcsv.com/json-to-csv.htm
+
+**** CSVW @@html:<a name='csv_csvw'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: csvw
+     :END:
+
+CSV for the Web ("CSVW") is the W3C's way of working with CSV files on
+the web, almost like a simple database schema. Basically, now that the
+W3C has completed its [[https://www.w3.org/2013/csvw/wiki/Main_Page][CSV
+on the Web]] work, that working groups guidelines can simply be applied
+to the CSV serialization.
+
+Notes: -
+[[https://www.w3.org/TR/2016/NOTE-tabular-data-primer-20160225/#geospatial][CSVW:
+geospaptial representation]] - ibid:
+[[https://www.w3.org/TR/2016/NOTE-tabular-data-primer-20160225/#shared-schemas]["How
+can you specify a single schema for multiple CSV files?"]] - The basic
+encoding should be to a single CSV. But there should be /optional/
+alternative, more efficient encodings to multiple CSVs interlinked via
+HATEOAS file a la CVSW. - Accoring to the W3C: "These metadata documents
+should be served from a web server with a media type of
+application/csvm+json if possible."
+[[https://www.w3.org/TR/2016/NOTE-tabular-data-primer-20160225/][CSV on
+the Web: A Primer]]
+
+CSV does break down at some level of complexity. But with CSVW, a
+HATEOAS API can be built out where the leaves of the hyperlinked
+structure are CSV files. CSVW calls for the interlinking and schema
+defining information to be serialized as JSON. That (JSON in the middle)
+does qualify as hypermedia, the "H" in HATEOS. SO, that there is your
+HATEOAS mult-table datastructure for an outbreak time series.
+
+Folks could be given a template in a zip file containing multiple CSV
+tables and the JSON metadata file. The JSON files can be hand-tweaked
+(and would possibly remain unchanged after initial creation) and
+software apps would generate the core CSV data during a data export,
+which possibly involves multiple CSV files but this spec allows for
+simply a single CSV file to work.
+
+**** HXL @@html:<a name='csv_hxl'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: hxl
+     :END:
+
+*[HXL is cool but will probably end out not getting used. This section
+is probably going to be edited out soon]*
+
+Outbreak Time Series Specification maximally leverages
+[[http://hxlstandard.org/standard/dictionary/][the HXL spec]], including
+the idea that column headers should not be data (e.g. year2014,
+year2015, etc.), as that hinders reusability.
+
+If the page/blog post has the hashtag #GOMNO #outbreak\_time\_series
+then GOMNO can find it via search engines and index the numbers.
+
+The follow tags from
+[[https://docs.google.com/spreadsheets/d/1En9FlmM8PrbTWgl3UHPF_MXnJ6ziVZFhBbojSJzBdLI/edit#gid=0][the
+HXL core schema]] are used in this spec (these same #HXL tags as used in
+the CSV serialization and in HTML table, the latter being a specific
+case of XML.):
+
+Cultural region info (country, state, etc.): - =#country=, =#country_id=
+- =#adm1=, =#adm1_id= - =#adm2=, =#adm2_id= - =#adm3=, =#adm3_id= -
+=#adm4=, =#adm4_id= - =#adm5=, =#adm5_id=
+
+Geographical region info: - =#lat_deg=: Latitude - =#lon_deg=: Longitude
+
+Metadata: - #crisis, #crisis\_id - #data\_lnk Data origin link -
+#report\_date - #to\_date - #from\_date - #period\_date (e.g.
+http://hxlstandard.org/standard/tagging/ Notice Year gets #period\_date)
+
+Maybe: - #status\\
+- #loc\_id\\
+- #loc #loctype - #people\_num\\
+- #people\_num
+
+***** New tags
+      :PROPERTIES:
+      :CUSTOM_ID: new-tags
+      :END:
+
+See [[http://hxlstandard.org/standard/dictionary/][HXL hashtag
+dictionary]], Section 1.1, Tag Format: - should start with =#x_= -
+should end with - (none) Plain, human-readable text (e.g. a placename).
+- \_date A date or time period (e.g. 2012). - \_deg Degrees of latitude
+or longitude. - \_id A code or unique identifier (e.g. a P-code from the
+Common Operational Datasets). - \_lnk A URL (web link). - \_num A
+numeric value.
+
+**** CSV examples @@html:<a name='csv_example'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: csv-examples
+     :END:
+
+*TBD*
+
+**** HTML @@html:<a name='csv_html'>@@@@html:</a>@@
+     :PROPERTIES:
+     :CUSTOM_ID: html
+     :END:
+
+*OR is this XML subsection?*
+
+*** XML @@html:<a name='xml-serialization'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: xml
+    :END:
+
+The XML serialization is actually just a direct translation of the CSVW
+JSON metadata to XML. The time series part is still in CSV, only the
+JSON gets translated to XML.
+
+**** Why XML
+     :PROPERTIES:
+     :CUSTOM_ID: why-xml
+     :END:
+
+-  Having a well defined (yet simple) XML schema and a well-known name
+   for that schema enables namespacing Outbreak Time Series info into,
+   say, Atom feeds.
+
+"Upcasting" from JSON to XML is pretty straight forward. XML --> JSON is
+where things can get sticky. So, by focusing on JSON first, XML will be
+easy, automatic translation of JSON.
+
+Goals: - XML for HATEOAS rendering via XSLT. Start from metadata, show
+whole datastructure. (How is CSV rendered?) - Simple use should have
+option to have all data in one file so no "H" in HATEOS, for simple
+cases.
+
+Relevant: -
+http://www.internetsociety.org/articles/using-json-ietf-protocols -
+watch out for mixed content and metadata (is that indicators?) -
+[[https://www.w3.org/TR/2016/NOTE-csvw-html-20160225/][CSVW Note:
+Embedding Tabular Metadata in HTML]] (XML-to-HTML converter?) -
+https://www.npmjs.org/package/js2xmlparser -
+https://www.npmjs.org/package/xml2js
+
+D3.js can read XML. So D3 for both CSV and XML reading: -
+http://bl.ocks.org/mbostock/1080941 -
+https://gist.github.com/lgrammel/2772585

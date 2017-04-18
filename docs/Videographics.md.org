@@ -1,0 +1,42 @@
+Videographics is simply a fancy word for video recording of someone
+talking over graphics, preferably with dynamic and interesting motion. A
+videographic can be as simple as a recorded screencast.
+
+The Economist does a great job of this. Those "live charts," as they
+call them ([[https://www.youtube.com/watch?v=WMyFNPIG_hQ][e.g.]]), sure
+look like D3. I might be wrong but nonetheless the live charts could be
+implemented in D3 is the point. You can check out more of their work on
+[[https://www.youtube.com/playlist?list=PL800D5CBC2E5E1AE4][The
+Economist's Videographics YouTube playlist]].
+
+To illustrate what tools like *EbolaMapper* enable please consider
+[[http://www.ted.com/talks/hans_rosling_shows_the_best_stats_you_ve_ever_seen][Hans
+Rosling's famous 2006 TED talk]]. Now check out a
+[[http://bost.ocks.org/mike/nations/][D3 visualization of the same data
+by Mike Bostock]].
+
+Shoot, here's
+[[https://twitter.com/nytgraphics/status/543147429273829376][the New
+York Times on Twitter doing a videographic of someone clicking on their
+excellent D3-based Ebola viz]].
+
+For discussing the ebola outbreak, [[EbolaMapper.html]] be useful. It
+has minimal trim. Fullscreen it and start recording your presentation.
+Of course, without jumping into the code the only control you have of
+what happens is through the UI. Not that controlling sequences with code
+is particularly hard with D3.
+
+So, if Hans Rosling were to record a screencast of him talking while
+driving *EbolaMapper*, after someone watched the video they could then
+go explore the outbreak via *EbolaMapper*. This seems like a very
+engaging way to get people's attention on public health crises.
+
+** How to produce videographic screencasts
+   :PROPERTIES:
+   :CUSTOM_ID: how-to-produce-videographic-screencasts
+   :END:
+
+*TBD [[https://github.com/JohnTigue/EbolaMapper/issues/5][issue #5]]*\\
+The section needs to have a brief write-up, mostly consisting of links
+to good tutorials on the Web. There should also be a demo or two i.e.
+links to videographics produced and uploaded to both YouTube and Vimeo.

@@ -1,0 +1,79 @@
+[*TODO:* "Outbreak API" is cute and all but it's more like a "Outbreak
+Time Series Library API" or IDOTS Library API. Also, these words are
+destined for
+[[https://github.com/JohnTigue/outbreak_time_series_data/wiki/IDOTS-Library-API][the
+=outbreak_time_series_data= repository]]]
+
+The Outbreak API is simply a RESTful API expression of the same
+information that the [[Outbreak Time Series Specification]] defines,
+with the addition of a naming convention for files and directories (or
+formally, HTTP Resources and Collections) such that a collection of
+Outbreak Time Series can be packaged into, say, a ZIP file. For code
+that implements this sort of thing in AWS S3, see
+[[https://github.com/meconlin/lambda-s3-microservice][the
+lambda-s3-microservice repo]].
+
+The Outbreak API is defined by a
+[[https://github.com/JohnTigue/outbreak_time_series_data/blob/master/api/swagger/swagger.yaml][Swagger
+spec, which is in the outbreak\_time\_series\_data repo]]. (Swagger is
+now more formally known as
+[[https://github.com/OAI/OpenAPI-Specification][The OpenAPI
+Specification]].)
+
+[*TODO:* This [[http://dataprotocols.org/tabular-data-package/][Tabular
+Data Package]] seems extremely relevant, but may well be superseded by
+CSVW.]
+
+** Data subsetter
+   :PROPERTIES:
+   :CUSTOM_ID: data-subsetter
+   :END:
+
+The core task of the OTS Spec is to model a library of DOTS. This
+Outbreak API also adds the constraint that the library should all be
+physically located in a single URL tree (read: on one web server, or in
+a ZIP file).
+
+Even a single CSV file can be large though. A web-app accessing IDOTS
+data may be interested in only a small subset of the data in a CSV
+files. As such this API includes mechanism for specifying CSV subsets,
+which enables faster transfer of the data over the network, and reduces
+parse time. This is similar to the
+[[https://proxy.hxlstandard.org/data/source][HXL Proxy]] (which is
+[[https://github.com/HXLStandard/hxl-proxy][open source]] and discussed
+in an article about
+[[https://medium.com/@Simon_B_Johnson/how-hxl-is-being-used-at-the-british-red-cross-281c0b632df6#.8fvue49go][#HXL
+at the Red Cross]]. These APIs will still return OTS Spec compliant data
+(JSON & CSV Resources). Subsets are defined in the API Requests using
+the data model as defined in the OTS Spec.
+
+** Physical URL tree
+   :PROPERTIES:
+   :CUSTOM_ID: physical-url-tree
+   :END:
+
+The Outbreak API Swagger file describes the structure of an URL tree.
+All endpoints are read-only HTTP GET. The URL tree is a library of
+Outbreak Time Series. The API simply defines, in Swagger, the same
+logical structure of interlinked files as found in the core Outbreak
+Time Series Specification, with the constraint that all linked data
+files are physically within the same URL tree. In this way it defines a
+directory structure whereby a library of Outbreak Time Series documents
+can be packaged as, say, a ZIP file.
+
+The structure of the Outbreak API's URL tree mirrors the
+[[http://disease-ontology.org/][Disease Ontology]] tree. Some examples:
+- Zika (aka DOID:0060478) -
+=disease/disease_by_infectious_agent/viral_infectious_disease/Zika_fever=
+- =disease/disease_by_DOID/0060478= - Ebola (aka DOID:4325) -
+=disease/disease_by_infectious_agent/viral_infectious_disease/Ebola_hemorrhagic_fever=
+- =disease/disease_by_DOID/4325= - Cholera (aka DOID:1498) -
+=disease/disease_by_infectious_agent/bacterial_infectious_disease/primary bacterial infectious disease/cholera=
+- =disease/disease_by_DOID/1498=
+
+Note that the DIODs (as defined by the Disease Ontology) are also used
+as short codes within the Outbreak Time Series Specification.
+
+For an example of such a library, see the
+[[https://github.com/JohnTigue/outbreak_time_series_data][outbreak\_time\_series\_data]]
+repository.

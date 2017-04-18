@@ -1,0 +1,219 @@
+[[https://data.hdx.rwlabs.org/][The Humanitarian Data Exchange]] (HDX)
+is *the* place to pay attention to for ebola outbreak data in terms of
+actual hosted data as well as modern visualizations thereof. See
+[[https://data.hdx.rwlabs.org/ebola][the HDX ebola dashboard]] for
+evidence of this statement.
+
+** Table of Content
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-content
+   :END:
+
+-  [[overview][Overview]]
+-  [[code][Code]]
+-  [[data][Data]]
+
+*** Overview @@html:<a name='overview'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: overview
+    :END:
+
+The HDX is a project of the UN with
+[[https://data.hdx.rwlabs.org/about][the goal of making "humanitarian
+data easy to find and use for analysis."]] The HDX team is not your
+grandfather's United Nations. Imagine if the Web start-up community has
+an outpost in the UN: that would be the HDX. They are very much of the
+open source mentality and they have a lot of code in public GitHub
+repos. They also do a lot of the group management in public. This is
+most encouraging.
+
+The project is showing traction:\\
+[[https://raw.githubusercontent.com/luiscape/hdx-in-2014/master/plots/number_of_registered_users.png]]
+
+The HDX site itself is [[https://github.com/OCHA-DAP/hdx-ckan][a highly
+customized instance of CKAN]]. In the governmental and humanitarian tech
+crowds, [[http://ckan.org/][CKAN]] is a popular "data portal" document
+repository open source codebase.
+
+There are many datasets on HDX, not all of which are related to the 2014
+Ebola Outbreak in West Africa. This page focuses on some of the ebola
+datasets and code that uses those datasets. This is only a high level
+overview. For detailed analysis of JSON and API at HDX, see [[JSON
+Ebola2014 Data Found on the Web|JSON Ebola2014 Data Found on the
+Web#hdx]].
+
+*** Code@@html:<a name='code'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: code
+    :END:
+
+This section reports on code from the HDX folks that was found on
+GitHub. First I mention their API experiment which clearly indicates
+that they have the big picture in mind (read: Web service API data feeds
+in JSON).
+
+**** APIs
+     :PROPERTIES:
+     :CUSTOM_ID: apis
+     :END:
+
+Since at least 2013-10, these folks have completely understood what
+needs to be done on the API front, see
+[[https://github.com/OCHA-DAP/ProjectWiki/wiki/Data-APIs][Data APIs page
+on their wiki]].
+
+In 2014-07, experiments on this front can be seen:
+https://github.com/luiscape/hdx\_api
+
+As of 2014-11-12 they have started
+[[http://docs.hdx.rwlabs.org/an-api-for-ebola-data/][experimenting with
+an API for ebola data]]. Initially the information is extremely simple,
+just top line summaries, not the nitty-gritty that is in the [[Outbreak
+Time Series Specification|Outbreak Time Series Specification Overview]].
+As CJ Hendrix wrote in the announcement: >It's an experiment!\\
+We have just started to experiment with the CKAN Datastore and with this
+dataset in particular. Most of our datasets are not datastore-enabled
+right now. We may shortly be adding sparklines and other visualizations
+that require a time series of these data, so the structure of this
+dataset may change
+
+This is great news because time series is part of exactly what this
+project's [[Outbreak Time Series Specification|Outbreak Time Series
+Specification Overview]] addresses. So, John Tigue is interacting with
+them.
+
+For detailed analysis of ebola related JSON from HDX see [[JSON
+Ebola2014 Data Found on the Web|JSON Ebola2014 Data Found on the
+Web#hdx]].
+
+**** The HDX ebola dashboard
+     :PROPERTIES:
+     :CUSTOM_ID: the-hdx-ebola-dashboard
+     :END:
+
+URL: https://data.hdx.rwlabs.org/ebola\\
+GitHub: https://github.com/OCHA-DAP/hdxviz-ebola-cases-total
+
+This is very important, see [[JSON Ebola2014 Data Found on the Web|JSON
+Ebola2014 Data Found on the Web#the-hdx-ebola-dashboard]] for detailed
+analysis.
+
+2015-01-07: found this:\\
+http://docs.hdx.rwlabs.org/west-africa-ebola-outbreak-visualization/
+
+**** The ebola narrative
+     :PROPERTIES:
+     :CUSTOM_ID: the-ebola-narrative
+     :END:
+
+[[https://github.com/luiscape/Ebola-Narrative/network][In 2014-08 Capelo
+was contributing]] to
+[[http://simonbjohnson.github.io/Ebola-Narrative/][an ebola narrative]].
+It's D3.js-based and can run (tested by JFT) via =file://= URLs so it
+should be easily offlined, which is one of the things I am interested
+in.
+
+**** A HDX data gatherer and storer
+     :PROPERTIES:
+     :CUSTOM_ID: a-hdx-data-gatherer-and-storer
+     :END:
+
+https://github.com/luiscape/hdx-datastorer-ebola-cases\\
+>Collection of scripts to manage datasets on CKAN's DataStore.
+
+https://github.com/luiscape/hdx-datastorer-ebola-cases/blob/master/data/data.csv\\
+A well data typed CSV file that seems to get updated now and again. New
+info is appended to the end. It has the top line numbers broken out by
+country. For each country, info like cases (suspected, confirmed,
+probable), same for deaths, both of those as Case fatality rate (CFR).
+
+[[https://github.com/luiscape/hdx-datastorer-ebola-cases/blob/master/code/fetch-file.py][Some
+code in here]] fetches data from an URL:
+
+#+BEGIN_EXAMPLE
+    https://data.hdx.rwlabs.org/api/action/resource_show?id=a02903a9-022b-4047-bbb5-45127b591c85
+#+END_EXAMPLE
+
+Which points to
+
+#+BEGIN_EXAMPLE
+    https://docs.google.com/spreadsheets/d/1LcGzK41O5xANVxTvympUwBBz_eioQJ7VJqzRh6r5XJc/export?format=csv
+#+END_EXAMPLE
+
+Which is a direct download of a CSV file of which contains the exact
+information which comes out of [[the HDX top line numbers experimental
+API|JSON-Ebola2014-Data-Found-on-the-Web#hdx-api-experiment]]. So, I
+guess the former feeds the latter.
+
+*** Data @@html:<a name='data'>@@@@html:</a>@@
+    :PROPERTIES:
+    :CUSTOM_ID: data
+    :END:
+
+**** Sub-national time series data on Ebola cases and deaths
+     :PROPERTIES:
+     :CUSTOM_ID: sub-national-time-series-data-on-ebola-cases-and-deaths
+     :END:
+
+This dataset is the most important one that needs to be paid
+attention:\\
+URL: https://data.hdx.rwlabs.org/dataset/rowca-ebola-cases\\
+License: public domain\\
+> Sub-national time series data on Ebola cases and deaths in Guinea,
+Liberia, Sierra Leone, Nigeria, Senegal and Mali since March 2014
+>@@html:<br/>@@ > Ebola outbreak time series data at national and sub
+national levels since March 2014. Data compiled manually from a number
+of published reports. Updated by OCHA ROWCA every working day.
+
+This is the first highly usable data I found. The data is available as
+an Excell spreadsheet, Data Ebola (Public).xlsx. So, they still need to
+figure out how to get that information easily and automatically
+available via HTTP but it seems they are working on that.\\
+https://github.com/luiscape/hdx-datastorer-ebola-cases
+
+On 2014-11-14, JFT downloaded this and used it for development purposes.
+
+**** Number of Ebola cases in Guinea, Liberia, Sierra Leone, Nigeria,
+Mali, Spain and USA
+     :PROPERTIES:
+     :CUSTOM_ID: number-of-ebola-cases-in-guinea-liberia-sierra-leone-nigeria-mali-spain-and-usa
+     :END:
+
+https://data.hdx.rwlabs.org/dataset/ebola-cases-2014 >Total number of
+probable, confirmed and suspected Ebola cases and deaths in Guinea,
+Liberia, Sierra Leone, Nigeria, Senegal, Mali, Spain and USA. Extracted
+from WHO: Ebola Response Roadmap Situation Reports, the latest of which
+was on 19 November 2014
+
+Related but not outbreak numbers -
+[[https://data.hdx.rwlabs.org/dataset/health-facilities-in-guinea-liberia-mali-and-sierra-leone][Health
+facilities in Guinea, Liberia, Mali and Sierra Leone]]
+
+**** EVD Cases by district
+     :PROPERTIES:
+     :CUSTOM_ID: evd-cases-by-district
+     :END:
+
+https://data.hdx.rwlabs.org/dataset/evd-cases-by-district >This data is
+made available from the WHO - Global Health Observatory. Data on new
+probable and confirmed cases by epi week and district. There is a file
+for each country Liberia, Sierra Leone, and Guinea. All the data from
+the countries can be found at
+http://apps.who.int/gho/data/node.ebola-sitrep.ebola-country?lang=en
+There are 2 values for each district. One is from the Ministry of Health
+SitRep. The other is from the patient database maintained in country.
+There is latency in getting the patient database is updated therefore
+the numbers are lower in the latest weeks.
+
+**** Treatment centers
+     :PROPERTIES:
+     :CUSTOM_ID: treatment-centers
+     :END:
+
+https://data.hdx.rwlabs.org/dataset/ebola-treatment-centers\\
+*Ebola Treatment Centers or Units (ETCs or ETUs)* > This dataset
+represents the best-known collection of status and location of the
+facilities known as Ebola Treatment Centers or Ebola Treatment Units in
+Guinea, Liberia and Sierra Leone, with relevant attributes and
+information. Please forward any mistakes or requested changes to
+unmeer.im@gmail.com. Updated frequently, latest update 26 November.

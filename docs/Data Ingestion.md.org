@@ -1,0 +1,44 @@
+Unbelievably (or more appropriately, disappointingly) the world seems to
+be at a state where ebola data acquisition revolves around screen
+scraping of Web pages from the CDC, WHO, etc.
+
+To address this insanity, Luis Capelo banged out
+[[https://github.com/luiscape/who-new-figures-alert][a tool]]: >Simple,
+ScraperWiki-based email-alert script that sends a warning every time WHO
+updates their Ebola cases figure.
+
+Then I guess screen scrappers go off and collect the info. E.g.
+https://github.com/luiscape/hdxscraper-cdc-ebola-historic
+
+* HDX
+  :PROPERTIES:
+  :CUSTOM_ID: hdx
+  :END:
+
+For example, the dataset on HDX seems to be built via multiple scrapers.
+Here's one:
+https://github.com/luiscape/hdxscraper-cdc-ebola-historic/blob/master/code/scraper.R
+
+In [[https://github.com/luiscape?tab=repositories][luiscape's
+repositories]] are other scrapers
+
+-  [ ] Was he using: https://scraperwiki.com/help/whats-new/\\
+   As seen in:
+   https://github.com/luiscape/hdxscraper-brc-health-facilities/blob/master/http/index.html
+
+See [[Other Coders]] for more on him.
+
+* Future
+  :PROPERTIES:
+  :CUSTOM_ID: future
+  :END:
+
+So, hopefully we can just use their work for a while. But in the end
+there should be some core, highly typed data repositories ([[HDX|HDX
+Repository]] and [[OHDR|OHDR Repository]] will probably be first) where
+data has passed through acquisition and cleaning, certified by some data
+lint checker (which can be used solo for devs testing data they
+generate).
+
+This will need to be addressed...
+[[https://github.com/JohnTigue/EbolaMapper/issues/11][Issue #11]]

@@ -1,0 +1,9 @@
+Open Humanitarian Data Repository (OHDR)\\
+http://ohdr.nethope.opendata.arcgis.com/
+
+This is a project of NetHope(http://nethope.org/) so I expect there will
+be APIs there soon, hopefully [[Outbreak APIs]] will be part of it.
+
+NetHope is running the cell network the #TackleEbola provided
+smartphones will communicate with. Therefore this seem like a natural
+place for the info to surface.

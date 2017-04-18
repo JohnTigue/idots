@@ -1,0 +1,268 @@
+This wiki page is about defining an ontology of infectious disease
+outbreak indicators. Such an ontology is a deliverable of this Outbreak
+Time Series project. Examples of the kind of indicators the ontology
+should address include: - "All deaths in the last 7 days" - "Cumulative
+suspected cases to date, in women" - "Cumulative deaths, percentage of
+which are from the last 3 weeks"
+
+** Table of Contents
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-contents
+   :END:
+
+-  [[intro][Introduction]]
+-  [[targets][Target audience and author]]
+-  [[terminology][Meta terminology: ontology versus schema]]
+-  [[goal][Goal]]
+-  [[prior_art][Potentially relevant previous art]]
+-  [[early_spec][Early work from the Spec]]
+-  [[indicators][Indicators: types and attribute dimensions]]
+-  [[others][Related definitional needs of the Spec]]
+
+** Introduction @@html:<a name='intro'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: introduction
+   :END:
+
+So, the task this page is addressing is to map out and name well various
+topics embedded in such indicator names. For example, seemingly
+=confidence= is a dimension/property with values =suspected=,
+=probable=, and =confirmed=. Another property seems to be =deaths=
+versus =cases=. There are populations and sub-populations. Etc. This
+ontology will be mapped to RDF and serialized as CSVW table annotations,
+see [[https://www.w3.org/ns/csvw][CSVW Namespace Vocabulary Terms]] for
+further information on where RDF and CSVW meet.
+
+This page is currently broken out from the Specs in order to provide
+easy focus on just the ontology during its development, without having
+to wade into formal specification language of a work in progress.
+
+The [[Outbreak Time Series Specification]] (the Spec) will use this
+ontology. This page may well get folded into the Spec. Alternatively,
+there is precedence in web standards to have "well known vocabularies"
+as separate specs, both of which get released simultaneous. The idea
+being that the core spec is designed to be extensible. Inevitably, there
+will be a need for indicators that are not covered in this "well known
+vocabulary" spec. So make the core extensible, and separately use those
+extension mechanism to inject a vocabulary of frequently seen
+indicators, as defined in this vocabulary spec for an ontology of common
+epidemiological indicators.
+
+** Target audience and author @@html:<a name='targets'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: target-audience-and-author
+   :END:
+
+The target audience for this document is epidemiology domain experts who
+would like to contribute to the discussion of this ontology. By
+separating this page from the Spec, such experts can quickly read this
+page and easily leave comments. If you are such a person, please just
+hit the edit button and type away in this wiki page. This page is under
+version control; any changes can be rolled back, so not to worry. If you
+do not have and do not want a (free) GitHub account you cannot edit this
+page. In that case feel free to email comment to
+[[mailto:john@tigue.com][John Tigue (john@tigue.com)]].
+
+The original author of this document is John Tigue; hopefully others
+will contribute. I (John Tigue) am not an expert in the epidemiology
+field so please feel free to provide feedback which differs radically
+from is presented here. (Heck, I don't even know if "indicators" is the
+right term.) I am simply a programmer with standards body experience who
+saw a place where he could contribute by driving the definition of a
+spec and building software (visualization, translators, validators,
+etc.) that works with the spec.
+
+Any existing definitional standards should be used. For example, the
+[[http://disease-ontology.org/][Disease Ontology]] is being used. Is
+there some already worked out ontology for indicators? That should be
+used. Please speak up if you know of any thing. Maybe even a good text
+book?
+
+There is no official standards body which is defining this
+specification. This is a completely informal process at this time. If
+this project proves valuable, the end definition of success would be to
+transfer the work to a standards body. At that time John Tigue simply
+becomes the spec editor and reference implementation coder. The
+reference implementation is called [[Omolumeter]].
+
+** Meta terminology: ontology versus schema
+@@html:<a name='terminology' />@@
+   :PROPERTIES:
+   :CUSTOM_ID: meta-terminology-ontology-versus-schema
+   :END:
+
+This ontology is an abstract concept design for consumption by human
+minds; the ontology provides common understanding between humans. The
+Spec is designed for consumption by machines. The ontology is to be
+encoded in the Spec as a schema.
+
+For more background on the distinction made here between ontology and
+schema, see
+[[https://www.semanticscholar.org/paper/Ontology-and-database-schema-What-s-the-difference-Uschold/b44fa4592b69183c1965d0075dea1a3bc58dfbfe/pdf][Ontologies
+and Database Schema: What's the Difference?]]. Simply take "database
+schema" in those slides to mean CSVW schema.
+
+** Goal @@html:<a name='goal'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: goal
+   :END:
+
+The goal of this project is to make outbreak time series data become
+first class objects of the Web, encoded in a machine readable fashion
+based on the Web's native data standards such as JSON and CSVW. The
+specific task of this page is to build a data type for identities of
+infectious disease outbreak indicators such as =cases_confirmed=,
+=deaths_suspected=, =deaths_probable=, etc.
+
+In programmer terminology when information is enters or exits a running
+programs, the thing exchanged is called a serialization. A serialization
+is often called a document, for example "Outbreak Time Series conformant
+documents." A serialization may be the contents of a file on a file
+system, or it may be the payload of an HTTP message sent over the web.
+
+Documents conformant to the Spec contain data typed by the schema. The
+Spec uses [[https://www.w3.org/2013/csvw/wiki/Main_Page][CSVW]] for the
+schema. Serialized, this is a small-ish JSON file. The main data of an
+outbreak time series is a CSV file. So, the ontology defined here is
+simple a way of saying something like "column 3 of that CSV contains
+cumulative suspected cases to date."
+
+In CSVW, having a schema of well defined indicators enables expressing
+assertions such as "column 7 of that CSV contains the same information
+as that other CSV." The Spec is written such that the set of indicators
+is not fix; there is an extension mechanism for indicators not defined
+in this ontology. In this way, the goal is to create a standard that can
+be easily used across the web on multiple web sites for the exchange of
+outbreak data.
+
+** Potentially relevant prior art @@html:<a name='prior_art'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: potentially-relevant-prior-art
+   :END:
+
+-  [[http://www.who.int/gho/indicator_registry/en/][WHO Indicator and
+   Measurement Registry (IMR)]]
+-  [[http://apps.who.int/gho/data/node.metadata][Global Health
+   Observatory metadata]]
+-  [[http://apps.who.int/gho/data/node.metadata.DISEASECAUSE?lang=en][Disease
+   Cause Codelist]]
+-  [[http://apps.who.int/gho/data/node.metadata.GHOCAT?lang=en][Indicator
+   Categories Codelist]]
+
+   -  INFECT: Infectious Diseases
+   -  INFECTTBL: Infectious diseases table\\
+
+-  WHO
+-  [[http://www.who.int/library/collections/historical/en/index1.html][WHO
+   Historical Collection: Disease classifications and nomenclature
+   documents]]
+-  [[http://www.who.int/library/en/][The Institutional Repository for
+   Information Sharing (IRIS)]]
+-  http://www.violinet.org/vaccineontology/
+-  [[http://disease-ontology.org/about/][DOIDs]]
+-  [[http://nar.oxfordjournals.org/content/40/D1/D940.full.pdf?keytype=ref&ijkey=oOOVAj4zMzRpayq][Disease
+   Ontology: a backbone for disease semantic integration]]
+
+   -  "user may retrieve metadata for a specific DO term by making use
+      of our REST metadata API by constructing a HTTP request in the
+      following format:
+      http://www.disease-ontology.org/api/metadata/@@html:<DOID>@@"
+
+-  [[http://nar.oxfordjournals.org/content/early/2014/10/27/nar.gku1011.full.pdf?keytype=ref&ijkey=Ul8AlMyerFSf0rP][Disease
+   Ontology 2015 update: an expanded and updated database of human
+   diseases for linking biomedical knowledge through disease data)]]
+
+-  [[https://www.cs.umd.edu/~hjs/pubs/IIMAS-lieberman-2008.pdf][Augmenting
+   Spatio-Textual Search With an Infectious Disease Ontology]] >For our
+   application, we used a disease ontology, a database of infectious
+   diseases and associated metadata. An important challenge that we
+   address in our system is the automatic integration of ontology
+   information with document content. For our system, we adapted the
+   ontology used by The Institute for Genomic Research (TIGR) as part of
+   their Gemina project (http://gemina.tigr.org). This ontology is
+   ordered in a hierarchical manner with diseases arranged in order of
+   increasing specificity of disease descriptions. The ontology provides
+   standardized disease names, as well as commonly-used synonyms for the
+   disease as used in medical literature.
+
+** Early work from the Spec @@html:<a name='early_spec' />@@
+   :PROPERTIES:
+   :CUSTOM_ID: early-work-from-the-spec
+   :END:
+
+v0.0.1 of the Spec was pre-defining the following: - =otss_cases_all= -
+=otss_cases_probable= - =otss_cases_suspected= - =otss_cases_confirmed=
+- =otss_deaths_all= - =otss_deaths_probable= - =otss_deaths_suspected= -
+=otss_deaths_confirmed= - =otss_basic_reproductive_number=
+
+** Indicators: types and attribute dimensions
+@@html:<a name='indicators'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: indicators-types-and-attribute-dimensions
+   :END:
+
+As seen in the above list, even a small set of indicator names shows
+some internal structure that should be teased out. One dimension seems
+to be [cases, deaths] and another dimension seems to have values
+[probable, suspected, confirmed]. Is the latter the same dimension that
+has values "all" and "discarded" or is there another dimension at play?
+Etc. What dimensions need to be modeled in the indicator ontological?
+
+These indicators can add up quickly. One
+[[https://github.com/JohnTigue/outbreak_time_series_data/blob/master/disease/disease_by_infectious_agent/viral_infectious_disease/Ebola_hemorrhagic_fever/who.by_county.2016_03_20.csv][WHO
+CSV file on Ebola 2014]] had about thirty indicators.
+
+The follow dimensions are basic and easy to classify: - Subject - cases
+- deaths - (Perhaps this is =outcome=: death, active, recovery, where
+cases = active+recovery but not deaths?) - Veracity - suspected -
+probable - confirmed - discarded *TODO* Is this one actually an value of
+another dimension? - all (lame label, and what does it even mean?) -
+Lag, temporal offset - [ ] notice how these define repeated structures
+just at different delays - now (default - X intervals (or Y day?) Ebola
+data has 7 days and 21 days - incubation periods ago?
+
+The following observed indicators are more complex: - CFR - this is the
+combo of a subject and attribute; has details - count, percentage, cfr
+(is CFR it's own dimension?) - "cumulative deaths, of which % from last
+3 weeks - What about, for e.g., "cases suspected per 1000" and "cases
+confirmed per 1000"? The "per 1000" is a different dimension of
+attribute typing, no? - =otss_basic_reproductive_number=
+
+*TODO* Can =otss_basic_reproductive_number= really change per interval?
+I guess it could if the pathogen evolves. Perhaps this is a property of
+something else, say the outbreak rather than a specific interval?
+Perhaps what should happen is that the ontology is a spec unto its own.
+Then OTSS uses it in two places: on individual intervals or on the
+outbreak's metadata
+
+*** Dimension: source
+    :PROPERTIES:
+    :CUSTOM_ID: dimension-source
+    :END:
+
+[[http://www.cidrap.umn.edu/news-perspective/2016/07/two-new-saudi-mers-cases-noted-experts-air-road-map][CIDRAP]]:
+>The source of his illness is primary, meaning he did not contract the
+virus from another person... The other patient is a 73-year-old woman
+from Najran in far southern Saudi Arabia who is hospitalized in critical
+condition. The MOH said she had indirect contact with camels.
+
+** Related definitional needs of the Spec @@html:<a name='others'/>@@
+   :PROPERTIES:
+   :CUSTOM_ID: related-definitional-needs-of-the-spec
+   :END:
+
+Diseases need short formal names to be referred to by internally within
+the CSV & JSON, and optionally in the end-user UI. - Textual disease
+name labels - [ ] What is this standard naming schema which generates
+name labels? - e.g.s - =IAV=: influenza A - =MERS-CoV=: Middle East
+respiratory syndrome coronavirus (MERS-CoV) - =ZIKV=, =EBOV=, =CHIKV=,
+=HCV= - what about ZIKV versus ZIKV disease (ZVD)? Which should be the
+label?
+
+-  URI scheme for diseases
+-  Is there a URI scheme?
+-  http://disease-ontology.org/ is being used in IDOTS for
+   [[https://github.com/JohnTigue/outbreak_time_series/wiki/Outbreak-API#physical-url-tree][the
+   physical structure of an IDOTS library]]
+-  DOID's seem awfully promising as URI parameters, e.g.: "DOID:1234"
+   which could be `/by\_DOID/1234'

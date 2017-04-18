@@ -1,0 +1,296 @@
+** Requirements @@html:<a name='requirements'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: requirements
+   :END:
+
+This document enumerates requirements and use cases for the Outbreak
+Time Series Specification. The hub document for the spec is [[Outbreak
+Time Series Specification Overview]].
+
+*** Table of Contents
+    :PROPERTIES:
+    :CUSTOM_ID: table-of-contents
+    :END:
+
+-  [[contextual_concerns][Contextual concerns]]
+-  [[standards_based][Standards based]]
+-  [[user_concerns][User concerns]]
+-  [[simple_should_be_simple][Simplest cases must be realizable and easy
+   to do]]
+-  [[unorganized][Unorganized]]
+
+*** Contextual concerns @@html:<a name='contextual_concerns' />@@
+    :PROPERTIES:
+    :CUSTOM_ID: contextual-concerns
+    :END:
+
+**** Enable decentralized disease monitoring networks
+     :PROPERTIES:
+     :CUSTOM_ID: enable-decentralized-disease-monitoring-networks
+     :END:
+
+The Spec should define one of the basic data formats for a global,
+decentralized disease monitoring network. The Spec should enable network
+architecture along the lines of those discussed at the
+[[http://www.decentralizedweb.net/0][Decentralized Web Summit: Locking
+the Web Open]]
+
+**** Enable web crawling
+     :PROPERTIES:
+     :CUSTOM_ID: enable-web-crawling
+     :END:
+
+APIs based on the Spec should be designed in such a way that a single
+root URL can be used to exhaustively crawl a collection of conformant
+documents. For example, a single command line evocation of, say,
+[[https://www.gnu.org/software/wget/][Wget]] should be able to copy down
+a complete repository of Spec conformant documents.
+
+**** Enable HTTP caching
+     :PROPERTIES:
+     :CUSTOM_ID: enable-http-caching
+     :END:
+
+Any standard API which cannot be realized in a cache friendly manner is
+deeply flawed. This dovetails well with the =file://= URL requirement as
+that implies that the API's data can be realized as static files, which
+by their very nature are cache friendly.
+
+This requirement implies that URL query terms are not a great thing as
+they by definition do not play well with caching. But that does not mean
+that an implementation that uses URL query terms
+(=Content-Type: application/x-www-form-urlencoded=) fails to comply with
+this standard. It simply means that being HTTP cache friendly is a
+design goal of this project.
+
+(Similarly, things like AWS's API Gateway has a caching mechanism, which
+could also be leveraged if these Outbreak APIs are defined properly.)
+
+**** Be able to work via file:// URLs
+     :PROPERTIES:
+     :CUSTOM_ID: be-able-to-work-via-file-urls
+     :END:
+
+This is so that that consumers of Outbreak Time Series API data, e.g.
+[[Omolumeter]], can be distributed via, say, USB sticks. In a =file://=
+context URL query terms do not serve to qualify what data should be
+loaded from the file. This also means that HTTP POST must not be a
+dependency.
+
+This requirement does *not* mean that Web services providing Outbreak
+Time Series API data via HTTP GET with URL query terms or using the HTTP
+POST method fail to comply. It simply means that working via =file://=
+URLs is a design goal of this project.
+
+Also related, the Spec should be designed such that tools such as
+[[https://www.gnu.org/software/wget/][Wget]] should be usable to copy
+down an entire library of OTSS-compliant documents from just a single
+start URL (read: [[https://en.wikipedia.org/wiki/HATEOAS][HATEOAS]]
+interlinking). A collection of files on a file system should be
+internally interlinked such that all data can be discover and used by
+OTSS aware tools. This requirement also makes the data HTTP cache
+friendly and implies the HTTP GET is the only verb which should be used.
+
+**** Enable blogging infrastructure
+     :PROPERTIES:
+     :CUSTOM_ID: enable-blogging-infrastructure
+     :END:
+
+Be cognizant of Atom and AtomPub. The XML serialization schema should
+enable the namespacing of outbreak information into an Atom feed.
+
+Someone should be able to attach a single file to a blog post, add a
+hashtag and their data should be aggregated into the global outbreak
+monitoring network:\\
+http://codex.wordpress.org/Using\_Image\_and\_File\_Attachments
+
+Someone should be able to publish a report by simply writing a blog post
+without file attachments. This would be someone typing in the context
+"Ebola in City, State, Country", a doc-type-id-ing hashtag, and then
+just a list of dates with their cases. If getting fancy then they could
+throw in some [[http://hxlstandard.org/standard/tagging/][#HXL tags]].
+Of course, any aggregator should be able to parse data with nothing more
+than the doc-type-id-ing hashtag.
+
+**** The core data schema must work in many data store types
+     :PROPERTIES:
+     :CUSTOM_ID: the-core-data-schema-must-work-in-many-data-store-types
+     :END:
+
+The data should be able to be easily stored in spreadsheets, SQL, NOSQL,
+and big data clusters, depending on the size of the data. (The sort of
+data the Spec address is not "big data" so this is not a very important
+requirement.)
+
+*** Standards based @@html:<a name='standards_based'/>@@
+    :PROPERTIES:
+    :CUSTOM_ID: standards-based
+    :END:
+
+**** Serialization should be realizable as CSVW
+     :PROPERTIES:
+     :CUSTOM_ID: serialization-should-be-realizable-as-csvw
+     :END:
+
+The W3C has completed the work on
+[[https://www.w3.org/standards/techs/csv#w3c_all][CSV on the Web]]
+(a.k.a CSVW). This project should comply with all their recommendations.
+The CSV serialization should maximally leverage CSVW.
+
+Hopefully, CSVW can be used to map existing infectious disease data on
+the web, some of which is CSV. CSVW can map those columns to the
+Outbreak Time Series Specification data model. ##### Example tabular
+data on the web that should be mappable -
+[[http://gamapserver.who.int/gareports/Default.aspx?ReportNo=2][Influenza
+Laboratory Surveillance Information, Latest Week]] - Data source: FluNet
+( www.who.int/flunet ), Global Influenza Surveillance and Response
+System (GISRS)
+
+**** Work with GeoJSON and TopoJSON
+     :PROPERTIES:
+     :CUSTOM_ID: work-with-geojson-and-topojson
+     :END:
+
+The data model should be such that a trivial transformation of the JSON
+serialization to [[http://geojson.org/geojson-spec.html][GeoJSON]] can
+make the data model be rendered in GeoJSON web-apps. Indeed, from a
+GeoJSON perspective the data model looks like a sequence of simple
+GeoJSON maps -- one map for each =time_interval= reported on.
+
+GeoJSON has an openend extension mechanism, =properties=. This is a
+place where Outbreak Time Series data can be attached. So, each of the
+sequence of GeoJSON maps contains all the data for that time\_interval.
+This way an infection's course could be animated simply by visually
+rendering one GeoJSON map after the next, like movie frames.
+(Conceptually is easier said than realized performantly in software. For
+actually doing such a thing, there might need to be some post-processing
+of the data, but the mental model is more important than implementation
+details.)
+
+(The work is designed to work with GeoJSON. It should be tested to work
+with TopoJSON but that should be a no-brainer.)
+
+**** Do but do not require HATEOAS
+     :PROPERTIES:
+     :CUSTOM_ID: do-but-do-not-require-hateoas
+     :END:
+
+For more complex cases (multiple files/ HTTP Resources) a HATEOAS XML
+formatted interlink API with associated XSL stylesheet enabling
+navigating the data via a Web browsers should be possible.
+
+(For V1, there is an explicit design goal that the entire info on an
+outbreak be fetchable via a single HTTP GET on one resource, so HATEOAS
+is not an issue, and perhaps we will not even go there; see
+[[http://mark-kirby.co.uk/2013/creating-a-true-rest-api/][Understand
+Hypermedia application state and why you probably shouldn't use it]].
+
+*** User concerns @@html:<a name='user_concerns'/>@@
+    :PROPERTIES:
+    :CUSTOM_ID: user-concerns
+    :END:
+
+**** Simplest cases must be realizable and easy to do
+@@html:<a name='simple_should_be_simple'/>@@
+     :PROPERTIES:
+     :CUSTOM_ID: simplest-cases-must-be-realizable-and-easy-to-do
+     :END:
+
+For example, the following should be compliant with the spec: a user
+(agent) has a single URL (or, more generally, URI); it should be able to
+fetch a single CSV file which contains data about a single outbreak.
+This should work as a HTTP or in the case of a file system a filename
+should be loadable into, say, a spreadsheet program.
+
+A person who knows how to load a CSV file into a spreadsheet programs
+should be able to understand the information in a Spec-compliant
+document. Of course by starting from a CSV rather than the CSVW JSON,
+information is lost but it would be desirable for this case to be
+enabled, if not for editing purposes then at least for quick
+comprehension of the value of the Spec.
+
+The next more complicated case would be a single URI to a CSVW JSON
+metadata file. Continuing with the complications: a single URI to a CSVW
+metadata file might contain a list of multiple CSVs (a
+[[https://www.w3.org/TR/tabular-data-model/#table-groups][CSVW Table
+Group]]), etc.
+
+(Note the Spec is being developed along with a web site
+([[http://omolumeter.com][omolumeter.com]]) which hosts files conformant
+with the Spec. That site also has an API for enumerating and
+manipulating Spec conformant documents. That is a separate topic from
+the Spec. Nonetheless, the core job of omolumeter.com's API is to serve
+up OTSS documents.)
+
+**** Be able to express all information in a single serialization
+     :PROPERTIES:
+     :CUSTOM_ID: be-able-to-express-all-information-in-a-single-serialization
+     :END:
+
+The Outbreak Time Series API must have a mechanism by which all
+information about an outbreak can be represented in a single file or
+HTTP Resource. This is useful for serializations via XML or especially
+CSV. For the CSV case, this enables someone to export from a spreadsheet
+and use the CSV file to feed, say, [[Omolumeter]].
+
+On the other hand, there are ways of using the Outbreak Time Series API
+which does not return all data available on an outbreak. For example,
+time series data on cases and deaths can be a sizable chunk of bits. If
+that information is not needed, there has to be a way of not calling for
+all that.
+
+**** Work with existing epidemiology tools
+     :PROPERTIES:
+     :CUSTOM_ID: work-with-existing-epidemiology-tools
+     :END:
+
+For example, tools such as [[http://www.gleamviz.org/][GleamViz]] can
+already export outbreak time series to a set of CSV files. This spec
+should enable the repurposing of those CSV within web visualizations.
+From the GleamViz perspective, the =outbreak_time_series= web apps will
+provide a web UI player for epidemic simulations run in GleamViz (which
+is a desktop client, without any web UI).
+
+*** Unorganized @@html:<a name='unorganized'/>@@
+    :PROPERTIES:
+    :CUSTOM_ID: unorganized
+    :END:
+
+**** Multiple outbreak reporting
+     :PROPERTIES:
+     :CUSTOM_ID: multiple-outbreak-reporting
+     :END:
+
+Consider the use case of a treatment center publishing its stats all in
+one document. The center may be dealing with multiple outbreaks at the
+same time. Or consider a global summary of outbreaks. That would very
+likely have multiple outbreaks going on at the same time.
+
+That would be an array of outbreaks. Should that be addressed now?
+
+#+BEGIN_EXAMPLE
+    {
+    outbreaks: [] 
+    }
+#+END_EXAMPLE
+
+**** Aside: consider a JSON document of the form:
+     :PROPERTIES:
+     :CUSTOM_ID: aside-consider-a-json-document-of-the-form
+     :END:
+
+#+BEGIN_EXAMPLE
+    {
+    foo:
+      {
+      bar: {},
+      bas: [],
+      baz: 123
+      }
+    }
+#+END_EXAMPLE
+
+This is sometimes referred to as a data envelope; =foo= is arguably
+cruft. This API is intentionally being design to work in non-HTTP
+contexts which have on HTTP headers, so having an envelope provides a
+place to put info that would be in HTTP headers.

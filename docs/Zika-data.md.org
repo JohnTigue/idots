@@ -1,0 +1,16 @@
+*[This page started on 2016-06-08 and is under development.]*
+
+Simon B. Johnson and others are using
+[[https://docs.google.com/spreadsheets/d/1_S6PA5L32Mq7H_cfp9NAe-Y8-17hNer2OMyb3hVPTvU/edit#gid=1516521608][Google
+Sheets]] as a collaboration point for curated Zika data.
+
+PAHO has [[http://ais.paho.org/phip/viz/ed_zika_epicurve.asp][a Ziki
+epicurves viz]] but it not yet clear where the raw data driving that is
+available, besides PDFs.
+
+Heathmap has [[http://www.healthmap.org/zika/#timeline][a Zika timeline
+viz]] but it is not yet clear where the data is available at. Perhaps
+[[http://publichealth.jmir.org/2016/1/e30/][her article's]] references
+will lead to an answer. She too is trying to find
+[[https://twitter.com/maiamajumder/status/738792252139524096][data from
+#Brazil for 2014 & 2015]]

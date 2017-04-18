@@ -1,0 +1,95 @@
+There are other software developers working in this space. This page
+lists, alphabetically, notable individuals and their ebola related work.
+
+** Table of Contents
+   :PROPERTIES:
+   :CUSTOM_ID: table-of-contents
+   :END:
+
+-  [[luis-capelo][Luis Capelo]]
+-  [[simon-johnson][Simon Johnson]]
+-  [[caitlin-rivers][Caitlin Rivers]]
+
+** Luis Capelo @@html:<a name='luis-capela'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: luis-capelo
+   :END:
+
+Github: [[https://github.com/luiscape][luiscape]]\\
+Homepage: http://www.luiscapelo.info/\\
+Organization: [[http://www.unocha.org/][UN Office for the Coordination
+of Humanitarian Affairs (OCHA)]]\\
+Twitter: https://twitter.com/luiscape
+
+Seems like he has been working on ebola mapping starting in 2014-08, and
+many of [[https://github.com/luiscape?tab=repositories][his
+repositories]] should be checked out as he seems to have been cranking
+out various screen scrapers to gather ebola data from around the Web.
+
+See [[HDX Repository]] for more on his work.
+
+** Simon Johnson @@html:<a name='simon-johnson'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: simon-johnson
+   :END:
+
+Github: [[https://github.com/SimonbJohnson][SimonbJohnson]]\\
+Home page: https://simonbjohnson.github.io/\\
+Twitter: https://twitter.com/Simon\_B\_Johnson\\
+Organization: British Red Cross
+
+Judging by [[https://twitter.com/Simon_B_Johnson][his twitter feed]]
+he's be paying attention to the data problem since mid 2014-08. He
+[[https://twitter.com/Simon_B_Johnson/status/506422860018380800][tweeted
+his first ebola visualization]] on 2014-09-01.
+
+He has worked on [[https://simonbjohnson.github.io/][multiple
+visualizations and dashboards of the 2014 Ebola Outbreak]]. He seems to
+have worked with Luis Capelo on
+[[http://simonbjohnson.github.io/Ebola-Narrative/][The Ebola Narrative]]
+and is currently maintaining it.
+
+Simon Johnson's ebola visualization work is very good. Note that his
+gallery is more about getting the code working. Then he let's others run
+with it and pretty it up for public consumption, as happened in the case
+of [[http://simonbjohnson.github.io/Ebola-Narrative/][his Ebola
+Narrative]] which
+[[http://www.letemps.ch/tout_le_temps/le_temps/infographie/2014/ebola/][Le
+Temps deployed successfully]].
+
+One can consider his work as evidence that the project's goal (a single
+amateur being able to easily and freely produced an outbreak dashboard)
+is achievable. Simon, who is very much not an amateur, nonetheless is
+essentially cranking out his visualizations solo.
+
+Note that these type of tools can work without a network connection (for
+example, [[http://simonbjohnson.github.io/Ebola-Narrative/][The Ebola
+Narrative]] has been tested and proven to work when loaded via =file://=
+URLs of a local hard drive).
+
+*** Ebola Dashboard
+    :PROPERTIES:
+    :CUSTOM_ID: ebola-dashboard
+    :END:
+
+He cranked out high level dashboard which he maintains with fresh data:
+- the viz: http://simonbjohnson.github.io/Ebola\_Dashboard/ - its
+github: https://github.com/SimonbJohnson/Ebola\_Dashboard/tree/gh-pages
+
+** Caitlin Rivers @@html:<a name='caitlin-rivers'>@@@@html:</a>@@
+   :PROPERTIES:
+   :CUSTOM_ID: caitlin-rivers
+   :END:
+
+Github: [[https://github.com/cmrivers/][cmrivers]]\\
+Home page: http://www.caitlinrivers.com/\\
+Twitter: [@cmyeaton](https://twitter.com/cmyeaton)\\
+Organization: Virginia Tech
+
+In the early days of the West Africa ebola outbreak, Caitlin Rivers
+manually collected data from the Web and maintained resulting CVS files
+in [[https://github.com/cmrivers/ebola/][a Github repository]], which
+was being updated roughly daily with
+[[https://github.com/cmrivers/ebola/graphs/contributors][27 people
+contributing]] to the repository. Eventually, the WHO started putting
+out numbers and the effort was wound down.

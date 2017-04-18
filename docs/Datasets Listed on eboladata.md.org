@@ -1,0 +1,308 @@
+The site http://eboladata.org is a repository information relevant to the 2014 Ebola Outbreak in West Africa, mostly in the form of links to information at other sites although there are a few dataset on eboladata.org. Not everything is ebola outbreak specific. For example, [Open Street Map - Republic of Sierra Leone](http://eboladata.org/dataset/open-street-map-republic-sierra-leone) is not specifically about Ebola2014 but maps of West Africa certainly are relevant. OpenStreetMaps is open data, making it especially apropos.
+
+eboladata.org is a deploy of DKAN.
+
+## Ebola Data Jam
+The Ebola Data Jam event took place on Saturday, 2014-10-18 in NYC. The event's associated Web site is http://eboladata.org.
+
+Sounds like 81 folks were involved. Apparently they searched the Web for Ebola2014 data and added what they found to http://eboladata.org.
+ 
+# Datasets
+The datasets are listed at http://eboladata.org/dataset. The first dataset seems to have been added 2014-10-07. Data sets continue to be added.
+
+| Date | Count |
+|------|-------|
+| 2014-11-15 | 17 |
+| 2014-11-22 | 27 |
+| 2014-11-23 | 30 |
+| 2014-11-24 | 32 |
+| 2014-12-13 | 35 |
+| 2014-12-31 | 36 |
+
+[This link](http://eboladata.org/dataset?sort_by=changed&sort_order=DESC) lists the datasets by date-modified, useful for checking for new stuff. 
+
+Following are the datasets listed on http://eboladata.org/dataset, [as sorted by title by eboladata.org](http://eboladata.org/dataset?query=&sort_by=title&sort_order=ASC). The `Useful` column indicates whether the dataset might be useful for developing the [[Outbreak Time Series Specification]] and visualizations that would use Outbreak Dashboard API. This essentially means JSON, well structured XML (not some random xhtml page), or CSV. Randomly structured HTML pages and PDFs do not qualify (others are already on the screen scraping machinery issue). This is not a judgement of the dataset's usefulness in other contexts.
+
+| Useful | Name |
+|-----|----|
+| Yes | Caitlin Rivers' GitHub |
+| ?   | CrisisNet Ebola data |
+| No  | Democratic Republic of Congo Indicators |
+| Yes | Ebola Treatment Centers or Units |
+| No  | Ebola Treatment Centres, Isolation Wards, Hospitals and Transit Centres |
+| ?   | Ebola Twitter Data |
+| Yes | Ebola Virus Disease in West Africa — The First 9 Months of the Epidemic and Forward Projections |
+| Yes | Ebola in Liberia |
+| Yes | EbolaBigData.org Case Counts |
+| No  | Esri Disaster Response Program |
+| Yes | Flowminder Estimated Mobility Patterns for West Africa |
+| ?   | Guinea official socio economic statistics |
+| Yes | Health Map RSS |
+| Yes | Humanitarian Data Exchange |
+| No  | Liberia Ministry of Health & Social Welfare |
+| No  | Liberia official economic data |
+| No  | Liberia official regional statistics |
+| No  | Liberia official trade data |
+| Yes | NetHope Open Humanitarian Data Repository |
+| Yes | Non-Governmental Organizations Responding to Ebola |
+| Yes | Open Street Map - Republic of Sierra Leone |
+| Yes |  OpenStreetMap - Republic of Guinea |
+| Yes | OpenStreetMap - Republic of Liberia |
+| No  | ReliefWeb |
+| No  | Sierra Leone Health Facilities |
+| No  | Sierra Leone Ministry of Health and Sanitation |
+| No  | Sierra Leone Open Government Initiative |
+| No  | Sierra Leone official regional statistics |
+| Yes | Spatio-Temporal Epidemiological Modeler Ebola Parameter Comparison |
+| No  | Standby Task Force |
+| Yes | Sub-national time series data on Ebola cases and deaths in Guinea, Liberia, Sierra Leone, Nigeria and Senegal since March 2014  |
+| Yes | The Microbe-scope |
+| Yes | UK redcross data on cases, deaths, treatment centers |
+| Yes | Wikipedia Case Counts |
+| Yes | World Health Organisation |
+| Yes | Worldwide Flights |
+
+# Analysis
+## Short answer 
+Moving forward with `Sub-national time series data on Ebola cases and deaths in Guinea, Liberia, Sierra Leone, Nigeria and Senegal since March 2014`. See [[HDX Repository]] for more details.
+
+`Caitlin Rivers' GitHub` is the place to go for CSV timeseries data.
+
+## Long answer
+The EbolaMapper widget will need datasources (i.e. the app and the data are separate things, with the data source being specified via an HTTP URL). We'll need to come up with an API aka data structure to that data but first let's see which of the above 14 are candidates for feeding to EbolaMapper.
+
+The following are quick notes on each of the listed data sources, [sorted by title](http://eboladata.org/dataset?query=&sort_by=title&sort_order=ASC).
+
+##### Caitlin Rivers' GitHub
+http://eboladata.org/dataset/caitlin-rivers-github  
+- The github links have high quality CSV files. 
+- The DataMart stuff mentions APIs but download of files required login, so passed on.
+Good stuff. The basis of many folks numbers. See [[Other Coders#caitlin-rivers]] for more info.
+
+##### CrisisNet Ebola data
+http://eboladata.org/dataset/crisisnet-ebola-data  
+This does have JSON. Not really clear what's going on or what is available. They do have Twitter feeds of "ebola." See, https://github.com/ushahidi/crisisnet
+
+https://twitter.com/IgorBrigadir/status/538006710347386880:  
+>has anyone come across a nice API that simply wraps other APIs? e.g. access to municipal data stored across multiple departments... @mikedewar @knowtheory I think @CrisisNET has something like what you describe. Pulls Data from many sources, exposing a single API... we cache transformed/augmented data in the format we use and credit the original source. It's a like a data warehouse.
+
+##### Democratic Republic of Congo Indicators
+http://eboladata.org/dataset/democratic-republic-congo-indicators  
+This is a subset of Caitlin Rivers' GitHub.  
+Ignore this entry but **do** check out her repo. 
+
+##### Ebola Treatment Centers or Units
+http://eboladata.org/dataset/ebola-treatment-centers-or-units  
+>This dataset represents the best-known collection of status and location of the facilities known as Ebola Treatment Centers or Ebola Treatment Units in Guinea, Liberia and Sierra Leone. Maintained by UNMEER in the HDX website.
+
+Links through to shapefiles and CSVs:  
+https://data.hdx.rwlabs.org/dataset/ebola-treatment-centers  
+
+So, HDX. Good stuff. Not the first task for EbolaMapper but perhaps.
+
+##### Ebola Treatment Centres, Isolation Wards, Hospitals and Transit Centres
+http://eboladata.org/dataset/ebola-treatment-centres-isolation-wards-hospitals-and-transit-centres  
+Essentially a link to a google doc: http://goo.gl/pVb4GC
+
+This is Simon Johnson and Luis Capelo work so it is good stuff.
+Notice the #HXL being used. Updated daily.
+This on [GitHub as GeoJson](https://github.com/BrcMapsTeam/Ebola_2014_West_Africa_medical_centres/blob/master/Ebola_medical_centres_open_closed_pending.geojson)
+
+**UPDATE** 2014-12-31, seems this is inactive now and the latest version is to be found at:  
+http://eboladata.org/dataset/ebola-treatment-centers-or-units
+
+##### Ebola Twitter Data
+http://eboladata.org/dataset/ebola-twitter-data  
+Added on 2014-11-23. Seems like it might be a dataset added but access failed.
+
+##### Ebola Virus Disease in West Africa — The First 9 Months of the Epidemic and Forward Projections
+http://eboladata.org/dataset/ebola-virus-disease-west-africa-%E2%80%94-first-9-months-epidemic-and-forward-projections  
+CSV. Quality data.
+
+##### Ebola in Liberia
+http://eboladata.org/dataset/ebola-liberia   
+This is links to ebolainliberia.org  
+High quality stuff.
+
+##### EbolaBigData.org Case Counts
+http://eboladata.org/dataset/ebolabigdataorg-case-counts  
+A link to http://ebolabigdata.org/ where there is a small XLS file with 5 columns: Date, Cases, Death, Diff, Noofdays. Usable but ignore this as there are better, more detailed spreadsheets available else where.
+
+##### Esri Disaster Response Program
+http://eboladata.org/dataset/esri-disaster-response-program  
+
+Some good visualizations. E.g.
+http://www.esri.com/services/disaster-response/drought-famine-disease/ebola-outbreak-cases
+
+Not free enough with the license:
+"Do not copy or reuse without permission from Direct Relief: http://www.directrelief.org/about/faqs/"
+
+pro: OpenStreetMaps
+
+E.g.
+http://www.esri.com/services/disaster-response/drought-famine-disease/ebola-outbreak-cases
+
+##### Flowminder Estimated Mobility Patterns for West Africa
+http://eboladata.org/dataset/flowminder-estimated-mobility-patterns-west-africa  
+
+Very interesting. Must have come from http://www.flowminder.org/
+Large, e.g. 20Mb, CSV files of predicted motion between regions, based on cell phone data. Might make for an interesting vis.
+
+##### Guinea official socio economic statistics
+http://eboladata.org/dataset/guinea-official-socio-economic-statistics  
+Failed to get to data via UI...
+
+##### Health Map RSS
+http://eboladata.org/dataset/health-map-rss  
+A link to http://healthmap.org/rss/ebola-all.rss  
+Seemingly a collection of news items about ebola.
+Has geo info for each item:
+```xml
+<georss:point>-25.734970 134.489563</georss:point>
+<geo:lat>-25.734970</geo:lat>
+<geo:long>134.489563</geo:long>
+```
+
+##### Humanitarian Data Exchange
+http://eboladata.org/dataset/humanitarian-data-exchange
+The #1 site on the Web for ebola info. See [[HDX Repository]]
+
+##### Liberia Ministry of Health & Social Welfare
+http://eboladata.org/dataset/liberia-ministry-health-social-welfare  
+>Situation reports on disease incidence, treatment statistics, contact tracing, requests for resources, general humanitarian conditions
+
+These are PDFs. Some are data rich and contain maps, graphs, and table. But there must be more direct ways to get at the raw data than ripping up PDFs. Other folks are already on the PDF and Web page scraping problems.
+
+##### Liberia official economic data
+http://eboladata.org/dataset/liberia-official-economic-data  
+>Economic data and some national statistics on vehicles, communication and crime.
+A link http://liberia.africadata.org/en/BulkDownload
+
+##### Liberia official economic data 
+http://eboladata.org/dataset/liberia-official-regional-statistics  
+>Economic data and some national statistics on vehicles, communication and crime.
+A link to http://liberia.africadata.org/en/BulkDownload
+
+##### Liberia official trade data
+http://eboladata.org/dataset/liberia-official-trade-data  
+>Official data on export, import and balance of various commodities and products.
+A link to  http://liberia.africadata.org/en/BulkDownload
+
+##### NetHope Open Humanitarian Data Repository
+http://eboladata.org/dataset/nethope-open-humanitarian-data-repository
+
+This does seem to be raw data (CSV, REST, JSON, APIs). Broken out for countries in West Africa.
+E.g.
+http://services1.arcgis.com/ZGrptGlLV2IILABw/arcgis/rest/services/EbolaCountriesUpdatedAugust15/FeatureServer/0  
+http://services1.arcgis.com/ZGrptGlLV2IILABw/arcgis/rest/services/EbolaCountriesUpdatedAugust15/FeatureServer/0?f=pjson  
+There might be some rendering going on as well, dunno site was very slow on 2014-11-12.
+
+##### Non-Governmental Organizations Responding to Ebola
+http://eboladata.org/dataset/non-governmental-organizations-responding-ebola  
+>This is a list of all of the NGOs that are responding to the Ebola crisis in West Africa. Produced by Center for International Disaster Information, United States Agency for International Development. Original source: http://www.cidi.org/ebola-ngos
+
+A CSV file list of 58 NGO (name, URL). The file is at eboladata.org, not just a link.
+
+##### Open Street Map - Republic of Sierra Leone
+http://eboladata.org/dataset/open-street-map-republic-sierra-leone  
+>Basic geographic details of Sierra Leone - includes roads, railways, natural features, etc.
+
+A link to http://download.geofabrik.de/africa/sierra-leone-latest.shp.zip which is a 1Mb ZIP file contain the OpenStreetMap shapefiles for Sierra Leone
+
+##### OpenStreetMap - Republic of Guinea
+http://eboladata.org/dataset/openstreetmap-republic-guinea  
+>Basic geographic details of the Republic of Guinea - includes roads, railways, natural features, etc.
+
+A link to http://download.geofabrik.de/africa/guinea-latest.shp.zip. I am assuming that is the shapefiles for Guinea
+
+##### OpenStreetMap - Republic of Liberia
+http://eboladata.org/dataset/openstreetmap-republic-liberia  
+>Basic geographic details of Liberia - includes roads, railways, natural features, etc.
+
+A link to htttp://download.geofabrik.de/africa/liberia-latest.shp.zip. I assume that is the shapefiles for Liberia.
+
+##### ReliefWeb
+>A specialised digital service of the United Nations Office for the Coordination of Humanitarian Affairs (OCHA) Maps and infographics on cases, treatment centers, intervention efforts and funding, telecommunications, general humanitarian conditions
+
+A link to http://reliefweb.int/disaster/ep-2014-000041-gin
+
+ReliefWeb is a good thing but these seem to be reports as PDFs and maps, not JSON, XML, or CSV.
+
+##### Sierra Leone Health Facilities
+http://eboladata.org/dataset/sierra-leone-health-facilities  
+Could be useful but duplicate of info that is already on HDX.
+
+##### Sierra Leone Ministry of Health and Sanitation
+http://eboladata.org/dataset/sierra-leone-ministry-health-and-sanitation  
+>Updates and situation reports on disease incidence, treatment statistics, contact tracing Numerical data extracted by Caitlin Rivers on GitHub: http://github.com/cmrivers/ebola Suggested uses: epidemiology, intervention planning, contact tracing
+
+2 links through to PDFs:  
+- [Ebola Virus Disease Updates](http://health.gov.sl/?page_id=576)
+- [Ebola Situation Reports](http://health.gov.sl/?page_id=583)
+
+So, good stuff but PDF and Rivers is already translating that to CSV.
+
+##### Sierra Leone Open Government Initiative
+http://eboladata.org/dataset/sierra-leone-open-government-initiative  
+A link to http://ogi.gov.sl/content/transparency-sierra-leone-registries  
+
+##### Sierra Leone official regional statistics
+http://eboladata.org/dataset/sierra-leone-official-regional-statistics  
+>Statistical data for Sierra Leone and its areas and districts.
+
+A link to http://sierraleone.africadata.org/en/BulkDownload  
+
+##### Spatio-Temporal Epidemiological Modeler Ebola Parameter Comparison
+http://eboladata.org/dataset/spatio-temporal-epidemiological-modeler-ebola-parameter-comparison
+>This data source by the spatio-temporal epidemiological modeler (STEM) team gives epidemiological parameters for Ebola from different sources.
+
+A small CSV ebola_param_comparison.csv, seems to be the output of a modeler of this ebola by country. E.g. Basic Reproductive Number, #day from onset to end of infectiousness.
+
+##### Standby Task Force
+http://eboladata.org/dataset/standby-task-force  
+>Comprehensive crowd-sourced maps of health facilities and related data: hospitals, laboratories, Ebola treatment centers, health centers, pharmacies Suggested uses: intervention and health facility planning, humanitarian resource allocation
+
+A link to http://standbytaskforce.maps.arcgis.com/home/gallery.html
+
+SBTF is doing great work. The above link can be followed to their [tools](http://standbytaskforce.maps.arcgis.com/home/gallery.html#c=organization&o=modified&f=tools) but that wasn't showing any content on 2014-12-31. There has to be more but this link is not the way forward.
+
+##### Sub-national time series data on Ebola cases and deaths in Guinea, Liberia, Sierra Leone, Nigeria and Senegal since March 2014  
+http://eboladata.org/dataset/sub-national-time-series-data-ebola-cases-and-deaths-guinea-liberia-sierra-leone-nigeria-and
+>Ebola outbreak time series data at national and sub national levels since March 2014. Data compiled manually from a number of published reports. Updated by OCHA ROWCA every working day.
+  
+JFT(2014-11-14): Wow, this is the name of the HDX dataset I finally settled on using. Sadly there was no link to be found on eboladata.org. Well, whatever, a week later: https://data.hdx.rwlabs.org/dataset/rowca-ebola-cases
+
+##### The Microbe-scope
+http://eboladata.org/dataset/microbe-scope  
+A CSV with numbers on 40 different infectious disease. Lists attributes of each disease: Fatality rate, basic reproductive number, survival time, yearly fatalities, and lots more. This could be useful if one wants to compare ebola to other diseases.
+
+##### UK redcross data on cases, deaths, treatment centers
+http://eboladata.org/dataset/uk-redcross-data-cases-deaths-treatment-centers  
+Good stuff.  
+2 links to Simon Johnsons Ebola Dashboard.
+the viz: http://simonbjohnson.github.io/Ebola_Dashboard/
+the github: https://github.com/SimonbJohnson/Ebola_Dashboard/tree/gh-pages
+
+##### Wikipedia Case Counts
+http://eboladata.org/dataset/wikipedia-case-counts  
+>Wikipedia record of major Ebola virus outbreaks by country and by date – 3 September to most recent WHO / Gov update.
+
+A link to http://en.wikipedia.org/wiki/Ebola_virus_epidemic_in_West_Africa#Understanding_the_data_and_its_limitations
+
+##### World Health Organisation
+http://eboladata.org/dataset/world-health-organisation  
+>Ebola data and news maintained by the World Health Organisation... Not an API but the WHO website with news and data.
+
+A link to: http://www.who.int/csr/disease/ebola/en/  
+Not accepted for this project since others are working on the screen scraping route.
+
+**UPDATE** by 2014-12-31 this has more links some of which are directly useful:  
+- [Sit Reps](http://apps.who.int/gho/data/node.ebola-sitrep) in "csv, Excel, html, xml"
+- [Sit Reps, more detail](http://www.who.int/csr/disease/ebola/situation-reports/en/)
+- http://maps.who.int/MapGallery/ (maps; but raw data?)
+
+##### Worldwide Flights
+http://eboladata.org/dataset/worldwide-flights  
+>All airports, airlines, and routes available from OpenFlights http://openflights.org/data.html. In addition, there are compiled files which make the data more useful for analysis.
+
+Two files: Flights Shapefile and CSV of known flights.

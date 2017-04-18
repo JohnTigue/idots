@@ -1,0 +1,19 @@
+The website, [[http://omolumeter.com][omolumeter.com]], serves two main
+purposes: - Provide a demo deploy of the [[Omolumeter]] software -
+Serve, via an API, a library of documents conformant to [[the
+Spec|Outbreak Time Series Specification Overview]]
+
+For the first purpose, any end user can simply navigate via a Web
+browser to [[http://omolumeter.com/]]. The root page of that Web site
+have a deploy of the [[Omolumeter]].
+
+For the second purpose, various sources of outbreak data on the Web are
+curated and made freely available to the web as [[Outbreak Time
+Series|Outbreak Time Series Specification Overview]] documents. (Note:
+this is more an idea than something that has actually be implemented.
+Nonetheless,
+[[http://omolumeter.com/data/ebola_2014/ebola_data_db_format.2016_03_20.csv][data]]
+is currently available for others to use. Some of this is extremely
+basic Web tech, like setting up Cross-Origin Resource Sharing
+[[https://www.w3.org/TR/cors/][(CORS)]] but the world needs even that
+simple level of global outbreak monitoring machinery.

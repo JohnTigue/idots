@@ -1,0 +1,33 @@
+Web developers looking for data on the 2014 Ebola outbreak in West
+Africa may consider this short list.
+
+For further data, http://eboladata.org is good for multiple types of
+data. For information coming from the humanitarian community, the [[HDX
+Repository]] is developing into the premiere site.
+
+** Outbreak timeseries
+   :PROPERTIES:
+   :CUSTOM_ID: outbreak-timeseries
+   :END:
+
+The best datasets for timeseries are: -
+[[https://github.com/cmrivers/ebola][Caitlin Rivers' ebola repo]] (CSV)
+- [[https://data.hdx.rwlabs.org/dataset/rowca-ebola-cases][Sub-national
+time series data on Ebola cases and deaths in Guinea, Liberia, Sierra
+Leone, Nigeria, Senegal and Mali since March 2014]] (Excell
+spreadsheet). The New York Times uses this for
+[[http://www.nytimes.com/interactive/2014/07/31/world/africa/ebola-virus-outbreak-qa.html][their
+visualization]].
+
+** Treatment centers
+   :PROPERTIES:
+   :CUSTOM_ID: treatment-centers
+   :END:
+
+For mapping treatment centers and other health care related locations,
+check out [[Ebola Treatment Centres, Isolation Wards, Hospitals and
+Transit Centres|Datasets Listed on
+eboladata.org#ebola-treatment-centres-isolation-wards-hospitals-and-transit-centres]]
+which is available and viewable on
+[[https://github.com/BrcMapsTeam/Ebola_2014_West_Africa_geojsons/blob/master/Ebola_medical_centres_open_closed_pending.geojson][GitHub
+as geoJSON]]

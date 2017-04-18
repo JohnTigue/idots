@@ -1,0 +1,26 @@
+* HTML5 offline Web application instructions
+  :PROPERTIES:
+  :CUSTOM_ID: html5-offline-web-application-instructions
+  :END:
+
+-  [ ] *TBD* [[https://github.com/JohnTigue/EbolaMapper/issues/1][Issue
+   #1]]
+-  [ ] There needs to be a cache.manifest file referenced from the HTML
+   (with the content type text/cache-manifest).
+-  [ ] If you're working on this, also consider:\\
+   https://github.com/JohnTigue/EbolaMapper/issues/12
+
+How end-users can instruct a Web browser to make the visualization work
+off-line. There are lots of situations where EbolaMapper could be useful
+when/where there is not connection to the Internet. This tool has been
+designed to work in such situations, using nothing but HTML5 tech built
+into modern Web browsers.
+
+Here's some basics on the topic: -
+[[http://www.w3.org/TR/2014/REC-html5-20141028/browsers.html#offline][The
+HTML5 Rec: 5.7 Offline Web applications]] -
+http://mislav.uniqpath.com/diveintohtml5/offline.html -
+http://www.html5rocks.com/en/features/offline
+
+I guess this page should have a few screen shots of how to run through
+Chrome, IE, Firefox, etc. to take [[EbolaMapper.html]] offline

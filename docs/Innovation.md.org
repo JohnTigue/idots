@@ -1,0 +1,20 @@
+*** Innovator's Dilemma
+    :PROPERTIES:
+    :CUSTOM_ID: innovators-dilemma
+    :END:
+
+-  The Innovator's Dilemma
+-  Clayton M. Christensen
+-  1997
+-  [[http://jhqedu.com:1042/upload/books/Book1010/20140311115729871.pdf][full
+   text PDF]]
+
+#+BEGIN_QUOTE
+  Generally disruptive innovations were technologically straightforward,
+  consisting of off-the-shelf components put together in a product
+  architecture that was often simpler than prior approaches. They
+  offered less of what customers in established markets wanted and so
+  could rarely be initially employed there. They offered a different
+  package of attributes valued only in emerging markets remote from, and
+  unimportant to, the mainstream.
+#+END_QUOTE

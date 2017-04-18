@@ -1,0 +1,44 @@
+see [[Deployment HOWTO]] see
+[[https://github.com/JohnTigue/EbolaMapper/issues/19][Issue #19]]
+
+EbolaMapper is a
+[[http://en.wikipedia.org/wiki/White-label_product][White label
+product]] i.e. it is designed to be easily "branded" and styled by
+deployers. This is important to large news organizations as evidenced by
+Mapbox's efforts,
+[[https://www.mapbox.com/blog/mapbox-studio-custom-fonts/][Custom font
+support added to Mapbox Studio]]
+
+** How to Style via CSS
+   :PROPERTIES:
+   :CUSTOM_ID: how-to-style-via-css
+   :END:
+
+Here's Mapbox studios doing fancy styling -
+https://www.mapbox.com/blog/terrain-mapbox-studio/ -
+[[https://www.mapbox.com/tilemill/docs/manual/carto/][Even have CartoCSS
+language]] - https://www.mapbox.com/tilemill/docs/crashcourse/styling/
+
+Certainly things like CartoCSS are out of scope, but things like
+[[https://www.mapbox.com/blog/mapbox-studio-custom-fonts/][customizing
+fonts]] should be easily supported.
+
+-  in [[http://vis.stanford.edu/files/2011-D3-InfoVis.pdf][the D3.js
+   paper]]:\\
+   "Toolkit-specific scenegraph abstractions diminish compatibility and
+   expressiveness: elements cannot be styled using external stylesheets,
+   and graphical effects such as dashed strokes and composite filters
+   may be unusable even if supported natively."
+
+On political map, CSS controls:\\
+color of countries\\
+stroke color and width
+
+** What images can be customized
+   :PROPERTIES:
+   :CUSTOM_ID: what-images-can-be-customized
+   :END:
+
+Various D3.js mark icons\\
+Badging\\
+etc.

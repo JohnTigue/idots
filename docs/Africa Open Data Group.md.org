@@ -1,0 +1,62 @@
+#+BEGIN_HTML
+  <p align="center">
+#+END_HTML
+
+@@html:<a href='http://index.okfn.org/?utm_content=buffer1e3c2' >@@@@html:<img src='http://johntigue.github.io/ebola-viz-twumbshots/twumbshot/africa-openness-by-okfn-org.png' />@@@@html:</a>@@
+
+#+BEGIN_HTML
+  </p>
+#+END_HTML
+
+The [[http://www.meetup.com/Africa-Open-Data/][Africa Open Data Group]]
+(AODG) is: >Open Data is a transformational trend in Open Governance
+that is generating empowerment and economic growth. Around the world,
+cities, states, and nations are publishing Open Data and creating new
+data supply chains and ecosystems that are managing scarce water
+resources, improving land use and agricultural security, enhancing
+transportation and traffic flows, and generating new high-tech jobs and
+tax revenues. Governments themselves are benefiting because published
+Open Data is free of organizational barriers that hold back departments
+from sharing information and collaborating.
+
+#+BEGIN_QUOTE
+  This Group is designed to be interactive, informative, and fun. It
+  will involve diverse skills and experiences, and showcase real live
+  examples of how Open Data works, African Challenges and opportunities,
+  and example applications. There will be online and real face to face
+  meetups and conferences, online collaboration in global communities
+  working to help Africa become a leader in Open Government and Open
+  Data. Our goal is to create new global relationships that bring
+  passionate Open Data communities together to share common challenges
+  and build new solutions. It doesn't matter where you live, where you
+  were born, or where you work. We are looking for Citizens of the World
+  to work together to help African countries embrace Open Government and
+  Open Data.
+#+END_QUOTE
+
+*** Meetup of 2014-11-07
+    :PROPERTIES:
+    :CUSTOM_ID: meetup-of-2014-11-07
+    :END:
+
+[[http://www.meetup.com/Africa-Open-Data/events/210071892/][Meetup
+page]]\\
+This project (*EbolaMapper*, not AODG) got started because John Tigue
+was really bothered by the lack of Ebola2014 visualizations on the Web.
+Then he opened his big mouth on
+[[http://www.meetup.com/Africa-Open-Data/events/210071892/][the
+2014-11-07 AODG conference call]] committing to banging out a
+visualization in order to confirm some of the data found during [[the
+Ebola Data Jam|Datasets Listed on eboladata.org#ebola-data-jam]]. What
+was supposed to be a day or so of banging out a nifty visualization
+using the official data turned out to be much more than that.
+
+*** Meetup of 2014-12-05
+    :PROPERTIES:
+    :CUSTOM_ID: meetup-of-2014-12-05
+    :END:
+
+[[http://www.meetup.com/Africa-Open-Data/events/211206302/][Meetup
+page]]\\
+John Tigue prepared a report, [[AODG Report 1 from John Tigue]], for the
+December conference call.

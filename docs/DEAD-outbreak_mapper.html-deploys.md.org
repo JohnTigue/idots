@@ -1,0 +1,89 @@
+This page *will be* a collection of visualizations based on
+=outbreak_mapper= visualizing the 2014 Ebola outbreak. All
+visualizations listed on this page are *to be* based on
+=outbreak_mapper=. For visualizations based on software *other* than
+=outbreak_mapper= see [[Gallery of Ebola Visualizations Found Across the
+Web]].
+
+** Examples
+   :PROPERTIES:
+   :CUSTOM_ID: examples
+   :END:
+
+Donald Knuth put it well: >the designer of a new system must not only be
+the implementor and the first large-scale user; the designer should also
+write the first user manual. ... If I had not participated fully in all
+these activities, literally hundreds of improvements would never have
+been made, because I would never have thought of them or perceived why
+they were important.
+
+The best examples are listed first. Although if you want to learn how to
+use *EbolaMapper* then start at the bottom with the simple examples.
+
+#+BEGIN_HTML
+  <table>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr height="193" valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr height="193" valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  <tr height="193" valign="top">
+#+END_HTML
+
+#+BEGIN_EXAMPLE
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+    <td width='193'><i>Name</i><br/>
+      <a href=''><img src='' width='188' /></a>
+    </td>
+#+END_EXAMPLE
+
+#+BEGIN_HTML
+  </tr>
+#+END_HTML
+
+#+BEGIN_HTML
+  </table>
+#+END_HTML

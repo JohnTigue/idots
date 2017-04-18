@@ -1,0 +1,11 @@
+*Real exporting is not currently implemented (2016-06-14)*\\
+See [[https://github.com/JohnTigue/EbolaMapper/issues/17][Docs: TBD:
+Export HOWTO (Issue #17)]]
+
+Static visualization have their place, of course, in both the web and
+print. Omolumeter can be used to generate static files by: - making
+screen shots (derp) - printing to PDF - printing to paper
+
+In the future: - Perhaps some map view could be exported as GeoJSON -
+D3.js uses SVG, so maybe interactive D3.js-based visualizations well be
+able to export excellent static maps and charts.

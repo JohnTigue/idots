@@ -1,0 +1,35 @@
+**** Internet and/or Internot
+     :PROPERTIES:
+     :CUSTOM_ID: internet-andor-internot
+     :END:
+
+[GoogleCrisisResponse
+(@GoogleCR)](https://twitter.com/GoogleCR/status/530750584228691968) on
+twitter: >Hongyi Hu: Humanitarian design principles to live by: Usable,
+Inexpensive, Robust, Portable #iccmnyc
+
+As the 2014 Ebola Outbreak in West Africa has demonstrated, tools need
+to work in contexts without pervasive Internet connectivity. Considering
+future outbreaks, West Africa is certainly not the only place where one
+cannot assume a network connection to global Web servers.
+
+Further an imagined context does not need to be a pandemic outbreak. It
+could be a much more localize event. How do we enable a future lone
+[[http://www.ph.ucla.edu/epi/snow/mapsbroadstreet.html][John Snow]]? For
+up-country contexts, how does such a person get the job done where the
+network is nothing more than, say, some [[http://one.laptop.org/][OPLC
+laptops]] connected via USB sticks moving over a
+[[http://en.wikipedia.org/wiki/Sneakernet][sneakernet]] serving as the
+long haul network?
+
+That can be done rather easily with nothing more exotic than modern Web
+browsers. Consider [[http://www.openepi.com/Menu/OE_Menu.htm][OpenEpi]],
+which along with *EbolaMapper*-type mapping visualization tools could be
+pretty powerful yet not /require/ a Web server.
+
+The critical issue is that the low-connectivity design goal has to
+followed from the beginning. That is certainly not how most tools on the
+Web work. Yet if the working in low-connectivity is a design goal, then
+with a properly defined data APIs the same visualization tools can serve
+one machine alone in the jungle or millions of clients hitting a Web
+site.
