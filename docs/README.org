@@ -1,3 +1,4 @@
+
 This is the start page of the wiki for *The IDOTS Project*, the
 artifacts of which are archived in this git repository. IDOTS is an
 acronym for Infectious Disease Outbreak Time Series.
@@ -20,7 +21,7 @@ For further elaboration of the project goals, see [[Goals]].
 -  [[status][Status]]
 -  [[further-information][Further information]]
 
-** Introduction@@html:<a name='introduction'>@@@@html:</a>@@
+** Introduction
    :PROPERTIES:
    :CUSTOM_ID: introduction
    :END:
@@ -74,7 +75,7 @@ adding a csv-metadata.json file to a Web server (with CORS enabled), a
 publisher can become a "live, direct" outbreak time series data source
 to web-apps.
 
-** Scope@@html:<a name='scope'>@@@@html:</a>@@
+** Scope
    :PROPERTIES:
    :CUSTOM_ID: scope
    :END:
@@ -181,7 +182,7 @@ channels. The Outbreak Time Series Spec is very much an edge-of-network
 front end, Web focused effort designed to work even when the is no
 connection to the global network.
 
-** Status @@html:<a name='status'>@@@@html:</a>@@
+** Status 
    :PROPERTIES:
    :CUSTOM_ID: status
    :END:
